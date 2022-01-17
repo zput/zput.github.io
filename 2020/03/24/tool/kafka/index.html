@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="coding"><title>kafka总结 | xczhao</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.1"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">kafka总结</h1><a id="logo" href="/.">xczhao</a><p class="description">堆排序</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa igloo"> 首页</i></a><a href="/go-goroutine"><i class="fa duck"> Go-goroutine 设计与实现</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">kafka总结</h1><div class="post-meta">2020-03-24<span> | </span><span class="category"><a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#broker"><span class="toc-text">Broker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#topic(%E4%B8%BB%E9%A2%98)"><span class="toc-text">Topic(主题)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#partition(%E5%88%86%E5%8C%BA)"><span class="toc-text">Partition(分区)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#segment"><span class="toc-text">Segment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#replication(%E5%89%AF%E6%9C%AC)"><span class="toc-text">Replication(副本)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89%E5%89%AF%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E7%AD%96%E7%95%A5--%3E%E5%AF%B9broker%E8%80%8C%E8%A8%80"><span class="toc-text">1）副本数据同步策略--&gt;对broker而言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1.2%EF%BC%89isr--%3E%E5%AF%B9broker%E8%80%8C%E8%A8%80"><span class="toc-text">1.2）ISR--&gt;对broker而言</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%BC%89%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E7%BB%86%E8%8A%82"><span class="toc-text">2）故障处理细节</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85"><span class="toc-text">生产者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85"><span class="toc-text">消费者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#between-producter-and-broker"><span class="toc-text">Between producter and broker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BF%9D%E8%AF%81"><span class="toc-text">数据可靠性保证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3%EF%BC%89ack%E5%BA%94%E7%AD%94%E6%9C%BA%E5%88%B6--%3E%E5%AF%B9producer%E8%80%8C%E8%A8%80"><span class="toc-text">3）ack应答机制--&gt;对producer而言</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exactly-once%E8%AF%AD%E4%B9%89"><span class="toc-text">Exactly Once语义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#between-broker-and-comsume-group"><span class="toc-text">Between broker and comsume group</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#round-robin"><span class="toc-text">round robin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sticky"><span class="toc-text">sticky</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#offset-%E7%9A%84%E7%BB%B4%E6%8A%A4"><span class="toc-text">offset 的维护</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%EF%BC%89%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6consumer.properties"><span class="toc-text">1）修改配置文件consumer.properties</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E8%AF%BB%E5%8F%96-offset"><span class="toc-text">2）读取 offset</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="post-content"><p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207110845.png" alt="20201207110845" /></p>
+<h2 id="broker" id="Broker">Broker</h2>
+<p>一台kafka服务器就是一个broker。一个集群由多个broker 组成。一个broker可以容纳多个topic。</p>
+<h3 id="topic(%E4%B8%BB%E9%A2%98)" id="Topic-主题">Topic(主题)</h3>
+<p>Topic ：可以理解为一个队列，生产者和消费者面向的都是一个 topic；</p>
+<h3 id="partition(%E5%88%86%E5%8C%BA)" id="Partition-分区">Partition(分区)</h3>
+<p>what:</p>
+<ul>
+<li>每个partition可以被认为是一个无限长度的数组，新数据顺序追加进这个数组。物理上，每个partition对应于<strong>一个文件夹</strong>。一个broker上可以存放多个partition。这样，producer可以将数据发送给多个broker上的多个partition，consumer也可以并行从多个broker上的不同paritition上读数据，实现了水平扩展</li>
+</ul>
+<p>why: 要在topic里加入分区的概念?</p>
+<ul>
+<li>面向接口编程，而不面向实现
+<ul>
+<li>对于生产者和消费者而言，只关心要向某个topic生产和消费数据，不感知数据是怎么存的。</li>
+<li>为了性能考虑，如果topic内的消息只存于一个broker，那这个broker会成为瓶颈，无法做到水平扩展。所以把topic内的数据分布到整个集群就是一个自然而然的设计方式。Partition的引入就是解决水平扩展问题的一个方案</li>
+<li>topic是逻辑的概念，partition是物理的概念;</li>
+</ul>
+</li>
+<li>方便在集群中扩展
+<ul>
+<li>每个 Partition 可以通过调整以适应它所在的机器，而一个 topic又可以有多个 Partition 组成，因此整个集群就可以适应任意大小的数据了；</li>
+</ul>
+</li>
+<li>可以提高并发
+<ul>
+<li>因为可以以 Partition 为单位读写了。</li>
+</ul>
+</li>
+</ul>
+<p>how:</p>
+<h3 id="segment" id="Segment">Segment</h3>
+<ul>
+<li>
+<p>what: segment file 是什么？</p>
+<ul>
+<li>segment file 由2大部分组成，(以.index结尾的索引文件，和以.log 结尾的数据文件)，一个partition对应一个文件夹，一个partition里理论上可以包含任意多个segment。所以partition可以认为是在segment上做了一层包装。</li>
+</ul>
+</li>
+<li>
+<p>why: 为什么有了partition还需要segment?</p>
+<ul>
+<li>为了kafka对文件的顺序写优化设计方案
+<ul>
+<li>如果不引入segment，一个partition直接对应一个文件（应该说两个文件，一个数据文件，一个索引文件），那这个文件会一直增大。同时，在做data purge时，需要把文件的前面部分给删除，不符合kafka对文件的顺序写优化设计方案。引入segment后，每次做data purge，只需要把旧的segment整个文件删除即可，保证了每个segment的顺序写，</li>
+</ul>
+</li>
+<li>~~把数据平行扩展的一种实现方式；<code>all data --&gt; some partition(different broker) ---&gt; more and more segment every partition</code>~~</li>
+</ul>
+</li>
+<li>
+<p>how:</p>
+<ul>
+<li>每个partition 只需支持顺序进行读写即可，segment 的生命周期由服务端配置参数决定。</li>
+</ul>
+</li>
+</ul>
+<h3 id="replication(%E5%89%AF%E6%9C%AC)" id="Replication-副本">Replication(副本)</h3>
+<ul>
+<li>Replication：副本，为保证集群中的某个节点发生故障时，该节点上的 partition 数据不丢失，且 kafka 仍然能够继续工作，kafka 提供了副本机制，一个 topic 的每个分区都有若干个副本，一个 leader 和若干个 follower。
+<ul>
+<li>leader：每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是 leader。</li>
+<li>follower：每个分区多个副本中的“从”，实时从 leader 中同步数据，保持和leader数据的同步。leader发生故障时，某个follower会成为新的 follower。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1%EF%BC%89%E5%89%AF%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E7%AD%96%E7%95%A5--%3E%E5%AF%B9broker%E8%80%8C%E8%A8%80" id="1）副本数据同步策略-对broker而言">1）副本数据同步策略--&gt;对broker而言</h4>
+<p>方案 | 优点 | 缺点<br />
+---------|----------|---------<br />
+<strong>半数以上完成同步，就发送ack</strong> | 延迟低 | 选举新的leader时，容忍n台节点的故障，需要2n+1个副本<br />
+<strong>全部完成同步，才发送ack</strong> | 选举新的leader时，容忍n台节点的故障，需要n+1个副本 | 延迟高</p>
+<ul>
+<li>Kafka 选择了第二种方案，原因如下：
+<ul>
+<li>1.同样为了容忍 n 台节点的故障，第一种方案需要 2n+1 个副本，而第二种方案只需要 n+1个副本，而 Kafka 的每个分区都有大量的数据，第一种方案会造成大量数据的冗余。</li>
+<li>2.虽然第二种方案的网络延迟会比较高，但网络延迟对 Kafka 的影响较小。</li>
+</ul>
+</li>
+</ul>
+<h5 id="1.2%EF%BC%89isr--%3E%E5%AF%B9broker%E8%80%8C%E8%A8%80" id="1-2）ISR-对broker而言">1.2）ISR--&gt;对broker而言</h5>
+<ul>
+<li>采用第二种方案之后，设想以下情景：
+<ul>
+<li>leader 收到数据，所有 follower 都开始同步数据，但有一个 follower，因为某种故障，迟迟不能与 leader 进行同步，那 leader 就要一直等下去，直到它完成同步，才能发送 ack。这个问题怎么解决呢？
+<ul>
+<li>Leader 维护了一个动态的 <strong>in-sync replicaset (ISR)</strong>，意为和 leader 保持同步的 <strong>follower 集合</strong>。当 ISR 中的 follower 完成数据的同步之后，leader 就会给 follower 发送 ack。如果 follower长时间未向leader同步数据，<strong>则该 follower 将被踢出ISR</strong> ， 该时间阈值由<strong>replica.lag.time.max.ms</strong>参数设定。Leader 发生故障之后，就会从 ISR 中选举新的 leader。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2%EF%BC%89%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E7%BB%86%E8%8A%82" id="2）故障处理细节">2）故障处理细节</h4>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207151352.png" alt="20201207151352" /></p>
+<ul>
+<li>LEO：指的是每个副本最大的 offset；</li>
+<li>HW：指的是消费者能见到的最大的 offset，ISR 队列中最小的 LEO。</li>
+</ul>
+<ol>
+<li>
+<p>follower故障<br />
+1.1. follower发生故障后会被临时踢出ISR，待该follower恢复后，follower会读取本地磁盘记录的上次的 HW，<strong>并将log文件高于HW的部分截取掉</strong>，然后从 HW 开始向 leader 进行同步。<br />
+1.2. 等该follower的LEO大于等于该Partition的HW，即follower追上leader之后，就可以重新加入ISR了。</p>
+</li>
+<li>
+<p>leader故障<br />
+2.1. leader发生故障之后，会从ISR中选出一个新的leader，之后，为保证多个副本之间的数据一致性，其余的follower会先将各自的log文件高于HW的部分截掉，然后从新的leader同步数据。</p>
+<ul>
+<li>2.1.1. 怎么选出新的leader？</li>
+</ul>
+</li>
+</ol>
+<p>注意：这只能保证<strong>副本之间的数据一致性</strong>，并不能保证数据不丢失或者不重复。</p>
+<h2 id="%E7%94%9F%E4%BA%A7%E8%80%85" id="生产者">生产者</h2>
+<h2 id="%E6%B6%88%E8%B4%B9%E8%80%85" id="消费者">消费者</h2>
+<h2 id="between-producter-and-broker" id="Between-producter-and-broker">Between producter and broker</h2>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BF%9D%E8%AF%81" id="数据可靠性保证">数据可靠性保证</h3>
+<blockquote>
+<p>为保证 producer 发送的数据，能可靠的发送到指定的 topic，topic 的每个 partition 收到producer 发送的数据后，都需要向 producer 发送 ack（acknowledgement 确认收到），如果producer 收到 ack，就会进行下一轮的发送，否则重新发送数据。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207144817.png" alt="20201207144817" /></p>
+<h4 id="3%EF%BC%89ack%E5%BA%94%E7%AD%94%E6%9C%BA%E5%88%B6--%3E%E5%AF%B9producer%E8%80%8C%E8%A8%80" id="3）ack应答机制-对producer而言">3）ack应答机制--&gt;对producer而言</h4>
+<ul>
+<li>
+<p>why: 对于某些不太重要的数据，对数据的可靠性要求不是很高，能够容忍数据的少量丢失，所以没必要等 ISR 中的 follower 全部接收成功。</p>
+</li>
+<li>
+<p>how: 所以 Kafka 为用户提供了三种可靠性级别，用户根据对可靠性和延迟的要求进行权衡，选择以下的配置。</p>
+<ul>
+<li>acks 参数配置：
+<ul>
+<li>0：producer不等待broker的ack，这一操作提供了一个最低的延迟，broker一接收到还没有写入磁盘就已经返回，当broker故障时有可能丢失数据；</li>
+<li>1：producer 等待 broker 的 ack，partition 的 leader 落盘成功后返回 ack，
+<ul>
+<li>如果在 follower同步成功之前 leader 故障，那么将会丢失数据；
+<ul>
+<li><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207150147.png" alt="ack==1" /></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>-1（all）：producer 等待 broker 的 ack，partition 的 leader 和 follower 全部落盘成功后才返回 ack。(~<sub>**如果follower的个数等于0个，那么退化成第二种情况，也可能出现丢数据的情况**</sub>~,应该leader也已经把数据保存到了磁盘，然后服务不可用？)
+<ul>
+<li>但是如果在 follower 同步完成后，broker 发送 ack 之前，leader 发生故障，那么会造成数据重复。
+<ul>
+<li><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207150327.png" alt="ack==-1" /></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>// TODO</p>
+<p>什么情况下会发生kafka丢数据的情况？</p>
+<h3 id="exactly-once%E8%AF%AD%E4%B9%89" id="Exactly-Once语义">Exactly Once语义</h3>
+<ul>
+<li>
+<p>At Least Once</p>
+<ul>
+<li>将服务器的 ACK 级别设置为-1，可以保证 Producer 到 Server 之间不会丢失数据，即 AtLeast Once语义。</li>
+<li>At Least Once 可以保证数据不丢失，但是不能保证数据<strong>不重复</strong>；</li>
+</ul>
+</li>
+<li>
+<p>At Most Once</p>
+<ul>
+<li>相对的，将服务器 ACK 级别设置为 0，可以保证生产者每条消息只会被发送一次，即 At Most Once 语义。</li>
+<li>可以保证数据不重复，但是不能保证数据不丢失。</li>
+</ul>
+</li>
+<li>
+<p>Exactly Once 语义</p>
+<ul>
+<li>
+<p>what:</p>
+<ul>
+<li><code>At Least Once + 幂等性 = Exactly Once</code>
+<ul>
+<li>幂等性:
+<ul>
+<li>所谓的幂等性就是指 Producer 不论向 Server 发送多少次重复数据，Server 端都只会持久化一条。(幂等性结合 At Least Once 语义，就构成了 Kafka 的 Exactly Once 语义)。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>why:</p>
+<ul>
+<li>下游数据消费者要求数据<strong>既不重复也不丢失</strong>，即 Exactly Once 语义。比如说交易数据</li>
+</ul>
+</li>
+<li>
+<p>how:</p>
+<ul>
+<li>要启用幂等性，只需要将 Producer 的参数中<code>enable.idompotence</code>设置为<code>true</code>即可。</li>
+<li>Kafka的幂等性实现其实就是将原来下游需要做的去重放在了数据上游。</li>
+<li>开启幂等性的 Producer 在初始化的时候会被分配一个 PID，发往同一 Partition 的消息会附带 Sequence Number。而Broker 端会对<code>&lt;PID, Partition, SeqNumber&gt;</code>做缓存，当具有相同主键的消息提交时，Broker 只会持久化一条。但是 PID 重启就会变化，同时不同的 Partition 也具有不同主键，所以幂等性无法保证跨分区跨会话的 Exactly Once。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="between-broker-and-comsume-group" id="Between-broker-and-comsume-group">Between broker and comsume group</h2>
+<figure class="highlight plain"><figcaption><span>group) <---> partition(every topic)```</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### 消费组的分配策略</span><br><span class="line"></span><br><span class="line">一个 consumer group 中有多个 consumer，一个 topic 有多个 partition，所以必然会涉及</span><br><span class="line">到 partition 的分配问题，即确定那个 partition 由哪个 consumer 来消费。</span><br><span class="line"></span><br><span class="line">- Kafka 有两种分配策略:</span><br><span class="line">  - rangeAssignor</span><br><span class="line">  - roundRobinAssinor</span><br><span class="line">  - stickAssignor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">当消费者是以消费组的呢？</span><br><span class="line">&gt; 上面的都是讨论的一个消费组内的消费者，</span><br><span class="line">&gt;&gt; 假想：如果是一个消费组内只有一个消费者，那么只要这个消费者订阅某个topic，那么必然能接收到topic消息。</span><br><span class="line">&gt;&gt; 所以上面讨论的都是组内的消费者！！！</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### range </span><br><span class="line"></span><br><span class="line">- 以每个topic为基础，对每个topic</span><br><span class="line">  - ① 假设&#96;&#96;&#96;n &#x3D; 这个topic的分区数 &#x2F; 订阅此topic消费者数量(在某个消费组内讨论)&#96;&#96;&#96;，</span><br><span class="line">  - ② &#96;&#96;&#96;m&#x3D;分区数%消费者数量</span><br></pre></td></tr></table></figure>
+<ul>
+<li>③ 那么前<strong>m个消费者</strong>每个分配n+1个分区，后面的（消费者数量-m）个消费者每个分配n个分区。</li>
+</ul>
+<p>https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/RangeAssignor.html</p>
+<p>The range assignor works on a per-topic basis. For each topic, we lay out the available partitions in numeric order and the consumers in lexicographic order. We then divide the number of partitions by the total number of consumers to determine the number of partitions to assign to each consumer. If it does not evenly divide, then the first few consumers will have one extra partition.</p>
+<p>For example, suppose there are two consumers C0 and C1, two topics t0 and t1, and each topic has 3 partitions, resulting in partitions t0p0, t0p1, t0p2, t1p0, t1p1, and t1p2.</p>
+<p>The assignment will be:</p>
+<p>C0: [t0p0, t0p1, t1p0, t1p1]<br />
+C1: [t0p2, t1p2]</p>
+<p>范围分配器以每个主题为基础工作。对于每个主题，我们按数字顺序列出可用的分区，按词法顺序列出消费者。然后，我们将分区的数量除以消费者的总数，以确定分配给每个消费者的分区数量。如果没有平均分配，那么前几个消费者就会多出一个分区。</p>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207185010.png" alt="20201207185010" /></p>
+<h4 id="round-robin" id="round-robin">round robin</h4>
+<blockquote>
+<p>请愿的时候，要杀名字靠前的前二到三个人，所以想轮盘写名字，同罪，中间是情愿书。</p>
+</blockquote>
+<ul>
+<li>基于<strong>某个消费组内所有消费者订阅的topic汇总去重后</strong>, topics所有的partitions和<strong>某个消费组内的所有消费者</strong>，把消费者排成轮盘，然后所有partitions进行分配。
+<ul>
+<li>当某个消费者没有订阅某个topic，则跳过。</li>
+</ul>
+</li>
+</ul>
+<p>https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/RoundRobinAssignor.html</p>
+<p>The round robin assignor lays out all the available partitions and all the available consumers. It then proceeds to do a round robin assignment from partition to consumer. If the subscriptions of all consumer instances are identical, then the partitions will be uniformly distributed. (i.e., the partition ownership counts will be within a delta of exactly one across all consumers.)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">For example, suppose there are two consumers C0 and C1, two topics t0 and t1, and each topic has 3 partitions, resulting in partitions t0p0, t0p1, t0p2, t1p0, t1p1, and t1p2.</span><br><span class="line"></span><br><span class="line">The assignment will be:</span><br><span class="line"></span><br><span class="line">C0: [t0p0, t0p2, t1p1]</span><br><span class="line">C1: [t0p1, t1p0, t1p2]</span><br></pre></td></tr></table></figure>
+<p>When subscriptions differ across consumer instances, the assignment process still considers each consumer instance in round robin fashion but skips over an instance if it is not subscribed to the topic. Unlike the case when subscriptions are identical, this can result in imbalanced assignments.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">For example, we have three consumers C0, C1, C2, and three topics t0, t1, t2, with 1, 2, and 3 partitions, respectively. Therefore, the partitions are t0p0, t1p0, t1p1, t2p0, t2p1, t2p2.</span><br><span class="line">C0 is subscribed to t0;</span><br><span class="line">C1 is subscribed to t0,t1;</span><br><span class="line">C2 is subscribed to t0, t1, t2.</span><br><span class="line"></span><br><span class="line">That assignment will be:</span><br><span class="line"></span><br><span class="line">C0: [t0p0]</span><br><span class="line">C1: [t1p0]</span><br><span class="line">C2: [t1p1, t2p0, t2p1, t2p2]</span><br></pre></td></tr></table></figure>
+<h4 id="sticky" id="sticky">sticky</h4>
+<ul>
+<li>对每个消费者保证尽可能平衡；</li>
+<li>当重新分配发生，尽可能保持原有的关系不变。</li>
+</ul>
+<p>https://kafka.apache.org/23/javadoc/org/apache/kafka/clients/consumer/StickyAssignor.html</p>
+<ul>
+<li>The sticky assignor serves two purposes.
+<ul>
+<li>
+<p>First, it guarantees an assignment that is as balanced as possible, meaning either:</p>
+<ul>
+<li>the numbers of topic partitions assigned to consumers differ by at most one; or</li>
+<li>each consumer that has 2+ fewer topic partitions than some other consumer cannot get any of those topic partitions transferred to it.</li>
+</ul>
+</li>
+<li>
+<p>Second, it preserved as many existing assignment as possible when a reassignment occurs. This helps in saving some of the overhead processing when topic partitions move from one consumer to another.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Starting fresh it would work by distributing the partitions over consumers as evenly as possible. Even though this may sound similar to how round robin assignor works, the second example below shows that it is not. During a reassignment it would perform the reassignment in such a way that in the new assignment</p>
+<ul>
+<li>topic partitions are still distributed as evenly as possible, and</li>
+<li>topic partitions stay with their previously assigned consumers as much as possible.</li>
+</ul>
+<p>Of course, the first goal above takes precedence over the second one.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Example 1. Suppose there are three consumers C0, C1, C2, four topics t0, t1, t2, t3, and each topic has 2 partitions, resulting in partitions t0p0, t0p1, t1p0, t1p1, t2p0, t2p1, t3p0, t3p1. Each consumer is subscribed to all three topics. The assignment with both sticky and round robin assignors will be:</span><br><span class="line"></span><br><span class="line">    C0: [t0p0, t1p1, t3p0]</span><br><span class="line">    C1: [t0p1, t2p0, t3p1]</span><br><span class="line">    C2: [t1p0, t2p1]</span><br><span class="line"></span><br><span class="line">Now, let's assume C1 is removed and a reassignment is about to happen. The round robin assignor would produce:</span><br><span class="line"></span><br><span class="line">    C0: [t0p0, t1p0, t2p0, t3p0]</span><br><span class="line">    C2: [t0p1, t1p1, t2p1, t3p1]</span><br><span class="line"></span><br><span class="line">while the sticky assignor would result in:</span><br><span class="line"></span><br><span class="line">    C0 [t0p0, t1p1, t3p0, t2p0]</span><br><span class="line">    C2 [t1p0, t2p1, t0p1, t3p1]</span><br><span class="line"></span><br><span class="line">preserving all the previous assignments (unlike the round robin assignor).</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Example 2. There are three consumers C0, C1, C2, and three topics t0, t1, t2, with 1, 2, and 3 partitions respectively. </span><br><span class="line">Therefore, the partitions are t0p0, t1p0, t1p1, t2p0, t2p1, t2p2. </span><br><span class="line">C0 is subscribed to t0; </span><br><span class="line">C1 is subscribed to t0, t1; and </span><br><span class="line">C2 is subscribed to t0, t1, t2. </span><br><span class="line">The round robin assignor would come up with the following assignment:</span><br><span class="line">    C0 [t0p0]</span><br><span class="line">    C1 [t1p0]</span><br><span class="line">    C2 [t1p1, t2p0, t2p1, t2p2]</span><br><span class="line"></span><br><span class="line">which is not as balanced as the assignment suggested by sticky assignor:</span><br><span class="line">    C0 [t0p0]</span><br><span class="line">    C1 [t1p0, t1p1]</span><br><span class="line">    C2 [t2p0, t2p1, t2p2]</span><br><span class="line"></span><br><span class="line">Now, if consumer C0 is removed, these two assignors would produce the following assignments.</span><br><span class="line"></span><br><span class="line">Round Robin (preserves 3 partition assignments):</span><br><span class="line">    C1 [t0p0, t1p1]</span><br><span class="line">    C2 [t1p0, t2p0, t2p1, t2p2]</span><br><span class="line"></span><br><span class="line">Sticky (preserves 5 partition assignments):</span><br><span class="line">    C1 [t1p0, t1p1, t0p0]</span><br><span class="line">    C2 [t2p0, t2p1, t2p2]</span><br></pre></td></tr></table></figure>
+<h4 id="offset-%E7%9A%84%E7%BB%B4%E6%8A%A4" id="offset-的维护">offset 的维护</h4>
+<p>由于 consumer 在消费过程中可能会出现断电宕机等故障，consumer 恢复后，需要从故<br />
+障前的位置的继续消费，所以 consumer 需要实时记录自己消费到了哪个 offset，以便故障恢<br />
+复后继续消费。</p>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201207201617.png" alt="20201207201617" /></p>
+<p>Kafka 0.9 版本之前，consumer 默认将 offset 保存在 Zookeeper 中，从 0.9 版本开始，<br />
+consumer 默认将 offset 保存在 Kafka 一个内置的 topic 中，该 topic 为__consumer_offsets。</p>
+<h6 id="1%EF%BC%89%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6consumer.properties" id="1）修改配置文件consumer-properties">1）修改配置文件consumer.properties</h6>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">exclude.internal.topics</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h5 id="2%EF%BC%89%E8%AF%BB%E5%8F%96-offset" id="2）读取-offset">2）读取 offset</h5>
+<ul>
+<li>0.11.0.0 之前版本:</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --topic __consumer_offsets --</span><br><span class="line">zookeeper hadoop102:2181 --formatter </span><br><span class="line">"kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter" </span><br><span class="line">--consumer.config config/consumer.properties --from-beginning</span><br></pre></td></tr></table></figure>
+<ul>
+<li>0.11.0.0 之后版本(含):</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --topic __consumer_offsets --</span><br><span class="line">zookeeper hadoop102:2181 --formatter </span><br><span class="line">"kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageForm</span><br><span class="line">atter" --consumer.config config/consumer.properties --frombeginning</span><br></pre></td></tr></table></figure>
+</div><div class="tags"><a href="/tags/kafka/"><i class="fa fa-tag"></i>kafka</a><a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><i class="fa fa-tag"></i>消息队列</a></div><div class="post-nav"><a class="pre" href="/2020/10/20/%E8%8C%83%E5%BC%8F/%E8%8C%83%E5%BC%8F/">三种编程范式</a><a class="next" href="/2020/02/25/tool/gitlab/conclusion_gitlab_ci_cd/">conclusion_gitlab_ci_cd</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/kubernets/">kubernets</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/sql/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/postgres/">postgres</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/tool/">tool</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/">个人成长</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E7%B1%BB/">工具类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/">服务器编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A8%A1%E5%BC%8F/">模式</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%8C%83%E5%BC%8F/">范式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/tool/" style="font-size: 15px;">tool</a> <a href="/tags/kubernets/" style="font-size: 15px;">kubernets</a> <a href="/tags/Http/" style="font-size: 15px;">Http</a> <a href="/tags/postgres/" style="font-size: 15px;">postgres</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" style="font-size: 15px;">个人成长</a> <a href="/tags/work/" style="font-size: 15px;">work</a> <a href="/tags/golang/" style="font-size: 15px;">golang</a> <a href="/tags/%E6%A8%A1%E5%BC%8F/" style="font-size: 15px;">模式</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">服务器编程</a> <a href="/tags/kafka/" style="font-size: 15px;">kafka</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 15px;">消息队列</a> <a href="/tags/%E8%8C%83%E5%BC%8F/" style="font-size: 15px;">范式</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/gitlab/" style="font-size: 15px;">gitlab</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/08/16/work/aliyun_transcode_video/">利用阿里云进行转码</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/24/%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/">访问者模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/20/%E8%8C%83%E5%BC%8F/%E8%8C%83%E5%BC%8F/">三种编程范式</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/24/tool/kafka/">kafka总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/25/tool/gitlab/conclusion_gitlab_ci_cd/">conclusion_gitlab_ci_cd</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/tool/postgre/">postgres高级总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/24/tool/MySQL/">mysql高级总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/22/tool/gitlab/the_process_structure_ci_cd_base_on_gitlab/">the_process_structure_ci_cd_base_on_gitlab</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/20/kubernets/telepresence/">telepresence一些使用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/24/tool/cros/">大话跨域</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/." rel="nofollow">xczhao.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.1" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.1" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.1"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.1"></script></div></body></html>
