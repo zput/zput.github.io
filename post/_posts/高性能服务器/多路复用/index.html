@@ -1,0 +1,558 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>多路复用一点理解 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="多路复用：what,why,how"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.101.0 with theme even"><link rel=canonical href=http://localhost:1313/post/_posts/%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="多路复用一点理解"><meta property="og:description" content="多路复用：what,why,how"><meta property="og:type" content="article"><meta property="og:url" content="http://localhost:1313/post/_posts/%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/"><meta property="article:section" content="post"><meta property="article:published_time" content="2018-05-20T16:33:00+00:00"><meta property="article:modified_time" content="2018-05-20T16:33:00+00:00"><meta itemprop=name content="多路复用一点理解"><meta itemprop=description content="多路复用：what,why,how"><meta itemprop=datePublished content="2018-05-20T16:33:00+00:00"><meta itemprop=dateModified content="2018-05-20T16:33:00+00:00"><meta itemprop=wordCount content="2427"><meta itemprop=keywords content="服务器编程,"><meta name=twitter:card content="summary"><meta name=twitter:title content="多路复用一点理解"><meta name=twitter:description content="多路复用：what,why,how"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a><a href=/categories/><li class=mobile-menu-item>技术类别</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li><li class=menu-item><a class=menu-item-link href=/categories/>技术类别</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>多路复用一点理解</h1><div class=post-meta><span class=post-time>2018-05-20</span><div class=post-category><a href=/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/>服务器编程</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><ul><li><a href=#why-为什么需要多路复用>why, 为什么需要多路复用?</a></li><li><a href=#what多路复用内部的原理>what,多路复用内部的原理</a></li><li><a href=#how如何使用多路复用>how,如何使用多路复用</a></li></ul></li><li><a href=#附录>附录</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h3 id=why-为什么需要多路复用>why, 为什么需要多路复用?</h3><p>为什么要多路复用？，为什么引出多路复用。
+对socket的I/O操作&ndash;》read，从I/O中得到数据， write，写数据到I/O中。
+当没有多路复用，</p><ul><li>我们操作<ul><li>一个阻塞的socket，一个线程/进程只能操作一个，如果想要操作多个socket，那么就需要多个线程，</li><li>一个非阻塞socket，那么就需要用户代码一直轮训，消耗CPU。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=k>for</span> <span class=nx>i</span><span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span><span class=p>&lt;</span><span class=nb>len</span><span class=p>(</span><span class=nx>sockets</span><span class=p>);</span><span class=nx>i</span><span class=o>++</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>read</span><span class=p>(</span><span class=nx>sockets</span><span class=p>[</span><span class=nx>i</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>所以我们需要多路复用就是为了更加高效的操作多个非阻塞的流(socket)。</p><h3 id=what多路复用内部的原理>what,多路复用内部的原理</h3><ul><li><p>进程的调度。 ready，running，</p></li><li><p>硬件中断。</p></li><li><p>流的读写缓冲区，wake queue(唤醒队列）</p></li></ul><p>当一个读或者写一个阻塞流的时候，如果没有数据可读，或者空间可写，那么这个线程或进程就会被CPU调度到非运行状态，且把这个线程/进程的标识放入这个流的wake queue里面，当这个流可读，或者空间可写的时候，把这个线程/进程标识为ready状态，放入CPU调度队列</p><h5 id=select>select</h5><p>很容易就想到，当调用select的时候可以，把需要操作的流和对应事件从用户空间，传入内核空间，</p><ul><li><p>当需要操作的流有事件发生就把对应的流标识，返回用户空间后，进行遍历</p></li><li><p>当需要操作的流都没有发生的时候，像上面的情况一样，把线程/进程的标识挂在每一个流的wake queue里面，当某一个/多个流I/O事件发生，把这个线程/进程的标识从每一个流中wake queue里面删除。</p></li><li><p>步骤：</p><ul><li>首先向内核传递需要操作的所有流的文件描述符和对应的事件</li><li>阻塞到事件发生，返回后，需要遍历所有的流，查看那个流有事件发生。</li></ul></li></ul><h5 id=epollkqueue>epoll/kqueue</h5><p>去掉每次都要传递流的文件描述符和对应事件给内核的步骤，epoll/kqueue独立出来一个系统函数，来管理需要操作流文件描述符，和对应的事件。（epoll_ctl(), kevent()）
+当阻塞的时候，让流的wake queue关联的是epoll/kqueue的文件描述符，而不是线程/进程。
+当流有事件发生，通知到epoll/kqueue的结构体上去。</p><p>使用epoll/kqueue做中介，当epoll_wait()，直接得出当前关注的流中是否有事件发生</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201028185551.png alt=20201028185551></p><p>int kqueue(void);
+int kevent(int kq,
+const struct kevent *changelist, int nchanges,
+struct kevent *eventlist, int nevents,
+const struct timespec *timeout);</p><p>从这个系统函数可以看出，epoll和kqueue应该没有文件描述符限制。</p><h3 id=how如何使用多路复用>how,如何使用多路复用</h3><p>当同时存在changelist/nchange,与eventlist/nevent,kqueue总是先判断nchange是否大于0，然后先应用changelist,然后再读已经pending event.</p><ul><li>All changes contained in the changelist are applied before any pending events are read from the queue.</li></ul><p><a href=http://bxr.su/OpenBSD/sys/kern/kern_event.c#kqueue_scan>kqueue source code</a>
+<a href=https://en.wikipedia.org/wiki/Kqueue>wiki</a>
+<img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201028161708.png alt=20201028161708></p><p>先来一个当changelist改变的时候，eventlist返回中会不会有它</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/event.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;   /* for strerror() */</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=cm>/* function prototypes */</span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>diep</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>kevent</span> <span class=n>change</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span>    <span class=cm>/* event we want to monitor */</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>kevent</span> <span class=n>event</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span>     <span class=cm>/* event that was triggered */</span>
+</span></span><span class=line><span class=cl>    <span class=n>pid_t</span> <span class=n>pid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>kq</span><span class=p>,</span> <span class=n>nev</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>kevent</span> <span class=o>*</span><span class=n>changelist</span> <span class=o>=</span> <span class=n>change</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>nchanges</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* create a new kernel event queue */</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>((</span><span class=n>kq</span> <span class=o>=</span> <span class=n>kqueue</span><span class=p>())</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>diep</span><span class=p>(</span><span class=s>&#34;kqueue()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* initalise kevent structure */</span>
+</span></span><span class=line><span class=cl>    <span class=n>EV_SET</span><span class=p>(</span><span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=mi>1</span><span class=p>,</span> <span class=n>EVFILT_TIMER</span><span class=p>,</span> <span class=n>EV_ADD</span> <span class=o>|</span> <span class=n>EV_ENABLE</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>6000</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>EV_SET</span><span class=p>(</span><span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=mi>2</span><span class=p>,</span> <span class=n>EVFILT_TIMER</span><span class=p>,</span> <span class=n>EV_ADD</span> <span class=o>|</span> <span class=n>EV_ENABLE</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>3000</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* loop forever */</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>count</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(;;)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>nev</span> <span class=o>=</span> <span class=n>kevent</span><span class=p>(</span><span class=n>kq</span><span class=p>,</span> <span class=n>changelist</span><span class=p>,</span> <span class=n>nchanges</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>event</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=mi>3</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>nev</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>diep</span><span class=p>(</span><span class=s>&#34;kevent()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>nev</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>nev</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\n\n</span><span class=s>------------begin--number[%d]---------------------</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>nev</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>EV_ERROR</span><span class=p>)</span> <span class=p>{</span>   <span class=cm>/* report any error */</span>
+</span></span><span class=line><span class=cl>                <span class=n>fprintf</span><span class=p>(</span><span class=n>stderr</span><span class=p>,</span> <span class=s>&#34;EV_ERROR: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>strerror</span><span class=p>(</span><span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>data</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>                <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>((</span><span class=n>pid</span> <span class=o>=</span> <span class=n>fork</span><span class=p>())</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>         <span class=cm>/* fork error */</span>
+</span></span><span class=line><span class=cl>                <span class=n>diep</span><span class=p>(</span><span class=s>&#34;fork()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>pid</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span>              <span class=cm>/* child */</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\t</span><span class=s>isChild pid[%d]</span><span class=se>\r\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>pid</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=n>execlp</span><span class=p>(</span><span class=s>&#34;date&#34;</span><span class=p>,</span> <span class=s>&#34;date&#34;</span><span class=p>,</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mi>0</span><span class=p>)</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=n>diep</span><span class=p>(</span><span class=s>&#34;execlp()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span><span class=k>else</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>                 <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\t</span><span class=s>isFather pid[%d];event.ident[*%d*];count[%d];----;nchanges[%d];changelist[%p] </span><span class=se>\r\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>pid</span><span class=p>,</span> <span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>ident</span><span class=p>,</span> <span class=n>count</span><span class=p>,</span> <span class=n>nchanges</span><span class=p>,</span> <span class=n>changelist</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                 <span class=k>if</span><span class=p>(</span><span class=n>count</span><span class=o>==</span><span class=mi>2</span><span class=p>){</span>       <span class=c1>// --------------here，当执行了0，1，2三次后，改变changelist,增加一个新的定时器，
+</span></span></span><span class=line><span class=cl><span class=c1></span>                     <span class=n>nchanges</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                     <span class=n>changelist</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>                 <span class=p>}</span>
+</span></span><span class=line><span class=cl>                 <span class=n>count</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>             <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>close</span><span class=p>(</span><span class=n>kq</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>EXIT_SUCCESS</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>diep</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>perror</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//下面是输出
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>Users</span><span class=o>/</span><span class=mi>9</span><span class=n>dwit</span><span class=o>/</span><span class=n>codeing</span><span class=o>/</span><span class=n>untitled1</span><span class=o>/</span><span class=n>cmake</span><span class=o>-</span><span class=n>build</span><span class=o>-</span><span class=n>debug</span><span class=o>/</span><span class=n>untitled1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>24203</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>0</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee67f67e0</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>15</span><span class=o>:</span><span class=mi>57</span><span class=o>:</span><span class=mi>36</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>24204</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee67f67e0</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>15</span><span class=o>:</span><span class=mi>57</span><span class=o>:</span><span class=mi>42</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>24205</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>2</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee67f67e0</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>15</span><span class=o>:</span><span class=mi>57</span><span class=o>:</span><span class=mi>48</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>24206</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>2</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee67f6800</span><span class=p>]</span> <span class=c1>//------------here,这里出现了，它是立即生效的
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>15</span><span class=o>:</span><span class=mi>57</span><span class=o>:</span><span class=mi>51</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>24207</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>4</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee67f6800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>15</span><span class=o>:</span><span class=mi>57</span><span class=o>:</span><span class=mi>54</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>24208</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>2</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>5</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee67f6800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>15</span><span class=o>:</span><span class=mi>57</span><span class=o>:</span><span class=mi>57</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>这里要特别注意，如果changelist一直没改变，它会一直reset，可能会导致它永远不会触发
+只改动一行，上面的就一直不会出现了。 <code>EV_SET(&change[1], 2, EVFILT_TIMER, EV_ADD | EV_ENABLE, 0, 3000, 0);</code> &mdash;> <code>EV_SET(&change[1], 2, EVFILT_TIMER, EV_ADD | EV_ENABLE, 0, 7000, 0);</code></p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=o>/</span><span class=n>Users</span><span class=o>/</span><span class=mi>9</span><span class=n>dwit</span><span class=o>/</span><span class=n>codeing</span><span class=o>/</span><span class=n>untitled1</span><span class=o>/</span><span class=n>cmake</span><span class=o>-</span><span class=n>build</span><span class=o>-</span><span class=n>debug</span><span class=o>/</span><span class=n>untitled1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25159</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>0</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee11177e0</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mo>01</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25160</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee11177e0</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mo>07</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25161</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>2</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee11177e0</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mi>13</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25163</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee1117800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mi>19</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25164</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>4</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee1117800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mi>25</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25167</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>5</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee1117800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mi>31</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25169</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>6</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee1117800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mi>37</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>------------</span><span class=n>begin</span><span class=o>--</span><span class=n>number</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span><span class=o>---------------------</span>
+</span></span><span class=line><span class=cl>	<span class=n>isFather</span> <span class=n>pid</span><span class=p>[</span><span class=mi>25170</span><span class=p>];</span><span class=n>event</span><span class=p>.</span><span class=n>ident</span><span class=p>[</span><span class=o>*</span><span class=mi>1</span><span class=o>*</span><span class=p>];</span><span class=n>count</span><span class=p>[</span><span class=mi>7</span><span class=p>];</span><span class=o>----</span><span class=p>;</span><span class=n>nchanges</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span><span class=n>changelist</span><span class=p>[</span><span class=mh>0x7ffee1117800</span><span class=p>]</span> 
+</span></span><span class=line><span class=cl>	<span class=n>isChild</span> <span class=n>pid</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Wed</span> <span class=n>Oct</span> <span class=mi>28</span> <span class=mi>16</span><span class=o>:</span><span class=mi>12</span><span class=o>:</span><span class=mi>43</span> <span class=n>CST</span> <span class=mi>2020</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>Process</span> <span class=n>finished</span> <span class=n>with</span> <span class=n>exit</span> <span class=n>code</span> <span class=mi>15</span>
+</span></span></code></pre></td></tr></table></div></div><p>所以changelist可以和eventlist混合用，但是changlist使用完后，一定要把上次的改变移除，</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span><span class=lnt>94
+</span><span class=lnt>95
+</span><span class=lnt>96
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/event.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;sys/time.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;   /* for strerror() */</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=cm>/* function prototypes */</span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>diep</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>kevent</span> <span class=n>change</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span>    <span class=cm>/* event we want to monitor */</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>kevent</span> <span class=n>event</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span>     <span class=cm>/* event that was triggered */</span>
+</span></span><span class=line><span class=cl>    <span class=n>pid_t</span> <span class=n>pid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>kq</span><span class=p>,</span> <span class=n>nev</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>kevent</span> <span class=o>*</span><span class=n>changelist</span> <span class=o>=</span> <span class=n>change</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>nchanges</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* create a new kernel event queue */</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>((</span><span class=n>kq</span> <span class=o>=</span> <span class=n>kqueue</span><span class=p>())</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>diep</span><span class=p>(</span><span class=s>&#34;kqueue()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* initalise kevent structure */</span>
+</span></span><span class=line><span class=cl>    <span class=n>EV_SET</span><span class=p>(</span><span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=mi>1</span><span class=p>,</span> <span class=n>EVFILT_TIMER</span><span class=p>,</span> <span class=n>EV_ADD</span> <span class=o>|</span> <span class=n>EV_ENABLE</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>2000</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>EV_SET</span><span class=p>(</span><span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=mi>2</span><span class=p>,</span> <span class=n>EVFILT_TIMER</span><span class=p>,</span> <span class=n>EV_ADD</span> <span class=o>|</span> <span class=n>EV_ENABLE</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>3000</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>EV_SET</span><span class=p>(</span><span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>2</span><span class=p>],</span> <span class=mi>3</span><span class=p>,</span> <span class=n>EVFILT_TIMER</span><span class=p>,</span> <span class=n>EV_ADD</span> <span class=o>|</span> <span class=n>EV_ENABLE</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>4000</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* loop forever */</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>count</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(;;)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>nev</span> <span class=o>=</span> <span class=n>kevent</span><span class=p>(</span><span class=n>kq</span><span class=p>,</span> <span class=n>changelist</span><span class=p>,</span> <span class=n>nchanges</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>event</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=mi>3</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>nev</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>diep</span><span class=p>(</span><span class=s>&#34;kevent()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>nev</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>nev</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>flags</span> <span class=o>&amp;</span> <span class=n>EV_ERROR</span><span class=p>)</span> <span class=p>{</span>   <span class=cm>/* report any error */</span>
+</span></span><span class=line><span class=cl>                <span class=n>fprintf</span><span class=p>(</span><span class=n>stderr</span><span class=p>,</span> <span class=s>&#34;EV_ERROR: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>strerror</span><span class=p>(</span><span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>data</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>                <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>((</span><span class=n>pid</span> <span class=o>=</span> <span class=n>fork</span><span class=p>())</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>         <span class=cm>/* fork error */</span>
+</span></span><span class=line><span class=cl>                <span class=n>diep</span><span class=p>(</span><span class=s>&#34;fork()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>pid</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span>              <span class=cm>/* child */</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\t</span><span class=s>isChild pid[%d]</span><span class=se>\r\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>pid</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=n>execlp</span><span class=p>(</span><span class=s>&#34;date&#34;</span><span class=p>,</span> <span class=s>&#34;date&#34;</span><span class=p>,</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mi>0</span><span class=p>)</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=n>diep</span><span class=p>(</span><span class=s>&#34;execlp()&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=c1>//nchanges = 0;
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=p>}</span><span class=k>else</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>                 <span class=n>printf</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\t</span><span class=s>isFather pid[%d];event.ident[%d];count[%d];----;nchanges[%d];changelist[%p] </span><span class=se>\r\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>pid</span><span class=p>,</span> <span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>ident</span><span class=p>,</span> <span class=n>count</span><span class=p>,</span> <span class=n>nchanges</span><span class=p>,</span> <span class=n>changelist</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                 <span class=k>if</span><span class=p>(</span><span class=n>count</span><span class=o>==</span><span class=mi>3</span> <span class=o>&amp;&amp;</span> <span class=n>event</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>ident</span> <span class=o>==</span><span class=mi>1</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>                     <span class=n>nchanges</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                     <span class=n>changelist</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>                     <span class=c1>//changelist = NULL;
+</span></span></span><span class=line><span class=cl><span class=c1></span>                     <span class=c1>//changelist = &amp;change[0];
+</span></span></span><span class=line><span class=cl><span class=c1></span>                     <span class=c1>//EV_SET(&amp;change[0], 1, EVFILT_TIMER, EV_DISABLE, 0, 3000, 0);
+</span></span></span><span class=line><span class=cl><span class=c1></span>                 <span class=p>}</span><span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>count</span><span class=o>==</span><span class=mi>5</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>                     <span class=n>nchanges</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                     <span class=n>changelist</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>change</span><span class=p>[</span><span class=mi>2</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>                 <span class=p>}</span><span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>count</span><span class=o>==</span><span class=mi>10</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                     <span class=n>nchanges</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                     <span class=n>changelist</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                 <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cm>/*               //else if(count == 6){
+</span></span></span><span class=line><span class=cl><span class=cm>                 //else if(count == 0 || count == 5){
+</span></span></span><span class=line><span class=cl><span class=cm>                 //else{
+</span></span></span><span class=line><span class=cl><span class=cm>                     nchanges = 0;
+</span></span></span><span class=line><span class=cl><span class=cm>                     changelist = NULL;
+</span></span></span><span class=line><span class=cl><span class=cm>                 }else if(count == 7){
+</span></span></span><span class=line><span class=cl><span class=cm>                        //nchanges = 1;
+</span></span></span><span class=line><span class=cl><span class=cm>                        //changelist = &amp;change[1];
+</span></span></span><span class=line><span class=cl><span class=cm>                     nchanges = 1;
+</span></span></span><span class=line><span class=cl><span class=cm>                     changelist = &amp;change[0];
+</span></span></span><span class=line><span class=cl><span class=cm>                 }*/</span>
+</span></span><span class=line><span class=cl>                 <span class=n>count</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>             <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>close</span><span class=p>(</span><span class=n>kq</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>EXIT_SUCCESS</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>diep</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span> <span class=o>*</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>perror</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=附录>附录</h2><ul><li><p>流的概念，</p><ul><li>一个流可以是文件，socket，pipe等等可以进行I/O操作的内核对象。不管是文件，还是套接字，还是管道，我们都可以把他们看作流。</li></ul></li><li><p>I/O的操作，</p><ul><li>通过read，我们可以从流中读入数据；通过write，我们可以往流写入数据。</li></ul></li></ul><p><a href=https://www.ibm.com/developerworks/cn/aix/library/1105_huangrg_kqueue/>kqueue APIs</a></p><p><a href=https://zhuanlan.zhihu.com/p/63179839>epoll</a></p><p><a href=https://blog.csdn.net/mumumuwudi/article/details/47145801>FreeBSD Kqueue的实现原理</a></p><p><a href=https://blog.csdn.net/mumumuwudi/article/details/50552470>Epoll 新增 EPOLLEXCLUSIVE 选项解决了新建连接的’惊群‘问题</a></p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2018-05-20</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/>服务器编程</a></div><nav class=post-nav><a class=prev href=/post/_posts/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/effective_habit/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">effective habit</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/_posts/%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8/%E9%AB%98%E6%80%A7%E8%83%BD/><span class="next-text nav-default">高性能服务器</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=zput/utterances-comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:wkzxc@sina.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://localhost:1313/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

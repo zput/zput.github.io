@@ -1,0 +1,254 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>the_process_structure_ci_cd_base_on_gitlab - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="step by step to construct ci/cd"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.101.0 with theme even"><link rel=canonical href=http://localhost:1313/post/_posts/tool/gitlab/the_process_structure_ci_cd_base_on_gitlab/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="the_process_structure_ci_cd_base_on_gitlab"><meta property="og:description" content="step by step to construct ci/cd"><meta property="og:type" content="article"><meta property="og:url" content="http://localhost:1313/post/_posts/tool/gitlab/the_process_structure_ci_cd_base_on_gitlab/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-01-22T20:09:00+00:00"><meta property="article:modified_time" content="2020-01-22T20:09:00+00:00"><meta itemprop=name content="the_process_structure_ci_cd_base_on_gitlab"><meta itemprop=description content="step by step to construct ci/cd"><meta itemprop=datePublished content="2020-01-22T20:09:00+00:00"><meta itemprop=dateModified content="2020-01-22T20:09:00+00:00"><meta itemprop=wordCount content="2653"><meta itemprop=keywords content="tool,gitlab,"><meta name=twitter:card content="summary"><meta name=twitter:title content="the_process_structure_ci_cd_base_on_gitlab"><meta name=twitter:description content="step by step to construct ci/cd"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a><a href=/categories/><li class=mobile-menu-item>技术类别</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li><li class=menu-item><a class=menu-item-link href=/categories/>技术类别</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>the_process_structure_ci_cd_base_on_gitlab</h1><div class=post-meta><span class=post-time>2020-01-22</span><div class=post-category><a href=/categories/tools/>tools</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#dockerdocker-compose主题>docker/docker-compose主题</a></li><li><a href=#gitlab主题>gitlab主题</a><ul><li><a href=#why为什么要使用gitlab>why:为什么要使用gitlab?</a></li><li><a href=#what>what:</a></li><li><a href=#how如何使用>how:如何使用？</a></li></ul></li><li><a href=#install-gitlab>install gitlab</a><ul><li><a href=#使用docker-compose安装>使用docker-compose安装</a></li><li><a href=#ssh-from-22-to-38022>ssh from 22 to 38022</a></li></ul></li><li><a href=#install-gitlab-runner>install gitlab-runner</a><ul><li><a href=#helm安装>helm安装</a></li><li><a href=#deprecate-这个方法了>deprecate 这个方法了</a></li><li><a href=#重新安装gitlab>重新安装gitlab</a></li></ul></li><li><a href=#配置cicd>配置ci/cd</a><ul><li><a href=#写gitlab-ciyaml>写gitlab-ci.yaml</a></li><li><a href=#注意点--当写gitlab-ciyaml>注意点&ndash;>当写gitlab-ci.yaml</a></li><li><a href=#准备build与auto-deploy里面的基本image>准备.build与.auto-deploy里面的基本image</a></li><li><a href=#回到每个项目的dockerfile>回到每个项目的dockerfile</a></li></ul></li><li><a href=#附录>附录</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=dockerdocker-compose主题>docker/docker-compose主题</h2><p><a href=https://docs.docker.com/engine/install/centos/>https://docs.docker.com/engine/install/centos/</a>
+<a href=https://docs.docker.com/compose/install/>https://docs.docker.com/compose/install/</a>
+!!!直接使用docker的官方文档做法就行了。</p><h2 id=gitlab主题>gitlab主题</h2><ul><li><input disabled type=checkbox> DevOps(CI/CD)</li><li><input disabled type=checkbox> Container(Docker)</li><li><input disabled type=checkbox> Kubernetes</li><li><input disabled type=checkbox> Service Mesh</li></ul><h3 id=why为什么要使用gitlab>why:为什么要使用gitlab?</h3><p><a href=https://about.gitlab.com/blog/2016/10/17/gitlab-ci-oohlala/>reference</a></p><ul><li>Simple to Use</li><li>Fast</li><li>Economical and Secure</li></ul><h2 id=install-gitlab>install gitlab</h2><ul><li>安装参考文档：<ul><li><a href=https://docs.gitlab.com/ee/install/README.html>kubernets/docker->helm/docker compose</a><ul><li><a href=https://docs.gitlab.com/omnibus/docker/></a></li></ul></li></ul></li></ul><h3 id=使用docker-compose安装>使用docker-compose安装</h3><blockquote><p>external_url,这个跟nginx有关，如果改端口，需要三者一样的端口.</p><blockquote><p>修改了内部gitlab的external_url后，其docker的内部访问端口不再是默认的80端口，而是你配置的external_url端口,所以你需要修改内部端口为你指定的external_url端口.</p></blockquote></blockquote><ul><li>docker-compose.yaml</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>gitlab</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gitlab/gitlab-ce:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>always</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>hostname</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;193.112.78.144&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>GITLAB_OMNIBUS_CONFIG</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>            external_url &#39;https://193.112.78.144:38443&#39;
+</span></span></span><span class=line><span class=cl><span class=sd>            nginx[&#39;redirect_http_to_https&#39;] = true
+</span></span></span><span class=line><span class=cl><span class=sd>            letsencrypt[&#39;enable&#39;] = false
+</span></span></span><span class=line><span class=cl><span class=sd>            nginx[&#39;ssl_certificate&#39;] = &#34;/etc/gitlab/nginx.pem&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            nginx[&#39;ssl_certificate_key&#39;] = &#34;/etc/gitlab/nginx.key&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            # Add any other gitlab.rb configuration here, each on its own line
+</span></span></span><span class=line><span class=cl><span class=sd>            ##email
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_enable&#39;] = true # 开启 SMTP 功能
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_address&#39;] = &#34;smtp.qq.com&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_port&#39;] = 465 # 端口不可以选择587，测试过会发送邮件失败
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_user_name&#39;] = &#34;554043925@qq.com&#34; # * 你的邮箱账号，也可以是ge**lin@qq.com等
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_password&#39;] = &#34;vafyxxwagenybaib&#34; # * 授权码，不是密码
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_authentication&#39;] = &#34;login&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_enable_starttls_auto&#39;] = true
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_tls&#39;] = true
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;gitlab_email_from&#39;] = &#39;554043925@qq.com&#39; # * 发件人信息，必须跟‘smtp_user_name’保持一致，否则报错
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_domain&#39;] = &#34;qq.com&#34; # 修改并不影响 可修改为exmail.qq.com/james.com 经测试完全不影响，删除也不影响，并且发送的邮件都是一样的。</span><span class=w>            
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;38443:38443&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;38022:22&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;/data/gitlab/config:/etc/gitlab&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;/data/gitlab/logs:/var/log/gitlab&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;/data/gitlab/data:/var/opt/gitlab&#39;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>配置脚本，这里我们volume的文件路径是<code>/data/gitlab</code>，可以按需更改。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl><span class=nb>export</span> <span class=nv>GITLAB_HOME</span><span class=o>=</span>/data/gitlab <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>sudo mkdir -p <span class=nv>$GITLAB_HOME</span>/config <span class=o>&amp;&amp;</span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>sudo openssl req -new -x509 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -days <span class=m>36500</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -nodes <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -out <span class=nv>$GITLAB_HOME</span>/config/nginx.pem <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -keyout <span class=nv>$GITLAB_HOME</span>/config/nginx.key <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>  -subj <span class=s2>&#34;/C=US/CN=gitlab/O=self.gitlab.com&#34;</span> <span class=o>&amp;&amp;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>sudo docker-compose up -d
+</span></span></code></pre></td></tr></table></div></div><p><a href=https://193.112.78.144:38443>安装后预览地址</a></p><h3 id=ssh-from-22-to-38022>ssh from 22 to 38022</h3><blockquote><p>这里是因为它的git直接使用ssh的22端口，而我们的端口改为了38022所以，需要我们改下配置文件如下：</p></blockquote><blockquote><p><code>.ssh/conf文件</code></p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>#为了让ssh连上gitlab的ssh
+</span></span><span class=line><span class=cl>Host 193.112.78.144
+</span></span><span class=line><span class=cl> HostName 193.112.78.144
+</span></span><span class=line><span class=cl> Port 38022
+</span></span><span class=line><span class=cl> User git
+</span></span><span class=line><span class=cl> IdentityFile ~/CODE/myLibrary/work/Yzm/SSHSave/LT_company/id_rsa
+</span></span></code></pre></td></tr></table></div></div><p><a href=https://zhuanlan.zhihu.com/p/49499229>reference</a></p><h2 id=install-gitlab-runner>install gitlab-runner</h2><h3 id=helm安装>helm安装</h3><p>我们使用helm来安装gitlab-runner到kubernets</p><p><a href=https://docs.gitlab.com/runner/install/kubernetes.html#installing-gitlab-runner-using-the-helm-chart>根据官方文档来下载安装kubernets gitlab-runner;注意此时是使用:0.23.0.版本</a></p><blockquote><p><a href=https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#kubernetes>Use Docker-in-Docker workflow with Docker executor&mdash;>这个说明很重要</a></p><blockquote><p>这种是我们要使用的，也就是我们有一个base image, 然后它与docker-dind交流，来打出新的image.</p><blockquote><p>按照文档修改后</p></blockquote></blockquote></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>helm repo add gitlab https://charts.gitlab.io
+</span></span><span class=line><span class=cl>helm search repo gitlab/gitlab-runner --version ^0.23.0
+</span></span><span class=line><span class=cl>        NAME                	CHART VERSION	APP VERSION	DESCRIPTION
+</span></span><span class=line><span class=cl>        gitlab/gitlab-runner	0.23.0       	13.6.0     	GitLab Runne
+</span></span><span class=line><span class=cl>helm pull --untar gitlab/gitlab-runner --version ^0.23.0
+</span></span><span class=line><span class=cl><span class=nb>cd</span> gitlab-runner/
+</span></span><span class=line><span class=cl>helm upgrade -i gitlab-runner-self3 -n oa <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        --set <span class=nv>gitlabUrl</span><span class=o>=</span>https://testgitlab.kids-coding.com.cn:38443,runnerRegistrationToken<span class=o>=</span>5g3XLUnYn4sysDdz3a9W <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        ./
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>helm upgrade -i gitlab-runner-product-test1 -n oa <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        --set <span class=nv>gitlabUrl</span><span class=o>=</span>https://gitlab.9dwit.com/ <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        --set <span class=nv>runnerRegistrationToken</span><span class=o>=</span>LiQzDHGLbodbi1RQgomZ <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>        ./
+</span></span></code></pre></td></tr></table></div></div><h3 id=deprecate-这个方法了>deprecate 这个方法了</h3><blockquote><p>它是直接让这个与物理机交流； docker-dind没有起作用。</p></blockquote><ul><li><p>因为不知道为什么这个helm版本，当与docker-dind交流时候，虽然按照官方版本说是docker在某个版本，当client与deamon交流时，开始需要证书。
+<a href=https://github.com/zput/gitlab-runner_in_kubernets>修改过的官方版本0.22.0</a></p></li><li><p>在<code>gitlab-runner_in_kubernets</code>目录下运行这个命令。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>helm install --namespace oa gitlab-runner-self ./
+</span></span></code></pre></td></tr></table></div></div><h3 id=重新安装gitlab>重新安装gitlab</h3><blockquote><p>因为安装gitlab-runner遇到证书不正确，所有配置一个ssl证书.</p></blockquote><p><a href=https://testgitlab.kids-coding.com.cn:38443>重新安装后的gitlab</a></p><ul><li>docker-compose.yaml</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>gitlab</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>gitlab/gitlab-ce:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>always</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>hostname</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;testgitlab.kids-coding.com.cn&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>GITLAB_OMNIBUS_CONFIG</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>            external_url &#39;https://testgitlab.kids-coding.com.cn:38443&#39;
+</span></span></span><span class=line><span class=cl><span class=sd>            nginx[&#39;redirect_http_to_https&#39;] = true
+</span></span></span><span class=line><span class=cl><span class=sd>            letsencrypt[&#39;enable&#39;] = false
+</span></span></span><span class=line><span class=cl><span class=sd>            nginx[&#39;ssl_certificate&#39;] = &#34;/etc/gitlab/nginx.pem&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            nginx[&#39;ssl_certificate_key&#39;] = &#34;/etc/gitlab/nginx.key&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            # Add any other gitlab.rb configuration here, each on its own line
+</span></span></span><span class=line><span class=cl><span class=sd>            ##email
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_enable&#39;] = true # 开启 SMTP 功能
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_address&#39;] = &#34;smtp.qq.com&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_port&#39;] = 465 # 端口不可以选择587，测试过会发送邮件失败
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_user_name&#39;] = &#34;554043925@qq.com&#34; # * 你的邮箱账号，也可以是ge**lin@qq.com等
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_password&#39;] = &#34;vafyxxwagenybaib&#34; # * 授权码，不是密码
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_authentication&#39;] = &#34;login&#34;
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_enable_starttls_auto&#39;] = true
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_tls&#39;] = true
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;gitlab_email_from&#39;] = &#39;554043925@qq.com&#39; # * 发件人信息，必须跟‘smtp_user_name’保持一致，否则报错
+</span></span></span><span class=line><span class=cl><span class=sd>            gitlab_rails[&#39;smtp_domain&#39;] = &#34;qq.com&#34; # 修改并不影响 可修改为exmail.qq.com/james.com 经测试完全不影响，删除也不影响，并且发送的邮件都是一样的。</span><span class=w>            
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;38443:38443&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;38022:22&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;/data/gitlab/config:/etc/gitlab&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;/data/gitlab/logs:/var/log/gitlab&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s1>&#39;/data/gitlab/data:/var/opt/gitlab&#39;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201127200343.png alt=20201127200343></p><h2 id=配置cicd>配置ci/cd</h2><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130163427.png alt=过程></p><blockquote><p>第一步是写<code>gitlab-ci.yaml</code>模板，然后gitlab-runner按照这个模版开始做动作;</p><blockquote><p>当上面的启动，它有一个image:auto_build_image,那么它就自动拉下来了作为底层运行的container，然后执行<code>gitlab-ci.yaml</code>里面的script(这个脚本运行的前提是gitlab-runner,已经帮我们把source code拉下来了，)<img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130191139.png alt="gitlab-ci/cd拉source code">
+script里面有docker build(可以参看3.2),来编译源代码。</p></blockquote></blockquote><ul><li>关于上面script中,docker build,它是如何跟docker daemon交流的？!!!
+<a href=https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#kubernetes>重要</a></li></ul><h3 id=写gitlab-ciyaml>写gitlab-ci.yaml</h3><ul><li><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#stage>gitlab-ci.yaml变量官方文档</a><ul><li><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#job-keywords>Job keywords</a></p></li><li><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#global-keywords>Global keywords</a></p><ul><li>全局变量，与job变量异同:<ul><li>Some keywords can be set globally as the default for all jobs with the default: keyword. Default keywords can then be overridden by job-specific configuration.</li></ul></li></ul></li><li><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#keyword-details>Keyword details</a></p></li><li><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#variables>CI/CD variables</a></p></li><li><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#special-yaml-features>Special YAML features</a></p></li></ul></li></ul><h4 id=stages--global-keywords>stages&ndash;global keywords</h4><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#stage>stages</a></p><h4 id=extends---job-keywords>extends&mdash;job keywords</h4><ul><li>extends<ul><li>Configuration entries that this job is going to inherit from.</li></ul></li></ul><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130105943.png alt=20201130105943></p><p>它的作用就是：</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130110745.png alt=20201130110745></p><h4 id=variable---globaljob>variable&mdash;global/job</h4><blockquote><p>They can be set globally and per-job.</p></blockquote><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130112547.png alt=20201130112547></p><h4 id=imageservices---globaljob>image/services&mdash;global/job</h4><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130113402.png alt="extends .build"></p><blockquote><p>image: Used to specify a Docker image to use <strong>for the job</strong>.</p><blockquote><p>services:Used to specify a service Docker image, linked to <strong>a base image</strong> specified in image.</p><blockquote><p>翻译下就是只有一个基础容器是来运行job任务，但是可以这个job任务，可以连接多个services(在运行的过程中)。</p></blockquote></blockquote></blockquote><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#image>image concept</a>
+<a href=https://docs.gitlab.com/ee/ci/yaml/README.html#services>services concept</a></p><h4 id=environment>environment</h4><p><a href=https://docs.gitlab.com/ee/ci/yaml/README.html#environment>reference this environment</a>
+<a href=https://docs.gitlab.com/ee/ci/yaml/README.html#environmentkubernetes>reference to environmentkubernetes</a></p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130161001.png alt="my example"></p><ul><li>before requirement:<ul><li><a href=https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html#add-existing-cluster>为gitlab,增加一个已存在的kubernets</a></li></ul></li></ul><h3 id=注意点--当写gitlab-ciyaml>注意点&ndash;>当写gitlab-ci.yaml</h3><h4 id=当需要echo某个变量的时候如何打印出来>当需要echo某个变量的时候，如何打印出来？</h4><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130155307.png alt=20201130155307></p><blockquote><p>可以在yaml中来打印变量,这是可以打印出来的。</p></blockquote><ul><li>yaml中的String<ul><li>保留换行(Newlines preserved)<ul><li>使用竖线符“ | ”来表示该语法，每行的缩进和行尾空白都会被去掉，而额外的缩进会被保留</li></ul></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># YAML</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>lines</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>  我是第一行
+</span></span></span><span class=line><span class=cl><span class=sd>  我是第二行
+</span></span></span><span class=line><span class=cl><span class=sd>    我是吴彦祖
+</span></span></span><span class=line><span class=cl><span class=sd>      我是第四行
+</span></span></span><span class=line><span class=cl><span class=sd>  我是第五行</span><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=l>// JSON</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>&#34;lines&#34;: </span><span class=s2>&#34;我是第一行\n我是第二行\n  我是吴彦祖\n     我是第四行\n我是第五行&#34;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><a href=https://zhuanlan.zhihu.com/p/145173920>yaml</a></p><h3 id=准备build与auto-deploy里面的基本image>准备.build与.auto-deploy里面的基本image</h3><p><a href=https://gist.github.com/zput/1c88cbf7960e703359451a09b6cf3c32>auto-build-image</a></p><p><a href=https://github.com/zput/auto-deploy-image>auto-deploy-image</a>
+<a href=https://github.com/zput/auto-build-image>auto-build-image</a></p><h4 id=parse-command-line>parse command line</h4><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130185010.png alt=20201130185010></p><p><a href=https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash>referenece: parse command line</a></p><h3 id=回到每个项目的dockerfile>回到每个项目的dockerfile</h3><h4 id=当golang这种如果它还依赖了其他的private-repository如何拉取>当golang这种如果它还依赖了其他的private repository,如何拉取?</h4><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130185614.png alt=20201130185614></p><p><a href=https://jwenz723.medium.com/fetching-private-go-modules-during-docker-build-5b76aa690280>Fetching Private Go Modules During Docker Build</a></p><h4 id=如何在docker-build时候把参数传入进去>如何在docker build时候把参数传入进去？</h4><p>其实这个<code>ACCESS_TOKEN_USR</code> and <code>ACCESS_TOKEN_PWD</code>是存放在ci/cd里面的variables</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20201130191801.png alt=20201130191801></p><p><a href=https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg>Set build-time variables</a></p><p>缺省的时候直接使用本地的环境变量:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>$ <span class=nb>export</span> <span class=nv>HTTP_PROXY</span><span class=o>=</span>http://10.20.30.2:1234
+</span></span><span class=line><span class=cl>$ docker build --build-arg HTTP_PROXY .
+</span></span></code></pre></td></tr></table></div></div><h2 id=附录>附录</h2><ul><li>当我们的gitlab是按照docker安装的，且22端口没有连接到gitlab里面去的，而我们提交代码的时候，如果使用ssh连接，那么实际会连到安装gitlab docker的实体机上面去的。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>#为了让ssh连上gitlab的ssh
+</span></span><span class=line><span class=cl>Host 193.112.xx.xx
+</span></span><span class=line><span class=cl> HostName 193.112.xx.xx
+</span></span><span class=line><span class=cl> Port 38022
+</span></span><span class=line><span class=cl> User git
+</span></span><span class=line><span class=cl> IdentityFile ~/CODE/myLibrary/XXXXXXXX/id_rsa
+</span></span><span class=line><span class=cl>Host testgitlab.xxxx.com.cn
+</span></span><span class=line><span class=cl> HostName testgitlab.xxxx.com.cn
+</span></span><span class=line><span class=cl> Port 38022
+</span></span><span class=line><span class=cl> User git
+</span></span><span class=line><span class=cl> IdentityFile ~/CODE/myLibrary/XXXXXXXX/id_rsa
+</span></span></code></pre></td></tr></table></div></div><ul><li>其他的一些思路：https://zhuanlan.zhihu.com/p/35749347</li></ul></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2020-01-22</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/tool/>tool</a>
+<a href=/tags/gitlab/>gitlab</a></div><nav class=post-nav><a class=prev href=/post/_posts/tool/postgre/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">postgres高级总结</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/_posts/kubernets/telepresence/><span class="next-text nav-default">telepresence一些使用方法</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=zput/utterances-comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:wkzxc@sina.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://localhost:1313/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
