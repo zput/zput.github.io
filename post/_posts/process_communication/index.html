@@ -1,0 +1,504 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>进程间通讯 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="including IPC的方式通常有 管道（包括无名管道和命名管道）:PIPE 信号量: 消息队列: 信号量 共享存储: mmap() shm Socket &amp;mdash; Streams: ##including 管道中的无名管道是存放在文件描述符"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.101.0 with theme even"><link rel=canonical href=http://localhost:1313/post/_posts/process_communication/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="进程间通讯"><meta property="og:description" content="including IPC的方式通常有 管道（包括无名管道和命名管道）:PIPE 信号量: 消息队列: 信号量 共享存储: mmap() shm Socket &mdash; Streams: ##including 管道中的无名管道是存放在文件描述符"><meta property="og:type" content="article"><meta property="og:url" content="http://localhost:1313/post/_posts/process_communication/"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-07-04T19:00:00+00:00"><meta property="article:modified_time" content="2019-07-04T19:00:00+00:00"><meta itemprop=name content="进程间通讯"><meta itemprop=description content="including IPC的方式通常有 管道（包括无名管道和命名管道）:PIPE 信号量: 消息队列: 信号量 共享存储: mmap() shm Socket &mdash; Streams: ##including 管道中的无名管道是存放在文件描述符"><meta itemprop=datePublished content="2019-07-04T19:00:00+00:00"><meta itemprop=dateModified content="2019-07-04T19:00:00+00:00"><meta itemprop=wordCount content="3421"><meta itemprop=keywords content="linux,process,thread,"><meta name=twitter:card content="summary"><meta name=twitter:title content="进程间通讯"><meta name=twitter:description content="including IPC的方式通常有 管道（包括无名管道和命名管道）:PIPE 信号量: 消息队列: 信号量 共享存储: mmap() shm Socket &mdash; Streams: ##including 管道中的无名管道是存放在文件描述符"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a><a href=/categories/><li class=mobile-menu-item>技术类别</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li><li class=menu-item><a class=menu-item-link href=/categories/>技术类别</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>进程间通讯</h1><div class=post-meta><span class=post-time>2019-07-04</span><div class=post-category><a href=/categories/systemandprotocol/>systemAndProtocol</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=article-container><div class=post-content><ul><li><a href=#including>including</a></li><li><a href=#ipc%E7%9A%84%E6%96%B9%E5%BC%8F%E9%80%9A%E5%B8%B8%E6%9C%89>IPC的方式通常有</a><ul><li><a href=#%E7%AE%A1%E9%81%93%E5%8C%85%E6%8B%AC%E6%97%A0%E5%90%8D%E7%AE%A1%E9%81%93%E5%92%8C%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93pipe>管道（包括无名管道和命名管道）:PIPE</a></li><li><a href=#%E4%BF%A1%E5%8F%B7%E9%87%8F>信号量:</a></li><li><a href=#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97>消息队列:</a></li><li><a href=#%E4%BF%A1%E5%8F%B7%E9%87%8F-1>信号量</a></li><li><a href=#%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8>共享存储:</a><ul><li><a href=#mmap>mmap()</a></li><li><a href=#shm>shm</a></li></ul></li><li><a href=#socket-streams>Socket &mdash; Streams:</a></li></ul></li></ul><p>##including</p><p>管道中的无名管道是存放在文件描述符, 那么也像sockfd一样也是在内核有缓存区域的.
+有名管道是无缓存的, 那么就像
+消息队列是存放在内核的
+信号量是生成在内核的</p><p>共享内存就是destination:是process虚拟空间的mmap区域(between heap and stack) source: mmap()是硬盘的文件, shm 是内核的某个区域</p><p>##IPC的方式通常有</p><p>###管道（包括无名管道和命名管道）:PIPE</p><p>first: int pipe(int pipefd[2])
+second: mkfifo() &mdash;> 无缓存pipe</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl>       <span class=cp>#include</span> <span class=cpf>&lt;sys/types.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>       <span class=cp>#include</span> <span class=cpf>&lt;sys/wait.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>       <span class=cp>#include</span> <span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>       <span class=cp>#include</span> <span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>       <span class=cp>#include</span> <span class=cpf>&lt;unistd.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>       <span class=cp>#include</span> <span class=cpf>&lt;string.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl>       <span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=kt>int</span> <span class=n>pipefd</span><span class=p>[</span><span class=mi>2</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>           <span class=n>pid_t</span> <span class=n>cpid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=kt>char</span> <span class=n>buf</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=k>if</span> <span class=p>(</span><span class=n>argc</span> <span class=o>!=</span> <span class=mi>2</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=n>fprintf</span><span class=p>(</span><span class=n>stderr</span><span class=p>,</span> <span class=s>&#34;Usage: %s &lt;string&gt;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>argv</span><span class=p>[</span><span class=mi>0</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>               <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=k>if</span> <span class=p>(</span><span class=n>pipe</span><span class=p>(</span><span class=n>pipefd</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=n>perror</span><span class=p>(</span><span class=s>&#34;pipe&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=n>cpid</span> <span class=o>=</span> <span class=n>fork</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>           <span class=k>if</span> <span class=p>(</span><span class=n>cpid</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=n>perror</span><span class=p>(</span><span class=s>&#34;fork&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_FAILURE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=k>if</span> <span class=p>(</span><span class=n>cpid</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>    <span class=cm>/* Child reads from pipe */</span>
+</span></span><span class=line><span class=cl>               <span class=n>close</span><span class=p>(</span><span class=n>pipefd</span><span class=p>[</span><span class=mi>1</span><span class=p>]);</span>          <span class=cm>/* Close unused write end */</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>               <span class=k>while</span> <span class=p>(</span><span class=n>read</span><span class=p>(</span><span class=n>pipefd</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=o>&amp;</span><span class=n>buf</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                   <span class=n>write</span><span class=p>(</span><span class=n>STDOUT_FILENO</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buf</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>               <span class=n>write</span><span class=p>(</span><span class=n>STDOUT_FILENO</span><span class=p>,</span> <span class=s>&#34;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=n>close</span><span class=p>(</span><span class=n>pipefd</span><span class=p>[</span><span class=mi>0</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>               <span class=n>_exit</span><span class=p>(</span><span class=n>EXIT_SUCCESS</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>           <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>            <span class=cm>/* Parent writes argv[1] to pipe */</span>
+</span></span><span class=line><span class=cl>               <span class=n>close</span><span class=p>(</span><span class=n>pipefd</span><span class=p>[</span><span class=mi>0</span><span class=p>]);</span>          <span class=cm>/* Close unused read end */</span>
+</span></span><span class=line><span class=cl>               <span class=n>write</span><span class=p>(</span><span class=n>pipefd</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=n>strlen</span><span class=p>(</span><span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>]));</span>
+</span></span><span class=line><span class=cl>               <span class=n>close</span><span class=p>(</span><span class=n>pipefd</span><span class=p>[</span><span class=mi>1</span><span class=p>]);</span>          <span class=cm>/* Reader will see EOF */</span>
+</span></span><span class=line><span class=cl>               <span class=n>wait</span><span class=p>(</span><span class=nb>NULL</span><span class=p>);</span>                <span class=cm>/* Wait for child */</span>
+</span></span><span class=line><span class=cl>               <span class=n>exit</span><span class=p>(</span><span class=n>EXIT_SUCCESS</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>###信号量:</p><p>###消息队列:</p><p>消息队列，是消息的<strong>链接表</strong>，存放在<strong>内核</strong>中。一个消息<strong>队列</strong>由一个**标识符（即队列ID）**来标识。</p><ol><li>特点</li></ol><ul><li>消息队列是面向记录的，其中的消息具有特定的格式以及特定的优先级。</li><li>消息队列独立于发送与接收进程。进程终止时，消息队列及其内容并不会被删除。</li><li>消息队列可以实现消息的<strong>随机查询</strong>,消息不一定要以先进先出的次序读取,也可以按消息的类型读取。</li></ul><ol start=2><li>原型 &ndash;> msg开头</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl> <span class=cp>#include</span> <span class=cpf>&lt;sys/msg.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl> <span class=c1>// 创建或打开消息队列：成功返回队列ID，失败返回-1
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>msgget</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>,</span> <span class=kt>int</span> <span class=n>flag</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=c1>// 添加消息：成功返回0，失败返回-1
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>msgsnd</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=k>const</span> <span class=kt>void</span> <span class=o>*</span><span class=n>ptr</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=kt>int</span> <span class=n>flag</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=c1>// 读取消息：成功返回消息数据的长度，失败返回-1
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>msgrcv</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=kt>void</span> <span class=o>*</span><span class=n>ptr</span><span class=p>,</span> <span class=n>size_t</span> <span class=n>size</span><span class=p>,</span> <span class=kt>long</span> <span class=n>type</span><span class=p>,</span><span class=kt>int</span> <span class=n>flag</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=c1>// 控制消息队列：成功返回0，失败返回-1
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>msgctl</span><span class=p>(</span><span class=kt>int</span> <span class=n>msqid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd</span><span class=p>,</span> <span class=k>struct</span> <span class=nc>msqid_ds</span> <span class=o>*</span><span class=n>buf</span><span class=p>);</span>
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>在以下两种情况下，msgget将创建一个新的消息队列：</p><blockquote><ul><li>如果没有与键值key相对应的消息队列，并且flag中包含了IPC_CREAT标志位。</li><li>key参数为IPC_PRIVATE。</li></ul></blockquote></blockquote><blockquote><p>函数msgrcv在读取消息队列时，type参数有下面几种情况：</p><blockquote><ul><li>type == 0，返回队列中的第一个消息；</li><li>type > 0，返回队列中消息类型为 type 的第一个消息；</li><li>type &lt; 0，返回队列中消息类型值小于或等于 type 绝对值的消息，如果有多个，则取类型值最小的消息。
+可以看出，type值非 0 时用于以非先进先出次序读消息。[所以zero就是以队列的形式输出]也可以把 type 看做优先级的权值。（其他的参数解释，请自行Google之）</li></ul></blockquote></blockquote><p>###信号量</p><p>信号量（semaphore）与已经介绍过的 IPC 结构不同，它是<strong>一个计数器</strong>。信号量用于实现进程间的<strong>互斥与同步</strong>，而不是用于存储进程间通信数据。</p><ol><li>特点</li></ol><ul><li>信号量用于进程间同步，若要在<strong>进程间传递数据需要结合共享内存</strong>。</li><li>信号量基于操作系统的PV操作，程序对<strong>信号量的操作都是原子操作</strong>。</li><li>每次对信号量的PV操作<strong>不仅限</strong>于对信号量值加 1 或减 1，而且可以<strong>加减任意正整数</strong>。</li><li>支持信号量组。</li></ul><p>2.原型</p><ul><li>binary semaphore: 最简单的信号量是只能取 0 和 1 的变量，这也是信号量最常见的一种形式，叫做二值信号量（Binary Semaphore）。</li><li>common semphore: 而可以取多个正整数的信号量被称为通用信号量。</li></ul><blockquote><p>Linux 下的信号量函数都是在<strong>通用的信号量数组</strong>(common semphore)上进行操作，而不是在一个单一的二值信号量上进行操作。</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl> <span class=cp>#include</span> <span class=cpf>&lt;sys/sem.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl> <span class=c1>// 创建或获取一个信号量组：若成功返回信号量集ID，失败返回-1  ---&gt; 是信号集ID, 而不是信号ID?
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>semget</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>,</span> <span class=kt>int</span> <span class=n>num_sems</span><span class=p>,</span> <span class=kt>int</span> <span class=n>sem_flags</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=c1>// 对信号量组进行操作，改变信号量的值：成功返回0，失败返回-1
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>semop</span><span class=p>(</span><span class=kt>int</span> <span class=n>semid</span><span class=p>,</span> <span class=k>struct</span> <span class=nc>sembuf</span> <span class=n>semoparray</span><span class=p>[],</span> <span class=n>size_t</span> <span class=n>numops</span><span class=p>);</span>  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> <span class=c1>// 控制信号量的相关信息
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=kt>int</span> <span class=nf>semctl</span><span class=p>(</span><span class=kt>int</span> <span class=n>semid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>sem_num</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd</span><span class=p>,</span> <span class=p>...);</span>
+</span></span></code></pre></td></tr></table></div></div><blockquote><blockquote><ul><li>当semget创建新的信号量集合时，必须指定集合中信号量的个数（即num_sems），通常为1；</li><li>如果是引用一个现有的集合，则将num_sems指定为 0.</li></ul></blockquote></blockquote><blockquote><p>在semop函数中，sembuf结构的定义如下：</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl> <span class=k>struct</span> <span class=nc>sembuf</span>
+</span></span><span class=line><span class=cl> <span class=p>{</span>
+</span></span><span class=line><span class=cl>     <span class=kt>short</span> <span class=n>sem_num</span><span class=p>;</span> <span class=c1>// 信号量组中对应的序号，0～sem_nums-1
+</span></span></span><span class=line><span class=cl><span class=c1></span>     <span class=kt>short</span> <span class=n>sem_op</span><span class=p>;</span>  <span class=c1>// 信号量值在一次操作中的改变量
+</span></span></span><span class=line><span class=cl><span class=c1></span>     <span class=kt>short</span> <span class=n>sem_flg</span><span class=p>;</span> <span class=c1>// IPC_NOWAIT, SEM_UNDO
+</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>其中 sem_op 是一次操作中的信号量的改变量：</p></li><li><p>若sem_op > 0，表示进程释放相应的资源数，将 sem_op 的值加到信号量的值上。如果有进程正在休眠等待此信号量，则换行它们。</p></li><li><p>若sem_op &lt; 0，请求 sem_op 的绝对值的资源。</p><ul><li>如果相应的资源数可以满足请求，则将该信号量的值减去sem_op的绝对值，函数成功返回。</li><li>当相应的资源数不能满足请求时，这个操作与sem_flg有关。<ul><li>sem_flg 指定IPC_NOWAIT，则semop函数出错返回EAGAIN。</li><li>sem_flg 没有指定IPC_NOWAIT，则将该信号量的semncnt值加1，然后进程挂起直到下述情况发生：<ul><li>当相应的资源数可以满足请求，此信号量的semncnt值减1，该信号量的值减去sem_op的绝对值。成功返回；</li><li>此信号量被删除，函数smeop出错返回EIDRM；</li><li>进程捕捉到信号，并从信号处理函数返回，此情况下将此信号量的semncnt值减1，函数semop出错返回EINTR</li></ul></li></ul></li></ul></li><li><p>若sem_op == 0，进程阻塞直到信号量的相应值为0：</p><ul><li>当信号量已经为0，函数立即返回。</li><li>如果信号量的值不为0，则依据sem_flg决定函数动作：<ul><li>sem_flg指定IPC_NOWAIT，则出错返回EAGAIN。</li><li>sem_flg没有指定IPC_NOWAIT，则将该信号量的semncnt值加1，然后进程挂起直到下述情况发生：<ul><li>信号量值为0，将信号量的semzcnt的值减1，函数semop成功返回；</li><li>此信号量被删除，函数smeop出错返回EIDRM；</li><li>进程捕捉到信号，并从信号处理函数返回，在此情况将此信号量的semncnt值减1，函数semop出错返回EINTR</li></ul></li></ul></li></ul></li></ul><blockquote><p>在semctl函数中的命令有多种，这里就说两个常用的：</p><blockquote><ul><li>SETVAL：用于初始化信号量为一个已知的值。所需要的值作为联合semun的val成员来传递。在信号量第一次使用之前需要设置信号量。</li><li>IPC_RMID：删除一个信号量集合。如果不删除信号量，它将继续在系统中存在，即使程序已经退出，它可能在你下次运行此程序时引发问题，而且信号量是一种有限的资源。</li></ul></blockquote></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;stdio.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;stdlib.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;sys/shm.h&gt;  // shared memory</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;sys/sem.h&gt;  // semaphore</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;sys/msg.h&gt;  // message queue</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span><span class=cpf>&lt;string.h&gt;   // memcpy</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1>// 消息队列结构
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>struct</span> <span class=nc>msg_form</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>mtype</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>mtext</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 联合体，用于semctl初始化
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>union</span> <span class=nc>semun</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span>              <span class=n>val</span><span class=p>;</span> <span class=cm>/*for SETVAL*/</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>semid_ds</span> <span class=o>*</span><span class=n>buf</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>unsigned</span> <span class=kt>short</span>  <span class=o>*</span><span class=n>array</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 初始化信号量
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>init_sem</span><span class=p>(</span><span class=kt>int</span> <span class=n>sem_id</span><span class=p>,</span> <span class=kt>int</span> <span class=n>value</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>union</span> <span class=nc>semun</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>tmp</span><span class=p>.</span><span class=n>val</span> <span class=o>=</span> <span class=n>value</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>semctl</span><span class=p>(</span><span class=n>sem_id</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>SETVAL</span><span class=p>,</span> <span class=n>tmp</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;Init Semaphore Error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// P操作:
+</span></span></span><span class=line><span class=cl><span class=c1>//  若信号量值为1，获取资源并将信号量值-1 
+</span></span></span><span class=line><span class=cl><span class=c1>//  若信号量值为0，进程挂起等待
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>sem_p</span><span class=p>(</span><span class=kt>int</span> <span class=n>sem_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>sembuf</span> <span class=n>sbuf</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>sbuf</span><span class=p>.</span><span class=n>sem_num</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=cm>/*序号*/</span>
+</span></span><span class=line><span class=cl>    <span class=n>sbuf</span><span class=p>.</span><span class=n>sem_op</span> <span class=o>=</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span> <span class=cm>/*P操作*/</span>
+</span></span><span class=line><span class=cl>    <span class=n>sbuf</span><span class=p>.</span><span class=n>sem_flg</span> <span class=o>=</span> <span class=n>SEM_UNDO</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>semop</span><span class=p>(</span><span class=n>sem_id</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>sbuf</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;P operation Error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// V操作：
+</span></span></span><span class=line><span class=cl><span class=c1>//  释放资源并将信号量值+1
+</span></span></span><span class=line><span class=cl><span class=c1>//  如果有进程正在挂起等待，则唤醒它们
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>sem_v</span><span class=p>(</span><span class=kt>int</span> <span class=n>sem_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>sembuf</span> <span class=n>sbuf</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>sbuf</span><span class=p>.</span><span class=n>sem_num</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=cm>/*序号*/</span>
+</span></span><span class=line><span class=cl>    <span class=n>sbuf</span><span class=p>.</span><span class=n>sem_op</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>  <span class=cm>/*V操作*/</span>
+</span></span><span class=line><span class=cl>    <span class=n>sbuf</span><span class=p>.</span><span class=n>sem_flg</span> <span class=o>=</span> <span class=n>SEM_UNDO</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>semop</span><span class=p>(</span><span class=n>sem_id</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>sbuf</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;V operation Error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 删除信号量集
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>del_sem</span><span class=p>(</span><span class=kt>int</span> <span class=n>sem_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>union</span> <span class=nc>semun</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>semctl</span><span class=p>(</span><span class=n>sem_id</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>IPC_RMID</span><span class=p>,</span> <span class=n>tmp</span><span class=p>)</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;Delete Semaphore Error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 创建一个信号量集
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>creat_sem</span><span class=p>(</span><span class=n>key_t</span> <span class=n>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>sem_id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>((</span><span class=n>sem_id</span> <span class=o>=</span> <span class=n>semget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=mi>1</span><span class=p>,</span> <span class=n>IPC_CREAT</span><span class=o>|</span><span class=mo>0666</span><span class=p>))</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;semget error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>init_sem</span><span class=p>(</span><span class=n>sem_id</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>  <span class=cm>/*初值设为1资源未占用*/</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>sem_id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>key_t</span> <span class=n>key</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>shmid</span><span class=p>,</span> <span class=n>semid</span><span class=p>,</span> <span class=n>msqid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>shm</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>data</span><span class=p>[]</span> <span class=o>=</span> <span class=s>&#34;this is server&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>shmid_ds</span> <span class=n>buf1</span><span class=p>;</span>  <span class=cm>/*用于删除共享内存*/</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>msqid_ds</span> <span class=n>buf2</span><span class=p>;</span>  <span class=cm>/*用于删除消息队列*/</span>
+</span></span><span class=line><span class=cl>    <span class=k>struct</span> <span class=nc>msg_form</span> <span class=n>msg</span><span class=p>;</span>  <span class=cm>/*消息队列用于通知对方更新了共享内存*/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 获取key值
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span><span class=p>((</span><span class=n>key</span> <span class=o>=</span> <span class=n>ftok</span><span class=p>(</span><span class=s>&#34;.&#34;</span><span class=p>,</span> <span class=sc>&#39;z&#39;</span><span class=p>))</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;ftok error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 创建共享内存
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span><span class=p>((</span><span class=n>shmid</span> <span class=o>=</span> <span class=n>shmget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=mi>1024</span><span class=p>,</span> <span class=n>IPC_CREAT</span><span class=o>|</span><span class=mo>0666</span><span class=p>))</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;Create Shared Memory Error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 连接共享内存
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>shm</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span><span class=o>*</span><span class=p>)</span><span class=n>shmat</span><span class=p>(</span><span class=n>shmid</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>((</span><span class=kt>int</span><span class=p>)</span><span class=n>shm</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;Attach Shared Memory Error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 创建消息队列
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span> <span class=p>((</span><span class=n>msqid</span> <span class=o>=</span> <span class=n>msgget</span><span class=p>(</span><span class=n>key</span><span class=p>,</span> <span class=n>IPC_CREAT</span><span class=o>|</span><span class=mo>0777</span><span class=p>))</span> <span class=o>==</span> <span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>perror</span><span class=p>(</span><span class=s>&#34;msgget error&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 创建信号量
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>semid</span> <span class=o>=</span> <span class=n>creat_sem</span><span class=p>(</span><span class=n>key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1>// 读数据
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>msgrcv</span><span class=p>(</span><span class=n>msqid</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>msg</span><span class=p>,</span> <span class=mi>1</span><span class=p>,</span> <span class=mi>888</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span> <span class=cm>/*读取类型为888的消息*/</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>msg</span><span class=p>.</span><span class=n>mtext</span> <span class=o>==</span> <span class=sc>&#39;q&#39;</span><span class=p>)</span>  <span class=cm>/*quit - 跳出循环*/</span> 
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>msg</span><span class=p>.</span><span class=n>mtext</span> <span class=o>==</span> <span class=sc>&#39;r&#39;</span><span class=p>)</span>  <span class=cm>/*read - 读共享内存*/</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>sem_p</span><span class=p>(</span><span class=n>semid</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span><span class=n>shm</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>sem_v</span><span class=p>(</span><span class=n>semid</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 断开连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>shmdt</span><span class=p>(</span><span class=n>shm</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/*删除共享内存、消息队列、信号量*/</span>
+</span></span><span class=line><span class=cl>    <span class=n>shmctl</span><span class=p>(</span><span class=n>shmid</span><span class=p>,</span> <span class=n>IPC_RMID</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buf1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>msgctl</span><span class=p>(</span><span class=n>msqid</span><span class=p>,</span> <span class=n>IPC_RMID</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>buf2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>del_sem</span><span class=p>(</span><span class=n>semid</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>###共享存储:</p><p><a href=https://blog.csdn.net/wlh_flame/article/details/6328380>详细的</a></p><p>####mmap()
+<img src=https://github.com/zput/myPicLib/raw/master/linux/mmap.png alt=mmap></p><blockquote><p>其中Stack的大小是固定的, 而heap mmap的区域是两边向中间缩小.</p></blockquote><p><a href=http://ju.outofmemory.cn/entry/224106>reference link</a></p><p>####shm</p><blockquote><ul><li>二者本质上是类似的，mmap可以看到文件的实体，而shmget对应的文件在交换分区上的shm文件系统内，无法直接 cat 查看</li><li>安全性：</li></ul><blockquote><p>mmap 方式对应的真实文件，如果用户有权限即可查看，甚至删除
+shmget 方式其实也一样，好了一层皮罢了（ipcrm -m &mldr;）</p></blockquote></blockquote><p>###Socket &mdash; Streams:</p><blockquote><p>其中 Socket和Streams支持不同主机上的两个进程IPC</p></blockquote></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2019-07-04</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/linux/>linux</a>
+<a href=/tags/process/>process</a>
+<a href=/tags/thread/>thread</a></div><nav class=post-nav><a class=prev href=/post/_posts/thread/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">谈谈线程</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/post/_posts/%E7%A8%8B%E5%BA%8F%E4%B8%8E%E6%B6%88%E8%80%97/><span class="next-text nav-default">程序需要考虑的资源消耗问题</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=zput/utterances-comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:wkzxc@sina.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://localhost:1313/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
