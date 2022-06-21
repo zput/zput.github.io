@@ -1,0 +1,356 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>线性代数 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="线性代数 线性代数 第三视角:从向量的角度 第一视角:${\color{Red} 方程组角度}$ 线性方程组 define 具体形 抽象形 nature application 有没有解? ==矩阵的运算"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.101.0 with theme even"><link rel=canonical href=http://zput.github.io/post/postgraduate/line/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="线性代数"><meta property="og:description" content="线性代数 线性代数 第三视角:从向量的角度 第一视角:${\color{Red} 方程组角度}$ 线性方程组 define 具体形 抽象形 nature application 有没有解? ==矩阵的运算"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/postgraduate/line/"><meta property="article:section" content="post"><meta itemprop=name content="线性代数"><meta itemprop=description content="线性代数 线性代数 第三视角:从向量的角度 第一视角:${\color{Red} 方程组角度}$ 线性方程组 define 具体形 抽象形 nature application 有没有解? ==矩阵的运算"><meta itemprop=wordCount content="10493"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="线性代数"><meta name=twitter:description content="线性代数 线性代数 第三视角:从向量的角度 第一视角:${\color{Red} 方程组角度}$ 线性方程组 define 具体形 抽象形 nature application 有没有解? ==矩阵的运算"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研知识专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a><a href=/categories/><li class=mobile-menu-item>技术类别</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研知识专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li><li class=menu-item><a class=menu-item-link href=/categories/>技术类别</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>线性代数</h1><div class=post-meta><span class=post-time>0001-01-01</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#线性代数>线性代数</a><ul><li><a href=#第三视角从向量的角度>第三视角:从向量的角度</a></li><li><a href=#第一视角colorred-方程组角度>第一视角:${\color{Red} 方程组角度}$</a><ul><li></li><li><a href=#有没有解>有没有解?</a></li><li><a href=#有解怎么表示>有解怎么表示？</a></li><li><a href=#特征值-特征向量>==特征值-特征向量==</a></li></ul></li><li><a href=#相似合同>相似合同</a><ul><li><a href=#相似理论>==相似理论==</a></li><li><a href=#二次型与合同>==二次型与合同==</a></li></ul></li><li><a href=#快速回顾>快速回顾</a><ul><li><a href=#背诵>背诵</a></li><li><a href=#todo>TODO</a></li><li><a href=#理解>理解</a></li></ul></li><li><a href=#archive>archive</a><ul><li></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h1 id=线性代数>线性代数</h1><ul><li><a href=#%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0>线性代数</a><ul><li><a href=#%E7%AC%AC%E4%B8%89%E8%A7%86%E8%A7%92%E4%BB%8E%E5%90%91%E9%87%8F%E7%9A%84%E8%A7%92%E5%BA%A6>第三视角:从向量的角度</a></li><li><a href=#%E7%AC%AC%E4%B8%80%E8%A7%86%E8%A7%92colorred-%E6%96%B9%E7%A8%8B%E7%BB%84%E8%A7%92%E5%BA%A6>第一视角:${\color{Red} 方程组角度}$</a><ul><li><a href=#%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84>线性方程组</a><ul><li><a href=#define>define</a><ul><li><a href=#%E5%85%B7%E4%BD%93%E5%BD%A2>具体形</a></li><li><a href=#%E6%8A%BD%E8%B1%A1%E5%BD%A2>抽象形</a></li></ul></li><li><a href=#nature>nature</a></li><li><a href=#application>application</a></li></ul></li><li><a href=#%E6%9C%89%E6%B2%A1%E6%9C%89%E8%A7%A3>有没有解?</a><ul><li><a href=#%E7%9F%A9%E9%98%B5%E7%9A%84%E8%BF%90%E7%AE%97>==矩阵的运算==</a><ul><li><a href=#define-1>define:</a></li><li><a href=#nature-1>nature:</a></li><li><a href=#application-1>application:</a></li></ul></li><li><a href=#%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%9C%89%E8%A7%A3-%E6%AF%94%E8%BE%83%E7%A7%A9>怎么判断是否有解&ndash;>比较秩</a></li><li><a href=#bold-colorred%E6%B1%82%E7%9F%A9%E9%98%B5%E7%A7%A9>${\bold{ \color{Red}求矩阵秩}}$</a><ul><li><a href=#define-2>define</a></li><li><a href=#nature-2>nature</a></li><li><a href=#application-2>application</a></li><li><a href=#%E8%A1%8C%E5%88%97%E5%BC%8F%E4%BD%99%E5%AD%90%E5%BC%8F%E5%92%8C%E4%BB%A3%E6%95%B0%E4%BD%99%E5%AD%90%E5%BC%8F>==行列式(余子式和代数余子式)==</a></li></ul></li><li><a href=#%E7%AC%AC%E4%BA%8C%E8%A7%86%E8%A7%92%E4%BB%8E%E5%90%91%E9%87%8F%E8%A7%92%E5%BA%A6%E6%9D%A5%E7%9C%8B>第二视角:从向量角度来看</a><ul><li><a href=#define-3>define</a></li><li><a href=#nature-3>nature</a></li><li><a href=#application-3>application</a><ul><li><a href=#%E5%85%B7%E4%BD%93%E5%BD%A2-1>具体形</a></li><li><a href=#%E5%85%B7%E4%BD%93%E5%BD%A2-2>具体形</a></li><li><a href=#%E5%90%91%E9%87%8F%E7%AD%89%E4%BB%B7>向量等价</a></li></ul></li></ul></li></ul></li><li><a href=#%E6%9C%89%E8%A7%A3%E6%80%8E%E4%B9%88%E8%A1%A8%E7%A4%BA>有解怎么表示？</a></li><li><a href=#%E7%89%B9%E5%BE%81%E5%80%BC-%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F>==特征值-特征向量==</a><ul><li><a href=#define-4>define</a></li><li><a href=#nature-4>nature</a></li><li><a href=#application-4>application</a></li></ul></li></ul></li><li><a href=#%E7%9B%B8%E4%BC%BC%E5%90%88%E5%90%8C>相似合同</a><ul><li><a href=#%E7%9B%B8%E4%BC%BC%E7%90%86%E8%AE%BA>==相似理论==</a><ul><li><a href=#define-5>define</a></li><li><a href=#nature-5>nature</a><ul><li><a href=#a-sim-lambda>$ A \sim \Lambda $</a></li><li><a href=#a-sim-b>$ A \sim B $</a></li><li><a href=#%E5%AE%9E%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5%E6%AD%A3%E4%BA%A4%E7%9F%A9%E9%98%B5%E5%9B%9B%E4%BA%8C%E6%80%A7%E8%B4%A8>实对称矩阵/正交矩阵(四/二性质)</a></li></ul></li><li><a href=#application-5>application</a></li></ul></li><li><a href=#%E4%BA%8C%E6%AC%A1%E5%9E%8B%E4%B8%8E%E5%90%88%E5%90%8C>==二次型与合同==</a><ul><li><a href=#define-6>define</a></li><li><a href=#nature-6>nature</a></li><li><a href=#application-6>application</a></li></ul></li></ul></li><li><a href=#%E5%BF%AB%E9%80%9F%E5%9B%9E%E9%A1%BE>快速回顾</a><ul><li><a href=#%E8%83%8C%E8%AF%B5>背诵</a></li><li><a href=#todo>TODO</a></li><li><a href=#%E7%90%86%E8%A7%A3>理解</a></li></ul></li><li><a href=#archive>archive</a>
+- <a href=#%E6%9E%81%E5%A4%A7%E7%BA%BF%E6%80%A7%E6%97%A0%E5%85%B3%E7%BB%84httpsrawgithubusercontentcomzputmypiclibmasterzputgithubio20211013081737png>极大线性无关组</a></li></ul></li></ul><h2 id=第三视角从向量的角度>第三视角:从向量的角度</h2><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211005165220.png width=60% height=60% alt=效果图></p><p>jenif的基向量&lt;b1,b2>:
+$$
+\begin{bmatrix} 1 \ 0 \end{bmatrix}
+\begin{bmatrix} 0 \ 1 \end{bmatrix}
+$$</p><p>从我们的基向量看jenif的基向量:&lt;b1,b2>
+$$
+\begin{bmatrix} 2 \ 1 \end{bmatrix}
+\begin{bmatrix} -1 \ 1 \end{bmatrix}
+$$</p><p><strong>转换矩阵T</strong>:
+$$
+\begin{bmatrix}
+2 & -1 \
+1 & 1
+\end{bmatrix}
+$$</p><p>当jenif说她的向量 $\begin{bmatrix} -1 \ 2 \end{bmatrix}$; 其实是指我们的向量 $\begin{bmatrix} -4 \ 1 \end{bmatrix}$</p><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211005165140.png width=60% height=60% alt=效果图></p><hr><h2 id=第一视角colorred-方程组角度>第一视角:${\color{Red} 方程组角度}$</h2><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211006211017.png width=60% height=60% alt=效果图></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>       [把未知数向下压缩为一点。(去重)] -&gt; 组合转置放最右边
+</span></span><span class=line><span class=cl>方程组 ---- ---- ----&gt; 矩阵形式
+</span></span><span class=line><span class=cl>|
+</span></span><span class=line><span class=cl>| [把未知数向下压缩为一点。(去重)]
+</span></span><span class=line><span class=cl>|
+</span></span><span class=line><span class=cl>\/
+</span></span><span class=line><span class=cl>向量组形式
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>${\color{Red} A_{m\cdot n}X=0}$ n为未知量的个数, r(A)与n去比较
+${\color{Red} A_{m\cdot n}X=b}$ n为未知量的个数, r(A|b)与n去比较
+去比较而不是说看列向量
+<span id=jump回归到方程组></p><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211217152513.png width=60% height=60% alt=letter></p></span><ul><li><a href=#jump%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F>矩阵形式</a></li><li><a href=#jump%E5%9B%9E%E5%BD%92%E5%88%B0%E6%96%B9%E7%A8%8B%E7%BB%84_%E5%90%91%E9%87%8F>回归到方程组_向量</a><ul><li><del><a href=#jump%E5%90%91%E9%87%8F%E7%BB%84%E5%BD%A2%E5%BC%8F>向量组形式</a></del></li></ul></li></ul></blockquote><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211024234428.png width=60% height=60% alt=看懂这个，就理解了方程组变成矩阵/向量形式></p><hr><h4 id=线性方程组>线性方程组</h4><h5 id=define>define</h5><h6 id=具体形>具体形</h6><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017223159.png width=90% height=90% alt=效果图></li></ul></p><ul><li><p align=left><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017222708.png width=60% height=60% alt=效果图></li></ul></p><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017224716.png width=70% height=70% alt=效果图></li></ul></p><ul><li><p>求基础解系步骤:</p><ul><li>s=n-r(A)</li><li>线性无关</li><li>是解: 齐次方程组解的线性组合，必然还是方程组的解。<ul><li>通解(一定是齐次方程，然后求通解):<a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017223939.png>按列找出秩是3的子矩阵，剩余位置赋予自由变量</a></li><li>特解:剩余位置给0</li></ul></li></ul></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017224026.png>克拉默法则</a></p></li><li><p>公共解/通解</p><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211018080746.png>公共解</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211018080949.png>通解</a></li></ul></li></ul><h6 id=抽象形>抽象形</h6><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211018084140.png width=90% height=90% alt=效果图></p><ul><li>解的判定: r(A)与什么比较呢？如果是方阵那么很好取，如果是行列不等，那么应该取哪一个呢？<ul><li><span id=jump矩阵形式></span> 等于A<strong>列</strong>秩，因为 $A_{m,n} * X_{n,j}$;且如果是方程，那么j一定是1；未知数的个数就是A的列，方程个数就是A的行。</li></ul></li></ul><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211018085215.png>判断基础解析的&lt;是解;无关;s=n-r(A)></a><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211018234356.png width=70% height=70% alt=效果图></li></ul></p></li></ul></li></ul><h5 id=nature>nature</h5><h5 id=application>application</h5><p><span id=jump非齐通></span></p><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211128163952.png width=60% height=60% alt=效果图></p><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211128171804.png width=60% height=60% alt=效果图></p><ul><li>架好自由变量后，怎么求剩下值 ${\color{Red}[_, _, _, 1, 0, 0]^T}$ 的呢？一定是从下到上来一步一步算出剩下的空的值</li></ul><hr><h3 id=有没有解>有没有解?</h3><table><thead><tr><th></th><th>齐次方程</th><th>非齐次方程</th></tr></thead><tbody><tr><td>==有解==</td><td>只有零解</td><td>有唯一解</td></tr><tr><td>==有解==</td><td>除零解外有无数个非零解</td><td>有无穷多解</td></tr><tr><td>无解</td><td><del><strong>不可能无解（至少存在一个零解）</strong></del></td><td>无解</td></tr></tbody></table><hr><ul><li><p>齐次方程组的解:</p><ul><li>当r=n时，原方程组仅有零解；</li><li>当r&lt;n时，有无穷多个解（从而有非零解）。</li></ul></li><li><p>非齐次方程组的解:</p><ul><li><p align=left><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211007181723.png width=60% height=60% alt=效果图></li></ul></p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>轮回:判断解类型:比较秩与未知数的个数:秩-&gt;矩阵-&gt;矩阵的运算-&gt;分块矩阵-&gt;
+</span></span><span class=line><span class=cl>                                \_&gt;求秩-&gt;行阶梯,行最简,初等变换,非零子式-&gt;行列式-&gt;求方程组解的类型。
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>               xxxxxxxxxxxxxxx
+</span></span><span class=line><span class=cl>            xx                 x
+</span></span><span class=line><span class=cl>          xx                    x
+</span></span><span class=line><span class=cl>         xx                      x       
+</span></span><span class=line><span class=cl>       xxx                        x     x 
+</span></span><span class=line><span class=cl>      xx                     x     x    x
+</span></span><span class=line><span class=cl>      x                        x    x   x
+</span></span><span class=line><span class=cl>      x                         x   x  x
+</span></span><span class=line><span class=cl>     xx                           x x x
+</span></span><span class=line><span class=cl>    x   x                           x
+</span></span><span class=line><span class=cl>   x  x   x                        x
+</span></span><span class=line><span class=cl>  x   xx    x                     x
+</span></span><span class=line><span class=cl> x    xx     x                   x
+</span></span><span class=line><span class=cl>        xx                    x
+</span></span><span class=line><span class=cl>         xxx               x
+</span></span><span class=line><span class=cl>            xxxxxxxxxxxx
+</span></span></code></pre></td></tr></table></div></div><hr><blockquote><p>m*n的矩阵 (m行*n列)
+看作方程组，方程的个数m, 未知数的个数n</p></blockquote><p>3行3列
+看作方程组，方程的个数3, 未知数的个数3
+$$
+\begin{bmatrix}
+1 & -1 & -1 \
+2 & -1 & -3 \
+3 & 2 & -5
+\end{bmatrix}
+$$</p><p>3行4列
+看作方程组，方程的个数3, 未知数的个数4
+$$
+\begin{bmatrix}
+1 & -1 & -1 & 2 \
+2 & -1 & -3 & 1 \
+3 & 2 & -5 & 0 \
+\end{bmatrix}
+$$</p><h5 id=矩阵的运算>==矩阵的运算==</h5><h6 id=define-1>define:</h6><ul><li><p>任何矩阵都有伴随，但是不一定可逆，可逆一定是方阵且行列式不等与0</p><ul><li>$ A^{-1}=\frac{1}{|A|}A^* $; 每一边只需要有一个-1就行了($\frac{1}{|A|} = |A|^{-1}$)</li></ul></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211110212258.png>分块矩阵</a></p></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017124905.png>伴随矩阵</a></p><ul><li><a href=#jump%E4%BC%B4%E9%9A%8F>==伴随公式的推导==</a>:代数余子式的一些内容<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211217160100.png width=30% height=30% alt=letter></p></li></ul></li></ul><h6 id=nature-1>nature:</h6><h6 id=application-1>application:</h6><blockquote><ul><li>代数加减乘: $A^n$<ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025080428.png width=80% height=80% alt=A^n></p></li><li>从内部性质来看<ul><li>$A^n = (X)^{n-1}A$ ; 其中X可为迹(主对角相乘)/K<ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016104414.png>${\color{Red} A为方阵，且秩为1}$</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016105330.png>试算$A^2,A^3$,找规律</a></li></ul></li></ul></li><li>从内部瓦解<ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016113010.png>$A \overset{分解}{=}B+C$</a></li></ul></li><li>借助外力(初等矩阵/相似)<span id=jump初等矩阵A^n></span><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016113330.png>初等矩阵:$ P_{1}^{m} A P_{2}^{n} $</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016113619.png>相似理论: $P^{-1}AP$</a><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016121253.png width=60% height=60% alt=效果图></p></li></ul></li></ul></li></ul></li></ul></blockquote><ul><li><p>代数除: $A^{-1}$ <span id=jump求逆的四种方式></span></p><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025081733.png width=80% height=80% alt=A^n></p></li></ul><blockquote><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016151006.png>求$A^{-1}$</a><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016150907.png>分块矩阵</a></li></ul></li></ul></blockquote></li><li><p>代数方程:矩阵方程</p><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025082140.png width=80% height=80% alt=A^n></p></li></ul><blockquote><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017161448.png>矩阵方程</a></li></ul></blockquote></li></ul><h4 id=怎么判断是否有解--比较秩>怎么判断是否有解&ndash;>比较秩</h4><ul><li>r(A) ${\color{Red}\overset{秩与方程未知数的个数大小关系}{\longrightarrow?}}$ n(<strong>方程未知数的个数,不是方程的个数</strong>)<ul><li>秩:<strong>在方程组为有效方程的个数</strong>。</li></ul></li></ul><p>$$
+\begin{array}{l}
+\left{\begin{array}{l}
+x_{1}-x_{2}-x_{3}=2 \
+2 x_{1}-x_{2}-3 x_{3}=1 \
+3 x_{1}+2 x_{2}-5 x_{3}=0
+\end{array} \Rightarrow A=\left(\begin{array}{ccc}
+1 & -1 & -1 \
+2 & -1 & -3 \
+3 & 2 & -5
+\end{array}\right)\right. \
+\left(\begin{array}{ccc}
+1 & -1 & -1 \
+2 & -1 & -3 \
+3 & 2 & -5
+\end{array}\right)\left(\begin{array}{l}
+x_{1} \
+x_{2} \
+x_{3}
+\end{array}\right)=\left(\begin{array}{l}
+2 \
+1 \
+0
+\end{array}\right) \
+\left(\begin{array}{l}
+1 \
+2 \
+3
+\end{array}\right) x_{1}+\left(\begin{array}{c}
+-1 \
+-1 \
+2
+\end{array}\right) x_{2}+\left(\begin{array}{l}
+-1 \
+-3 \
+-5
+\end{array}\right) x_{3}=\left(\begin{array}{l}
+2 \
+1 \
+0
+\end{array}\right)
+\end{array}
+$$</p><p>分为上/中/下式子；</p><p>从上->中引出矩阵的概念。$\overset{如何运算?}{====>}$引出矩阵的乘法(<strong>左行右列</strong>)
+从中->下引出了分块的概念。===>分块矩阵。</p><h4 id=bold-colorred求矩阵秩>${\bold{ \color{Red}求矩阵秩}}$</h4><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211106201457.png alt=20211106201457></p><h6 id=define-2>define</h6><blockquote><ul><li>概念性质的结论一定要从${\color{Red} 定义(矩阵/向量) }$入手去理解:<ul><li><strong>矩阵</strong>:非零子式的最高阶数就是秩</li></ul><ul><li><strong>向量</strong>:什么是向量组的秩？<ul><li>==从定义上的描述，秩是向量组的最大线性无关组所包含的向量个数，但更为直观的理解是：秩是描述一个向量组“表出能力”的数字，它表示向量组能够表出的线性空间的维度是多少，但并不记录它能表出哪些维度。==</li></ul><ul><li>B能被A表出，则${\color{Red} r(B)≤r(A)}$，这其实很好理解：<ul><li>①向量组能表示出的线性空间维度取决于构成它的向量本身（<strong>就跟不能用二维坐标直接去表示任意的三维空间坐标一样</strong>）</li><li>②对于已经定义好向量表示形式的向量组而言，它自身也不可能表出具有别的维度的向量组（比如[1,0,0]和[0,1,0]无论如何也不可能表出[0,0,1]这个向量）。因此表出结果的秩只可能变小或者维持相等（这也是有r(AB)≤r(A),r(B)的原因，因为矩阵乘法本身就是对向量组的一种线性变化）。<ul><li>就像我(A)兜里有橘子、苹果和香蕉，而你(B)兜里的水果全都来自与我(表出关系)，那你兜里的水果种类一定只能比我少或相等；</li></ul></li></ul></li><li>要使得A和B秩相同， 条件需要补充成A和B能互相线性表出，这种关系我们称为向量组A和B等价。<ul><li>需要注意“A和B能互相线性表出”是“A和B秩相同”的充分条件而不是必要条件，因为在A和B并不是满秩的情况下，他们可能刚好都能表示n(n&lt;N)维空间，但并非表示的相同的n维，这时候二者等秩但并不能相互线性表出（注意开始提到的秩的概念）。<ul><li>这也很好理解：我(A)手里有橘子和苹果，你(B)手里有橘子和香蕉，我俩水果种类都是2，但是我们不存在表出关系。</li></ul></li></ul></li></ul></li></ul></li></ul></blockquote><p><span id=jump秩></span></p><p>$$
+\left{\begin{array}{l}
+常识: \left{\begin{array}{l}
+\text { (1) } 0 \leqslant r\left(\boldsymbol{A}<em>{m \times n}\right) \leqslant \min {m, n}\
+\text { (2) } r(k \boldsymbol{A})=r(\boldsymbol{A})(k \neq 0)\
+\text { (10) } r\left(\boldsymbol{A}^{*}\right)=\left{\begin{array}{ll}
+n, & \boldsymbol{r}(\boldsymbol{A})=n \
+1, & r(\boldsymbol{A})=n-1 \
+0, & r(\boldsymbol{A})&lt;n-1
+\end{array}\right. \
+\text { (3) } r(\boldsymbol{A})=r(\boldsymbol{P A})=r(\boldsymbol{A} \boldsymbol{Q})=r(\boldsymbol{P A Q}) ; 设\boldsymbol{A} 是m \times n 矩阵, \boldsymbol{P}, Q 分别是m阶、n阶可逆矩阵\
+\text { (4) } r(\boldsymbol{A} \boldsymbol{B}) \leqslant \min {r(\boldsymbol{A}), r(\boldsymbol{B})}\
+\text { (8) } r(\boldsymbol{A} \boldsymbol{B}) \geqslant r(\boldsymbol{A})+ r (\boldsymbol{B})-n \boldsymbol{&mdash;>} \boldsymbol{A} \boldsymbol{B}=\boldsymbol{O} \text { 时, } r(\boldsymbol{A})+r(\boldsymbol{B}) \leqslant n, \text { 其中 } n \text { 是 } \boldsymbol{A} \text { 的列数（或 } \boldsymbol{B} \text { 的行数） } \
+\text { (9) } r(\boldsymbol{A})=r\left(\boldsymbol{A}^{\mathrm{T}}\right)=r\left(\boldsymbol{A} \boldsymbol{A}^{\mathrm{T}}\right)=r\left(\boldsymbol{A}^{\mathrm{T}} \boldsymbol{A}\right)\
+\end{array}\right. \
+分块矩阵: \left{\begin{array}{l}
+\text { (5) } r(\boldsymbol{A}+\boldsymbol{B}) \leqslant r([\boldsymbol{A}, \boldsymbol{B}]) \leqslant r(\boldsymbol{A})+r(\boldsymbol{B})\
+\text { (6) } r\left(\left[\begin{array}{ll}
+\boldsymbol{A} & \boldsymbol{O} \
+\boldsymbol{O} & \boldsymbol{B}
+\end{array}\right]\right)=r(\boldsymbol{A})+r(\boldsymbol{B})\
+\text { (7) } r(\boldsymbol{A})+r(\boldsymbol{B}) \leqslant r\left(\left[\begin{array}{ll}
+\boldsymbol{A} & \boldsymbol{O} \
+\boldsymbol{C} & \boldsymbol{B}
+\end{array}\right]\right) \leqslant r(\boldsymbol{A})+r(\boldsymbol{B})+r(\boldsymbol{C})\
+\end{array}\right. \
+矩阵A^n/矩阵方程/相似: \left{\begin{array}{l}
+(11) 若 \boldsymbol{A}^{2}=\boldsymbol{A} , 则 r(\boldsymbol{A})+r(\boldsymbol{A}-\boldsymbol{E})=n \
+(12) 若 \boldsymbol{A}^{2}=\boldsymbol{E} , 则 r(\boldsymbol{A}+\boldsymbol{E})+r(\boldsymbol{A}-\boldsymbol{E})=n \
+(13) A x=0 的基础解系所含向量的个数 s=n-r(A) \
+(14) 若 \boldsymbol{A} \sim \boldsymbol{\Lambda} , 则 n</em>{i}=n-r\left(\lambda_{i} \boldsymbol{E}-\boldsymbol{A}\right) , 其中 \lambda_{i} 是 n_{i} 重特征根 \
+(15) 若 \boldsymbol{A} \sim \boldsymbol{\Lambda} , 则 r(\boldsymbol{A}) 等于非零特征值的个数, 重根按重数算 \
+\end{array}\right. \
+\end{array}\right.
+$$</p><ul><li>解释:<ul><li>(3):初等变换不影响矩阵的秩<ul><li><strong>$初等变换法: 对(\begin{array}{l:l}A & E\end{array}) \overset{作初等变换}{\longrightarrow} (\begin{array}{l:l}E & A^{-1}\end{array})$</strong></li></ul></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211113154627.png>(4):</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211113163921.png>(10):</a> ${\color{Red} 已知伴随的秩可以反推矩阵的秩}$</li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211113163756.png>(8):</a><ul><li>向量空间的解释，就是线性无关的解的个数实际上就是解空间的维度。ABX=0的解空间维度要大于AX=0和BX=0的，用AB解空间的维度减去A解空间的维度，相当于去掉了A对解空间维度数量做出的贡献;<ul><li>但是由于A和B对空间维度增加的贡献有的是重合的（表现为ax=0和bx=0的基础解系中线性无关的解有可以相互表示的），所以 $S_{AB}-S_A&lt;S_B$ (S就是维数），转化成矩阵的秩表示就是n-r(AB)-（n-r(A))＜n-r(B)整理之后就是结果了</li></ul></li></ul></li><li>(11)(12)记住的方式为<ul><li>$A^2-A=0 -> A(A-E) -> r(A)+r(A-E)= n$</li><li>$A^2-E=0->(A+E)(A-E)->r(A+E)+r(A-E)==>n$</li></ul></li></ul></li></ul><h6 id=nature-2>nature</h6><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211113154627.png width=60% height=60% alt=效果图></p></li><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017182637.png width=60% height=60% alt=效果图></p></li></ul><h6 id=application-2>application</h6><hr><p>什么是非零子式? $\overset{跟行列式有关}{===>}$ 行列式的概念</p><hr><h5 id=行列式余子式和代数余子式>==行列式(余子式和代数余子式)==</h5><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025073739.png width=80% height=80% alt=效果图></p><ul><li><p>define:</p><ul><li>不能单独的把它看作数字，要看作向量，然后多个向量组成的向量组。<ul><li>一维:相当于一个数字;</li><li>二维:相当于面积;</li><li>三维:相当于体积，行列式就是向量组的体积.<ul><li>$D_3=0$ => V=0 => $\alpha,\beta,\gamma$ 线性相关</li><li>$D_3 \ne 0$ => V $\ne$ 0 => $\alpha,\beta,\gamma$ 线性无关(因为不在一个平面上,肯定线性无关)</li></ul><ul><li>所以当他为零的几种情况:<ul><li>一维向量等于0，二维共线，三维共面</li><li>至少有两个向量平行</li></ul></li></ul></li></ul></li><li>余子式: $M_{ij}$<ul><li>代数余子式:在余子式前面乘以 $(-1)^{i+j}$<ul><li>可以由代数余子式反求余子式:<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211014231606.png width=80% height=80% alt=效果图></p></li></ul></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211014231907.png>展开公式:n阶可拆分为n个n-1阶之和</a></li></ul></li></ul></li><li><p>nature:</p></li></ul><blockquote><ul><li>某一行列式全为0</li><li>某两行/列成比例</li><li>一行可拆开，其他行不动</li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211014230917.png>互换-倍乘-倍加</a><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211014230526.png>某一行乘以K，加减到另一行，行列式的值不变</a></li></ul></li></ul></blockquote><ul><li>application:</li></ul><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025073220.png width=60% height=60% alt=效果图></p><ul><li>行列式的计算。<blockquote><ul><li>具体：<ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015072645.png>12+1基本型</a><ul><li>(1) 按零元素多的行或列展开;</li><li>(2) 用行列式性质==对差别最小的“对应位置元 素”进行==处理,尽可能多地化出零元素,再按此行或列展开;(|A|=|$A^T$|)</li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015200331.png>(3) 对于==行和或列和相等==的情形,将所 有列加到第 1 列或将所有行加到第 1 行,提出公因式,再用 (2),等等.</a></li></ul></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015082712.png>加边法</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015083547.png>递推法</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015084725.png>数学归纳法</a></li></ul></li><li>抽象:<ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015202730.png>用行列式的性质</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015202432.png>用矩阵知识</a><ul><li>$|C| = |AB| = |A||B|$<ul><li>$|C| = |A+B| \overset{恒等变形,化为上式的两矩阵相乘}{=} |a(b_1+b_2)| = |a||b_1+b_2|$</li></ul></li><li>$|A^{<em>}|=|A|^{n-1},|(A^{</em>})^{*}|=|| A|^{n-2} A|=| A|^{(n-1)^{2}}$<ul><li>$ A \cdot A^{<em>}=|A| \cdot E \rightarrow |A| \cdot |A^</em>| = |A|^n $</li><li>$$ |k A|=k^{n}|A| \
+\left{\begin{array}{l}
+(k A)^{\top}=k A^{\top} \
+(k A)^{<em>}=k^{n-1} A^{</em>} \
+(k A)^{-1}=\frac{1}{k} A^{-1}
+\end{array}\right.
+$$</li></ul></li></ul></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015210201.png>相似理论:</a><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211015205438.png>一些公式</a></li></ul></li></ul></li></ul></blockquote><ul><li>余子式与代数余子式<ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025074252.png width=80% height=80% alt=效果图></p></li></ul><blockquote><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016085457.png>使用展开公式;余子式就是余下来的，与本身的值无关</a></li><li><span id=jump伴随></span><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016092837.png>使用伴随矩阵来求余子式</a><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016093121.png>example</a></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016094804.png>example</a></li></ul></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211016095844.png>使用特征值</a></li><li><strong>求余子式</strong>: 利用求代数余子式，然后反推。$由于 M_{i j}=(-1)^{i+j} A_{i j}, 故先求出 A_{i j} , 乘(-1)^{i+j} 即可.$</li></ul></blockquote></li></ul></li></ul><hr><p>TODO</p><ul><li>任何方阵都有伴随矩阵，<ul><li>|A|=0;仍有伴随矩阵，只是不能用$A^* = (\frac{1}{|A|}A)^{-1} = |A|A^{-1}$,只能使用代数余子式求(用定义)</li></ul></li></ul><hr><ul><li>轮回：用行列式怎么判断方程组是<strong>有解还是没有解</strong>？<ul><li>可逆</li><li>克拉默法则</li></ul></li></ul><hr><h4 id=第二视角从向量角度来看>第二视角:从向量角度来看</h4><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211006202331.png width=60% height=60% alt=效果图></p><p>$$
+\left(\begin{array}{l}
+1 \
+2 \
+3
+\end{array}\right) x_{1}+\left(\begin{array}{l}
+-1 \
+-1 \
+2
+\end{array}\right) x_{2}+\left(\begin{array}{r}
+-1 \
+-3 \
+-5
+\end{array}\right) x_{3}=\left(\begin{array}{l}
+2 \
+1 \
+0
+\end{array}\right)
+$$</p><h5 id=define-3>define</h5><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211019064206.png width=60% height=60% alt=效果图></p><ul><li><p>${\color{Red} 定理7:列无关,延长行(增加维度),还是无关}$</p><ul><li>$r(A)<em>{m\cdot n}=m; r(A|b)</em>{m\cdot (n+1)}$, 行满秩,再加一列,不影响行的秩</li></ul></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211019065619.png>线性表示 / 线性相关-无关</a></p></li></ul><blockquote><ul><li>向量之间的关系(相关-无关/表示)要从两个方面来分析:<ul><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211020083700.png>从向量之间的关系来:</a></p><ul><li>成比例的向量，为0的向量 ==> 线性相关</li><li>单个非零向量，两个不成比例的向量 ==> 线性无关</li></ul></li><li><p>从方程组的角度来分析</p><ul><li>线性表示/不能线性表示 $\overset{类比 AX=B}{====>}$ 非齐次方程组</li></ul><blockquote><ul><li>线性表示(出) $\overset{类比 AX=B}{====>}$ 非齐次方程组的有解(唯一解也好/无穷解也好，只要有解)<ul><li>线性表示 $\overset{多个向量进行线性表示}{====>}$ 向量等价</li></ul></li></ul></blockquote><ul><li>线性无关/线性相关 $\overset{类比 AX=0}{====>}$ <strong>齐次方程组</strong></li></ul><blockquote><ul><li>线性无关 $\overset{类比 AX=0}{====>}$ <strong>齐次方程组</strong>的有==零解==</li><li>线性相关 $\overset{类比 AX=0}{====>}$ <strong>齐次方程组</strong>的有==无穷多个解(从而有非零解)==<ul><li>能不能把线性相关无关这些概念 $\overset{极大线性无关组}{====>}$ 跟r(A)联系起来 ( $\overset{有效方程个数}{====>}$ 方程组)<ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211013085247.png>在与视角一的行列式联系起来？</a><ul><li>$|r| \ne 0$; 中间的那个 $\ne$ 很像<strong>无</strong>,所以线性无关。</li></ul></li></ul></li></ul></li></ul></blockquote></li></ul></li></ul><table><thead><tr><th>向量</th><th>方程组</th></tr></thead><tbody><tr><td>个数</td><td>未知数</td></tr></tbody></table><blockquote><p>个数++&ndash; | 未知数++&ndash;</p><blockquote><p>部分线性相关,整体线性相关 | <a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211020083139.png>click</a></p><table><thead><tr><th>整体线性无关,部分线性无关</th><th>这个很好理解</th></tr></thead><tbody><tr><td>维度</td><td>方程个数</td></tr><tr><td><strong>维度++&ndash;</strong></td><td><strong>方程个数++&ndash;(约束条件的变化)</strong></td></tr><tr><td><strong>线性相关-无关</strong></td><td><strong>齐次AX=0</strong></td></tr><tr><td><strong>线性无关</strong></td><td><strong>齐次AX=0;只有零解</strong></td></tr><tr><td>==原来无关,延长必无关==(原来就是无缘的人，延长时间还是无关)</td><td>==只有零解的情况下，减少约束条件，有零解/∞解；增加约束条件，只会有零解==</td></tr><tr><td>==原来相关,缩短必相关== (原来就是有缘的人，缩短时间还是能一见钟情)</td><td>==有∞解的情况下，减少约束条件，∞解；增加约束条件，只有零解/有∞解==</td></tr><tr><td><strong>线性相关</strong></td><td><strong>齐次AX=0;有∞解</strong></td></tr><tr><td>线性表示(出)</td><td>非齐次AX=B</td></tr></tbody></table></blockquote></blockquote></blockquote><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211019065952.png width=80% height=80% alt=效果图></li></ul></p><h5 id=nature-3>nature</h5><h5 id=application-3>application</h5><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211019083437.png width=60% height=60% alt=效果图></p><p><span id=jump回归到方程组_向量></span></p><ul><li><a href=#jump%E5%9B%9E%E5%BD%92%E5%88%B0%E6%96%B9%E7%A8%8B%E7%BB%84>抽象层向量关系用秩:</a><ul><li>应该还是从向量回归到方程组，然后用解(k1,k2,k3&mldr;))与秩的关系来</li></ul></li></ul><h6 id=具体形-1>具体形</h6><blockquote><ul><li>具体形向量关系:<ul><li><p>一个向量与一组向量的关系</p></li><li><p><span id=jump向量组形式>一组向量之间的关系</span></p><ul><li>${\bold{\color{Red}向量个数大于维数\overset{未知数的个数>方程的个数(先不论它是否是有效方程)}{&mdash;&mdash;&mdash;&mdash;&ndash;>}必相关}}$<ul><li>向量<strong>个数</strong>代表<strong>未知数</strong>个数:可以看出向量个数增加，则代表未知数的增加</li><li>向量<strong>维度</strong>代表<strong>方程</strong>个数:维度的增加，代表方程个数的的增加
+$$
+\boldsymbol{A}=\left[\boldsymbol{\alpha}<em>{1}, \boldsymbol{\alpha}</em>{2}, \cdots, \boldsymbol{\alpha}<em>{m}\right]=\left[\begin{array}{cccc}
+a</em>{11} & a_{12} & \cdots & a_{1 m} \
+a_{21} & a_{22} & \cdots & a_{2 m} \
+\vdots & \vdots & & \vdots \
+a_{n 1} & a_{n 2} & \cdots & a_{n m}
+\end{array}\right], \boldsymbol{x}=\left[\begin{array}{c}
+x_{1} \
+x_{2} \
+\vdots \
+x_{m}
+\end{array}\right]
+$$</li></ul></li></ul><p>$$
+x_{1} \boldsymbol{\alpha}<em>{1}+x</em>{2} \boldsymbol{\alpha}<em>{2}+\cdots+x</em>{m} \boldsymbol{\alpha}_{m}=\mathbf{0}
+$$</p></li><li><p>极大无关组</p><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211020063619.png width=80% height=80% alt=效果图></li></ul></p></li></ul></li></ul></blockquote><h6 id=具体形-2>具体形</h6><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211020084308.png width=80% height=80% alt=效果图></p><h6 id=向量等价>向量等价</h6><hr><h3 id=有解怎么表示>有解怎么表示？</h3><blockquote><p>有解无解判定成功后，有解如何表示？</p><blockquote><p>尤其是无穷多解。</p></blockquote></blockquote><p align=center><img width=60% height=60% src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211006202245.png></p><blockquote><p>怎么表示无穷多解？ $\overset{引出解个数判定,让它们自由组合({\color{Red} 在前面赋予系数k1,k2&mldr; })}{&lt;========}$ 无穷多个解中选出几个具有代表性的解。</p><blockquote><pre><code>                                                           代表性的解 ========&gt; 线性无关的解
+</code></pre></blockquote></blockquote><h3 id=特征值-特征向量>==特征值-特征向量==</h3><h4 id=define-4>define</h4><p>行列式里面都是方的
+相似理论-特征值/向量都是方的
+二次型一定是方的</p><ul><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211021073010.png width=90% height=90% alt=大纲></li></ul></p><ul><li>特征值-特征向量:<ul><li>$|3 A+2 E|=0 \Rightarrow \lambda=-\frac{2}{3} \rightarrow -\frac{b}{a}$<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211021080415.png width=50% height=50% alt=大纲> <img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211121175723.png width=50% height=50% alt=大纲 align></p></li></ul></li></ul><h4 id=nature-4>nature</h4><ul><li><p>特征值命题:</p><ul><li>==$f(A)\xi=f(\lambda)\xi$==</li><li>$A^{-1}\xi=\frac{1}{\lambda}\xi$</li><li>$A^{*}\xi=\frac{|A|}{\lambda}\xi$</li><li>==$(P^{-1}AP)(P^{-1}\xi)=\lambda (P^{-1}\xi)$==<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211121180602.png width=90% height=90% alt=大纲></p></li></ul></li><li><p>特征向量例子:<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211022081405.png width=60% height=60% alt=大纲></p></li></ul></p>-<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211022081957.png width=60% height=60% alt=大纲></p><h4 id=application-4>application</h4><ul><li>矩阵方程命题:<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211021084921.png width=90% height=90% alt=大纲></li></ul></p><h2 id=相似合同>相似合同</h2><p>相似合同这里的判定:</p><ul><li>相似判定</li><li>合同的判定</li><li>正定的判定</li></ul><blockquote><ul><li>==相似合同==<ul><li>判断合同:<ul><li>$用定义法: \boldsymbol{A}, \boldsymbol{B} 合同 \Leftrightarrow 存在可逆矩阵 \boldsymbol{C} , 使得 \boldsymbol{C}^{\mathrm{T}} \boldsymbol{A} \boldsymbol{C}=\boldsymbol{B} .$</li><li>用正、负惯性指数: $\mathbf{A}, \boldsymbol{B} 合同 \Leftrightarrow p_{\boldsymbol{A}}=p_{\boldsymbol{B}}, q_{\boldsymbol{A}}=q_{\boldsymbol{B}} . (相同的正、负惯性指数)$<ul><li>同阶实对称矩阵 $ {\color{Red} \boldsymbol{A}, \boldsymbol{B} 相似}$必合同;<ul><li>$A=A^T;B=B^T,且A～B$</li><li>下面这一条应该是错的,特征值相同,不能推出合同=>$ 实对称矩阵A,B相似 \overset{因实对称矩阵 \rightarrow 必定可以相似对角化}{\longrightarrow} 有相同的特征值/特征向量 \overset{p_A = p_B, q_A = q_B(相同的正负惯性指数 \Leftrightarrow A,B合同 )}{\longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow} A,B必合同 $</li></ul><ul><li>为什么是对称矩阵必有可逆矩阵C，使得$C^TAC=\Lambda$, 其中 $\Lambda$ 为对角矩阵?<ul><li>实对称矩阵有正交矩阵C, $ C^{-1}AC=C^TAC=\Lambda$</li><li>所以实对称矩阵相似,就有相同的$\Lambda$,所以$C^TAC=C_1^TAC_1 -> A = (C_1\cdot C^{-1})^T B (C_1\cdot C^{-1})$, ${\color{Red} 所以不是通过上面的用特征值相同得到正负惯性得到}$</li></ul></li></ul></li></ul></li><li>用传递性: $\boldsymbol{A} 合同于 \boldsymbol{C}, \boldsymbol{C} 合同于 \boldsymbol{B} , 则 \boldsymbol{A} 合同于 \boldsymbol{B}.$</li></ul></li><li><a href=#jump%E5%9B%9B%E4%BA%8C>实对称矩阵/正交矩阵(四/二性质)</a></li></ul></li><li>==二次型是应用==<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211218151504.png width=60% height=60% alt=矩阵的运算></p><ul><li>正定是描述二次型的->正定二次型<ul><li>判断是否正定<ul><li>|A|:<ul><li>顺序主子式>0</li></ul></li><li>$\lambda, \alpha$:<ul><li>$\lambda_i>0$</li></ul></li><li>相似合同:<ul><li>C可逆,$A=C^TC$</li><li>$C^TAC=E; A与E合同$</li></ul></li><li>二次型:<ul><li>定义:$x\ne0,x^TAx>0$</li><li>f的正惯性指数p=n</li></ul></li></ul></li></ul></li></ul></li></ul></blockquote><hr><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211215211352.png alt=20211215211352></p><h3 id=相似理论>==相似理论==</h3><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211027234546.png width=90% height=90% alt=大纲></p><ul><li><strong>当要求相似关系的时候，一个重要的突破点;就是有n个向量无关的特征向量，而特征向量又是与特征值密切相关的，就是一般就是判断矩阵A的特征值。</strong><ul><li>当求A的特征值的时候，比较难，或者题目是抽象的，根本不能直接求出来，一个重要的思想就是f(A)=0; $f(\lambda)$ = 0,进而求出A的特征值。<ul><li>A的秩为1，它的迹不等于0 ==> 可推出A能相似对角化。<ul><li>秩为1,则$A^2=tr(A)*A \rightarrow f(A)=A^2-tr(A)A=0 \rightarrow f(\lambda)=0 \rightarrow {\lambda}^2-tr(A)\lambda = 0 \rightarrow \lambda只能是{0, tr(A)}$</li></ul><ul><li>由于 $tr(A)=\lambda_1 + \lambda_2 + &mldr; + \lambda_n $,所以A有n-1个0, 1个tr(A)的特征值。n重特征值有n个线性无关的特征向量，那么就能得证。</li></ul></li><li>$当f(A)\ne 0; 比如f(A) = A \rightarrow g(A)=f(A)-A=0$</li></ul></li></ul></li></ul><hr><h4 id=define-5>define</h4><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211213074012.png alt=20211213074012></p><ul><li><a href=https://zhuanlan.zhihu.com/p/257872391>https://zhuanlan.zhihu.com/p/257872391</a></li></ul><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211213074937.png alt=20211213074937></p><blockquote><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023142141.png>$ A \sim \Lambda; A \sim B 定义$</a><ul><li>四个性质<ul><li><strong>(行)(秩)(特值迹)</strong></li></ul></li></ul></li></ul></blockquote><ul><li>${\color{Red} 2512 }$<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211022084631.png width=80% height=80% alt=大纲></p></li></ul><h4 id=nature-5>nature</h4><h5 id=-a-sim-lambda->$ A \sim \Lambda $</h5><blockquote><ul><li>找出所有: $\lambda$<ul><li>特征值 $f(A)=0 -> f(\lambda)=0$</li></ul></li><li>利用: ${\color{Red} n_{i}=n-r\left(\lambda_{i} \boldsymbol{E}-\boldsymbol{A}\right) \Leftrightarrow \boldsymbol{A} \sim \boldsymbol{\Lambda}}$</li><li>回归到: ${\color{Red} \boldsymbol{A} \text { 有 } n \text { 个线性无关的特征向量 } \Leftrightarrow \boldsymbol{A} \sim \boldsymbol{\Lambda} }$</li></ul></blockquote><hr><ul><li>充分必要条件:<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211022084541.png width=60% height=60% alt=大纲></li></ul></p><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023075946.png width=60% height=60% alt=大纲></p><ul><li><p>增加的充分条件:</p><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023085616.png width=60% height=60% alt=大纲></li></ul></p>-<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023085129.png width=60% height=60% alt=大纲></p></li><li><p>必要条件/否定条件:</p><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023104104.png width=60% height=60% alt=大纲></p></li></ul></li></ul><h5 id=-a-sim-b->$ A \sim B $</h5><blockquote><ul><li>四个必要不充分条件:<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023114907.png width=60% height=60% alt=大纲></p></li></ul><blockquote><ul><li><span id=jumpAB相似>AB相似的四个条件</span><ul><li>${\color{Red} \lambda_A==\lambda_B }$<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211218160948.png width=60% height=60% alt=letter></p><ul><li>tr(A)==tr(B)</li><li>|A|==|B|</li></ul></li><li>r(A)==r(B)</li></ul></li></ul></blockquote></blockquote><ul><li>重要结论:<ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023114706.png width=60% height=60% alt=大纲></p></li><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023123144.png width=60% height=60% alt=大纲></p><ul><li>$ A \sim \Lambda 与 B \sim \Lambda 中,\Lambda应该要相等。$</li></ul></li></ul></li></ul><h5 id=实对称矩阵正交矩阵四二性质>实对称矩阵/正交矩阵(四/二性质)</h5><p><span id=jump四二></span></p><blockquote><ul><li><p>实对称矩阵==四条性质==:<p align=center>: 先说特征值->特征向量->有正交矩阵相似<strong>对角化</strong>(这里就包括了第三个性质)（特征向量之间必定线性无关）
+<img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023142406.png width=60% height=60% alt=大纲></p></p><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023142658.png>example</a></li></ul></li><li><p>正交矩阵的==二个性质==:正交矩阵的<strong>转置-求逆-伴随</strong>都是正交矩阵
+$$
+\left{\begin{array}{l}
+\boldsymbol{A}^{\mathrm{T}} \boldsymbol{A}=\boldsymbol{E} & \Leftrightarrow \boldsymbol{A}^{-1}=\boldsymbol{A}^{\mathrm{T}} \
+& \Leftrightarrow \boldsymbol{A} \text { 由规范正交基组成 } \
+& \Leftrightarrow \boldsymbol{A}^{\mathrm{T}} \text { 是正交矩阵 } \
+& \Leftrightarrow \boldsymbol{A}^{-1} \text { 是正交矩阵 } \
+& \Leftrightarrow \boldsymbol{A}^{*} \text { 是正交矩阵 } \
+& \Leftrightarrow-\boldsymbol{A} \text { 是正交矩阵 } \
+\text { 若 } \boldsymbol{A}, \boldsymbol{B} & \text { 为同阶正交矩阵,则 } A \boldsymbol{B} \text { 为正交矩阵 }(\boldsymbol{A}+\boldsymbol{B} \text { 不一定 })
+\end{array}\right.
+$$</p><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023152125.png>example</a><ul><li>正交矩阵的几何意义:<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211213064023.png width=60% height=60% alt=letter></p></li><li>性质:<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211213064124.png width=60% height=60% alt=letter></p></li></ul></li></ul></li></ul></blockquote><ul><li>正交矩阵的特征值一定是1或-1吗？ - 周周的回答 - 知乎
+<a href=https://www.zhihu.com/question/393408422/answer/1208695268>https://www.zhihu.com/question/393408422/answer/1208695268</a></li></ul><h4 id=application-5>application</h4><ul><li><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023151432.png width=90% height=90% alt=大纲></p></li></ul><hr><h3 id=二次型与合同>==二次型与合同==</h3><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211213081010.png alt=20211213081010></p><ul><li><p>==二次型矩阵一定是实对称矩阵==</p></li><li><p>规范形只能有+-1(-|-|-,范) (夫子很严厉的,所以只能出现+/-1)</p><ul><li>由标准形化规范型这步反而简单,只需将平方项的系数放到平方项里面即可:
+$$
+f=y_1^2+ (√0.5y_2)^2 - (√0.5y_3)^2
+= z_1^2 + z_2^2 - z_3^2.
+其中 z_1=y1,z_2 = √0.5 y_2, z_3 = √0.5 y_3
+$$</li></ul></li><li><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211024094817.png width=90% height=90% alt=大纲></p></li></ul><h4 id=define-6>define</h4><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023163026.png width=90% height=90% alt=大纲></p><ul><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211024130446.png>实对称矩阵的合同:</a></p></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211024161556.png>正定二次型:</a></p></li></ul><h4 id=nature-6>nature</h4><ul><li>为什么是对称矩阵必有可逆矩阵C，使得$C^TAC=\Lambda$, 其中 $\Lambda$ 为对角矩阵?<ul><li>实对称矩阵有正交矩阵C, $ C^{-1}AC=C^TAC=\Lambda$</li></ul></li></ul><h4 id=application-6>application</h4><ul><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023171235.png>求二次型的矩阵表示:</a></p></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023171023.png>配方法:</a></p></li></ul><blockquote><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023180849.png>正交变换:</a><ul><li>==三步走:==<ul><li><strong>特征（值/向量）</strong></li><li><strong>正交</strong></li><li><strong>单位化</strong></li></ul></li></ul></li></ul></blockquote><ul><li>如何求齐次方程组的解？(求特征向量)</li><li>施密特正交化
+$$
+\begin{array}{l}
+\beta_{1}=\alpha_{1} \
+\beta_{2}=\alpha_{2}-\frac{\left(\alpha_{2}, \beta_{1}\right)}{\left(\beta_{1}, \beta_{1}\right)} \beta_{1} \
+\beta_{3}=\alpha_{3}-\frac{\left(\alpha_{3}, \beta_{1}\right)}{\left(\beta_{1}, \beta_{1}\right)} \beta_{1}-\frac{\left(\alpha_{3}, \beta_{2}\right)}{\left(\beta_{2}, \beta_{2}\right)} \beta_{2}
+\end{array}
+$$</li></ul><p>$$
+\left{\begin{array}{l}
+\beta 1=\alpha 1; \
+\beta 2=\alpha 2 - \frac{(\alpha 2,\beta 1)}{(\beta 1,\beta 1)}\beta 1 \
+\beta 2=\alpha 3 - \frac{(\alpha 3,\beta 1)}{(\beta 1,\beta 1)}\beta 1 - \frac{(\alpha 3,\beta 2)}{(\beta 2,\beta 2)}\beta 2 \
+\end{array}\right.
+$$</p><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211024101721.png>最值问题</a></li></ul><hr><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211024130144.png>合同三种类型问题:</a></li></ul><hr><h2 id=快速回顾>快速回顾</h2><ul><li><p>在已知A和r(A)的前提下,求$A^<em>$,可以通过$r(A)与r(A^</em>)$来简化计算<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211218120540.png width=60% height=60% alt=letter></p></p></li><li><p>$ |A-\lambda E|=(-1)^n|\lambda E -A|=0$</p><ul><li>$ |A-\lambda E|=|\lambda E-A|$</li></ul></li><li><p>A与B在相似的环境的下(是实对称矩阵,在合同的环境下)</p><ul><li>$ A\overset{之间的关系}{?}B $ : 一个很取巧的方式是通过中介:比如$\Lambda$<ul><li>$\begin{array}{l} Q^{\top} A Q=\Lambda_{1} \ A=\left(Q^{\top}\right)^{-1} \Lambda_{1} Q^{-1} \end{array}$ 先翻转到一边,然后再代入其它式子里面<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211218121415.png width=60% height=60% alt=letter></p></li><li>求A~B<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211218150652.png width=60% height=60% alt=letter></p></li></ul></li><li>相同的P, $ P^{-1}AP, P^TBP $<ul><li>从内到外易->从外到内难->所以从里面向外一层层剥开;也就是分解P,把P=QC</li></ul></li></ul></li></ul><p>A~B,必要条件: <a href=#jumpAB%E7%9B%B8%E4%BC%BC>四个重要的等式</a></p><hr><h3 id=背诵>背诵</h3><p><a href=#jump%E7%A7%A9><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211121085442.png width=80% height=80% alt=矩阵的运算></p></a></p><p><a href=#jump%E8%A1%8C%E5%88%97%E5%BC%8F-%E8%BD%AC%E7%BD%AE-%E9%80%86-%E4%BC%B4%E9%9A%8F><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211121091737.png width=80% height=80% alt=矩阵的运算></p></a></p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211122084259.png alt=20211122084259></p><hr><h3 id=todo>TODO</h3><ul><li><p><input disabled type=checkbox> 斯密特正交化</p></li><li><p><input disabled type=checkbox> 正交的两种方法:配方法,_;</p></li><li><p>做大题的一般思路</p></li></ul><blockquote><ul><li>如果是线性方程组-线性表示这种<ul><li>首先需要判断解的个数：<ul><li>唯一解？<ul><li>（自由变量的个数为0个）</li><li>线性表示的时候也不带变量</li></ul></li></ul></li><li><a href=#jump%E9%9D%9E%E9%BD%90%E9%80%9A>方程组就是求${\color{Red} 非齐通=齐通+非齐特}$</a><ul><li>其中求齐通的时候，需要乘以变量 $k_1,k_2&mldr;$(由自由变量的个数决定)</li></ul></li><li>线性表示的时候:<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211214210924.png width=60% height=60% alt=letter></p></li></ul></li></ul></blockquote><hr><h3 id=理解>理解</h3><blockquote><ul><li>E<ul><li>$ AA^T=E $</li><li>$ AA^{-1}=E $</li></ul></li></ul><blockquote><blockquote><ul><li>初等矩阵:<p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017140053.png width=60% height=60% alt=初等矩阵></li></ul></p><ul><li>$ E_{ij} $</li><li>$ E_{i}(K) $</li><li>$ E_{ij}(K) $: $第i行(列) * K加到第j行(列)$</li><li>$ E_{ij}(K) $: $第i行(列) * K加到第j行(列)$</li><li>$ E^{-1}<em>{ij}(K) $: $第i行(列) * K加到第j行(列), {\color{Red} 然后再取逆, 它的结果与 E</em>{xx}(X)的关系 }$</li></ul><table><thead><tr><th>.</th><th>秩</th><th>转置T(想象一下三阶的==单位矩阵(⚠️须是单位矩阵,其他矩阵是没有这个特性)==:$E^T=E->$如果不是倍加的情况,其他转置情况都不变)</th><th>求逆-1</th><th>伴随*</th></tr></thead><tbody><tr><td>$ E_{ij} $</td><td>x</td><td>x</td><td>$E_{ij}$</td><td></td></tr><tr><td>$ E_{i}(K) $</td><td>x</td><td>x</td><td>$E_{i}(\frac{1}{K})$</td><td></td></tr><tr><td>$ E_{ij}(K) $</td><td>x</td><td>$E_{ji}(K)$</td><td>$E_{i}(-K)$</td><td></td></tr></tbody></table><ul><li>求逆-1: ==想一想$(A|E)-> (E|A^{-1})$==</li><li>伴随*: ==$A^*=|A|A^{-1}$==
+$$
+\left{\begin{array}{l} \
+\begin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 1 \ \end{bmatrix} \overset{E_ij}{->} \begin{bmatrix} 0 & 1 & 0 \ 1 & 0 & 0 \ 0 & 0 & 1 \ \end{bmatrix}
+\overset{T}{->} \begin{bmatrix} 0 & 1 & 0 \ 1 & 0 & 0 \ 0 & 0 & 1 \ \end{bmatrix} \
+&mdash;&mdash;-\
+\begin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 1 \ \end{bmatrix} \overset{E_ij}{->}\begin{bmatrix} 0 & 1 & 0 \ 1 & 0 & 0 \ 0 & 0 & 1 \ \end{bmatrix} \
+\end{array}\right.
+$$</li></ul></blockquote><ul><li><strong>当$P=E_{原始};;;当 PA \overset{左行右列}{->} E_{原始}A \overset{左行右列}{->} E_{12}(1)\cdot E_{2}(-2) \cdot E_{12}(1) \cdot E \cdot A $</strong><ul><li>方向是先化为行阶梯，然后反过来算对应的E_{xxx}</li></ul></li></ul><blockquote><p>$$
+\begin{array}{l}
+\begin{bmatrix}
+1 & 1 & 0 \
+1 & -1 & 0 \
+0 & 0 & 1 \
+\end{bmatrix}
+\overset{化为阶梯形}{->}
+\begin{bmatrix}
+1 & 1 & 0 \
+0 & -2 & 0 \
+0 & 0 & 1 \
+\end{bmatrix}
+->
+\begin{bmatrix}
+1 & 1 & 0 \
+0 & 1 & 0 \
+0 & 0 & 1 \
+\end{bmatrix}
+->
+\begin{bmatrix}
+1 & 0 & 0 \
+0 & 1 & 0 \
+0 & 0 & 1 \
+\end{bmatrix} \
+\begin{bmatrix}
+1 & 1 & 0 \
+1 & -1 & 0 \
+0 & 0 & 1 \
+\end{bmatrix}
+\overset{E_{12}(1)}{&lt;-}
+\begin{bmatrix}
+1 & 1 & 0 \
+0 & -2 & 0 \
+0 & 0 & 1 \
+\end{bmatrix}
+\overset{E_{2}(-2)}{&lt;-}
+\begin{bmatrix}
+1 & 1 & 0 \
+0 & 1 & 0 \
+0 & 0 & 1 \
+\end{bmatrix}
+\overset{E_{12}(1)}{&lt;-}
+\begin{bmatrix}
+1 & 0 & 0 \
+0 & 1 & 0 \
+0 & 0 & 1 \
+\end{bmatrix} \
+E_{原始}=E_{12}(1)\cdot E_{2}(-2) \cdot E_{12}(1) \cdot E
+\end{array}
+$$</p></blockquote></blockquote></blockquote><ul><li>行列式<ul><li>求行列式:</li></ul></li></ul><blockquote><ul><li><p>秩</p><ul><li>求秩</li></ul></li><li><p>伴随(${\color{Red} 伴随一定存在，但是可逆不一定存在}$)</p><ul><li>求伴随:<ul><li>$ A^{-1} $</li><li>定义<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211026074101.png width=50% height=50% alt=矩阵的运算></p><ul><li>主对线互换，副对角线变号 （==主公换了，副手肯定变心了==）</li></ul></li></ul></li></ul></li><li><p>可逆</p><ul><li>判断是否可逆：<ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211110004041.png>$ |A|\ne 0 $</a></li></ul></li><li><a href=#jump%E6%B1%82%E9%80%86%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E5%BC%8F>求逆的四种方式:</a><ul><li>具体求逆<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211026065036.png width=80% height=80% alt=求逆></p><ul><li>主不变，副手被替换(==只能被替换，主都没动副变心干什么==)</li></ul></li><li>抽象求逆: $\begin{array}{l} \text { 根据题干创造 } A B=E \text {, 则 } A^{-1}=B \ \text { 根据题干创造 } A=B C \text {, 若 } B, C \text { 均可逆, 则 } A^{-1}=C^{-1} B^{-1} \end{array}$</li></ul></li></ul></li><li><p>万能公式: $ A^{-1}=\frac{A^{*}}{|A|} $</p></li></ul></blockquote><blockquote><blockquote><p><span id=jump行列式-转置-逆-伴随></span></p><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211025231523.png width=60% height=60% alt=矩阵的运算></p><ul><li>单独记忆$A^*$总是保持统一的，<ul><li>比如(二): $(kA)^<em>$它的最终结果还是$A^</em>$乘以某个结果,<strong>跟$(kA)^{-1}=\frac{1}{k}A^{-1}$,以$A^{-1}$为本一样</strong></li><li>比如(四): $(A^<em>)^</em>$它的最终结果还是$A$乘以某个结果,<strong>跟$(A^{-1})^{-1}=A$相同,以A为本</strong></li><li>比如(五): $|A^*|$它的最终结果还是$|A|$为本,<strong>跟$|A^{-1}|=\frac{1}{|A|}$相同,以|A|为本</strong></li></ul></li><li>(二),(三):<ul><li>$ (kA)^{-1}=(kEA)^{-1}=A^{-1}(kE)^{-1}\overset{(kE)^{-1}{=}\frac{1}{k}E}{=} \frac{1}{k}A^{-1} $</li><li>$ (kA)^{<em>}=(kEA)^{</em>}=A^{<em>}(kE)^{</em>} \overset{(kE)^{<em>} = |kE|(kE)^{-1}=k^n(kE)^{-1}}{=} k^{n-1}A^</em> $</li></ul></li><li>(一),(四):<ul><li>互异，可以相互翻转</li><li>相同的，可以抵消(除了$A^*$)<ul><li>$ (A^<em>)^</em>= \left{\begin{array}{l}|A^<em>|(A^</em>)^{-1} \ |A^<em>|(A^{-1})^</em> \ |A|^{n-1} \frac{1}{|A|} A \end{array}\right. $</li></ul></li></ul></li><li>$ |A^*|=||A|A^{-1}|=|A|^n|A^{-1}|=|A|^{n-1} $</li></ul></blockquote></blockquote><hr><blockquote><ul><li>相似/合同(合同引出二次型)的里面也有二个矩阵:<ul><li><strong>实对称矩阵的定义是：如果有n阶矩阵A，</strong>:<p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211121132914.png width=60% height=60% alt=实对称矩阵></p><ul><li>实: 其各个元素都为实数;</li><li>对称: 矩阵A的转置等于其本身($ A^T = A$)，则称A为实对称矩阵。<ul><li>==二次型矩阵一定是实对称矩阵==</li><li><del>A可相似$\overset{P为正交对角化}{->}$A一定是实对称矩阵？</del><ul><li>先假设一个A可以相似对角化（普通），那么就有 $P^{-1}AP=\Lambda(为对角阵) \longrightarrow A=P\Lambda P^{-1}$</li><li>所以$A^T \overset{A=P\Lambda P^{-1}}{=}(P\Lambda P^{-1})^T=(P^{-1})^T \Lambda^T P^T \overset{再假设P正交对角化,因为正交矩阵的性质，PP^T=E,所以P^{-1}=P^T}{============================} P\Lambda P^{-1} \longrightarrow A^T=A$，那么A一定是对称的。得证，A一定是对称矩阵</li></ul></li><li>实对称矩阵A和B相似的充要条件是A和B有相同的特征值;<ul><li>相同特征值表明“重数相等”;</li><li>AB特征值相同则相似于同一个对角矩阵，根据相似的传递性，A相似与B。</li></ul></li></ul></li></ul></li><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211023142722.png>正交矩阵: n阶方阵A, $A^TA=E$</a> $ \longrightarrow A^T = A^{-1}$<ul><li>判断合同:<ul><li>$用定义法: \boldsymbol{A}, \boldsymbol{B} 合同 \Leftrightarrow 存在可逆矩阵 \boldsymbol{C} , 使得 \boldsymbol{C}^{\mathrm{T}} \boldsymbol{A} \boldsymbol{C}=\boldsymbol{B} .$</li><li>用正、负惯性指数: $\mathbf{A}, \boldsymbol{B} 合同 \Leftrightarrow p_{\boldsymbol{A}}=p_{\boldsymbol{B}}, q_{\boldsymbol{A}}=q_{\boldsymbol{B}} . (相同的正、负惯性指数)$<ul><li>同阶实对称矩阵 $ {\color{Red} \boldsymbol{A}, \boldsymbol{B} 相似}$必合同;<ul><li>$A=A^T;B=B^T,且A～B$</li><li>$ 实对称矩阵A,B相似 \overset{因实对称矩阵 \rightarrow 必定可以相似对角化}{\longrightarrow} 有相同的特征值/特征向量 \overset{p_A = p_B, q_A = q_B(相同的正负惯性指数 \Leftrightarrow A,B合同 )}{\longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow \longrightarrow} A,B必合同 $</li></ul></li></ul></li><li>用传递性: $\boldsymbol{A} 合同于 \boldsymbol{C}, \boldsymbol{C} 合同于 \boldsymbol{B} , 则 \boldsymbol{A} 合同于 \boldsymbol{B}.$</li></ul></li></ul></li></ul><ul><li><a href=#jump%E5%9B%9B%E4%BA%8C>实对称矩阵/正交矩阵(四/二性质)</a></li></ul></li></ul></blockquote><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211215211352.png alt=20211215211352></p><hr><ul><li>初等变换<ul><li>define:三种基本的变换</li><li>nature:<ul><li>初等行变换不改变矩阵的秩:(<strong>矩阵的秩:向量的角度-矩阵的角度</strong>)<ul><li>因为对矩阵做初等行变换，就相当于对齐次线性方程组做同解变换。而方程组同解时，当然它的秩（即独立方程的个数）就不会变。<ul><li>一开始学秩的时候就觉得应该用独立方程个数来定义，不明白为什么还要引进一个非零子式的最高阶数<ul><li>为了做题时容易算秩</li></ul></li></ul></li></ul></li></ul></li><li>application:<ul><li><a href=#jump%E5%88%9D%E7%AD%89%E7%9F%A9%E9%98%B5A%5En>左行右列:可以求$A^n$</a></li><li>$A^{-1}$: $(\begin{array}{l:l}A & E\end{array}) \overset{作初等变换}{\longrightarrow} (\begin{array}{l:l}E & A^{-1}\end{array})$<ul><li>小知识:可逆矩阵都可经过初等变换化为E</li></ul></li></ul></li></ul></li><li>行阶梯<ul><li>每一非零行都在每一零行之上。</li><li>某一行的先导元素所在的列位于前一先导元素的右边。</li><li>某一先导元素所在列下方元素都是零。</li></ul></li><li>行最简:若一个阶梯形矩阵还满足一下性质，则称它为简化阶梯形（或简化行阶梯形）矩阵。<ul><li>每一非零行的先导元素是1.</li><li>每一先导元素1是该元素所在列的唯一非零元素。</li></ul></li><li>非零子式</li></ul><hr><hr><hr><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211110213435.png alt></p><blockquote><p>把它向量组合起来，当成一个矩阵，然后想象成一个方程组形式</p></blockquote><ul><li>向量的维度代表方程的个数<ul><li>向量的个数代表方程的未知数的个数
+<img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211216181433.png alt=20211216181433></li></ul></li></ul><blockquote><p>方程组研究对象</p><blockquote><p>向量是研究方程的理论。</p></blockquote></blockquote><blockquote><p>行列式/矩阵 研究工具</p><blockquote><p>行列式一个数。核心是如果求这个数。并且这个数代表的含义是什么？</p></blockquote></blockquote><blockquote><p>特征值/二次型应用。</p></blockquote><hr><p align=center><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211014085548.png width=60% height=60% alt=效果图></p><hr><h2 id=archive>archive</h2><p><a href="https://pan.baidu.com/disk/pdfview?path=%2F%E8%80%83%E7%A0%94%2F%E5%BC%BA%E5%8C%96%2F%E7%BA%BF%E4%BB%A3%E6%8C%87%E5%AF%BC%2F2022%E5%BC%A0%E5%AE%87%E8%80%83%E7%A0%94%E6%95%B0%E5%AD%A6%E7%BA%BF%E4%BB%A39%E8%AE%B2.pdf&size=84363937&fsid=183295534477322">https://pan.baidu.com/disk/pdfview?path=%2F%E8%80%83%E7%A0%94%2F%E5%BC%BA%E5%8C%96%2F%E7%BA%BF%E4%BB%A3%E6%8C%87%E5%AF%BC%2F2022%E5%BC%A0%E5%AE%87%E8%80%83%E7%A0%94%E6%95%B0%E5%AD%A6%E7%BA%BF%E4%BB%A39%E8%AE%B2.pdf&size=84363937&fsid=183295534477322</a></p><p>李林: <a href="https://www.bilibili.com/video/BV1CR4y1J7fx?p=2">https://www.bilibili.com/video/BV1CR4y1J7fx?p=2</a></p><p><a href="https://pan.baidu.com/play/video#/video?path=%2F%E8%80%83%E7%A0%94%2F%E5%BC%BA%E5%8C%96%2F05.2022%E5%BC%BA%E5%8C%96%E4%B8%93%E9%A1%B9%E7%89%B9%E8%AE%AD%2F02.2022%E7%BA%BF%E4%BB%A3%E5%BC%BA%E5%8C%96%2F15.%E7%AC%AC5%E8%AE%B2%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%8403.mp4&t=14">https://pan.baidu.com/play/video#/video?path=%2F%E8%80%83%E7%A0%94%2F%E5%BC%BA%E5%8C%96%2F05.2022%E5%BC%BA%E5%8C%96%E4%B8%93%E9%A1%B9%E7%89%B9%E8%AE%AD%2F02.2022%E7%BA%BF%E4%BB%A3%E5%BC%BA%E5%8C%96%2F15.%E7%AC%AC5%E8%AE%B2%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%8403.mp4&t=14</a></p><p><a href="https://account.chsi.com.cn/passport/login?entrytype=applystu&service=https%3A%2F%2Fyz.chsi.com.cn%2Fapply%2Fj_spring_cas_security_check%3Bjsessionid%3D3BC4179936F13E60D01441DBA239E0BD">https://account.chsi.com.cn/passport/login?entrytype=applystu&service=https%3A%2F%2Fyz.chsi.com.cn%2Fapply%2Fj_spring_cas_security_check%3Bjsessionid%3D3BC4179936F13E60D01441DBA239E0BD</a></p><p><a href="https://pan.baidu.com/disk/pdfview?path=/%E8%80%83%E7%A0%94/%E5%BC%BA%E5%8C%96/%E7%BA%BF%E4%BB%A3%E6%8C%87%E5%AF%BC/2022%E5%BC%A0%E5%AE%87%E8%80%83%E7%A0%94%E6%95%B0%E5%AD%A6%E7%BA%BF%E4%BB%A39%E8%AE%B2.pdf&size=84363937&fsid=183295534477322">https://pan.baidu.com/disk/pdfview?path=/%E8%80%83%E7%A0%94/%E5%BC%BA%E5%8C%96/%E7%BA%BF%E4%BB%A3%E6%8C%87%E5%AF%BC/2022%E5%BC%A0%E5%AE%87%E8%80%83%E7%A0%94%E6%95%B0%E5%AD%A6%E7%BA%BF%E4%BB%A39%E8%AE%B2.pdf&size=84363937&fsid=183295534477322</a></p><ul><li><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211006203532.png>线性表示</a> / <a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211006201211.png>线性相关/无关</a></li></ul><h6 id=极大线性无关组httpsrawgithubusercontentcomzputmypiclibmasterzputgithubio20211013081737png><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211013081737.png>极大线性无关组</a></h6><p align=right><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211013081901.png width=60% height=60% alt=效果图></p><p>副对角行列式的由来:</p><p>不是第一行是(-1)^(n+1)，最后一行是(-1)^(1+1),所以不应该是(-1)^{n(n+3)/2}?</p><p>$ (-1)^{n(n+3)/2}=(-1)^{n(n-1)/2+2n}=(-1)^{n(n-1)/2} $
+一个结果。
+你是用的思路是行列式展开定理
+我是用的行列式定义算的，用逆序数判断的正负号</p><p>行列式每项都包括各行各列一个元素.
+观察发现,第一行只能取最后一个数,第二行取倒数第二个数……
+所以这样的行列式只有来自副对角元素乘积的一项,
+正负号通过列的逆序数判断,τ（n,(n-1),(n-2)……3,2,1）=n(n-1)/2
+所以副对角线以上都为零的矩阵的行列式=(-1)^n(n-1)/2乘以所有副对角元素</p><blockquote><ul><li>$ 对于方阵 \boldsymbol{A}, \boldsymbol{B}, 若 \boldsymbol{A B}=\boldsymbol{E}, 则 \boldsymbol{A}, \boldsymbol{B}互为逆矩阵, 且\boldsymbol{A}^{-1}=\boldsymbol{B}, \boldsymbol{B}^{-1}=\boldsymbol{A}, \boldsymbol{A} \boldsymbol{B}=\boldsymbol{B} $<ul><li>(1)$ \left(\boldsymbol{A}^{-1}\right)^{-1}=\boldsymbol{A} . $</li><li>(2)$ (\boldsymbol{A B})^{-1}=\boldsymbol{B}^{-1} \boldsymbol{A}^{-1} (穿脱原则).$</li><li>(3)$ k \neq 0,(k \boldsymbol{A})^{-1}=\frac{1}{k} \boldsymbol{A}^{-1} .$</li><li>(4)$ \left(\boldsymbol{A}^{\mathrm{T}}\right)^{-1}=\left(\boldsymbol{A}^{-1}\right)^{\mathrm{T}} .$</li><li>(5)$ \left|\boldsymbol{A}^{-1}\right|=\frac{1}{|\boldsymbol{A}|} $</li></ul></li></ul></blockquote><hr><p>逆序：（5,4）5>4，则他们是一个逆序
+逆序数：（4,2,1,6,3,5）= 3+1+0+2+0</p><ul><li>4的逆序有：(4,2)，(4,1)，(4,3)</li><li>2的逆序有：(2,1)</li><li>&mldr;</li></ul><ul><li>点积（Dot Product）又称数量积，是一个接受两个等长度的数字序列（通常是向量坐标），然后返回单个数字的代数运算。在欧几里德几何中，两个笛卡尔坐标向量的点积常称为内积（Inner Product）。<ul><li><p>向量的内积可以理解为向量A在向量B上的投影跟向量B的长度的乘积。</p></li><li><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211021144516.png alt=20211021144516></p></li><li><p><a href=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211017170050.png>最大的线性无关</a></p></li></ul></li></ul><p>$$
+\begin{array}{l}
+\text { (1) } 0 \leqslant r\left(\boldsymbol{A}<em>{m \times n}\right) \leqslant \min {m, n}\
+\text { (2) } r(k \boldsymbol{A})=r(\boldsymbol{A})(k \neq 0)\
+\text { (3) } r(\boldsymbol{A})=r(\boldsymbol{P A})=r(\boldsymbol{A} \boldsymbol{Q})=r(\boldsymbol{P A Q})\
+\text { (4) } r(\boldsymbol{A} \boldsymbol{B}) \leqslant \min {r(\boldsymbol{A}), r(\boldsymbol{B})}\
+\text { (5) } r(\boldsymbol{A}+\boldsymbol{B}) \leqslant r([\boldsymbol{A}, \boldsymbol{B}]) \leqslant r(\boldsymbol{A})+r(\boldsymbol{B})\
+\text { (6) } r\left(\left[\begin{array}{ll}
+\boldsymbol{A} & \boldsymbol{O} \
+\boldsymbol{O} & \boldsymbol{B}
+\end{array}\right]\right)=r(\boldsymbol{A})+r(\boldsymbol{B})\
+\text { (7) } r(\boldsymbol{A})+r(\boldsymbol{B}) \leqslant r\left(\left[\begin{array}{ll}
+\boldsymbol{A} & \boldsymbol{O} \
+\boldsymbol{C} & \boldsymbol{B}
+\end{array}\right]\right) \leqslant r(\boldsymbol{A})+r(\boldsymbol{B})+r(\boldsymbol{C})\
+\text { (8) } r(\boldsymbol{A} \boldsymbol{B}) \geqslant r(\boldsymbol{A})+ r (\boldsymbol{B})-n\
+\text { (9) } r(\boldsymbol{A})=r\left(\boldsymbol{A}^{\mathrm{T}}\right)=r\left(\boldsymbol{A} \boldsymbol{A}^{\mathrm{T}}\right)=r\left(\boldsymbol{A}^{\mathrm{T}} \boldsymbol{A}\right)\
+\text { (10) } r\left(\boldsymbol{A}^{*}\right)=\left{\begin{array}{ll}
+n, & \boldsymbol{r}(\boldsymbol{A})=n \
+1, & r(\boldsymbol{A})=n-1 \
+0, & r(\boldsymbol{A})&lt;n-1
+\end{array}\right. \
+(11) 若 \boldsymbol{A}^{2}=\boldsymbol{A} , 则 r(\boldsymbol{A})+r(\boldsymbol{A}-\boldsymbol{E})=n \
+(12) 若 \boldsymbol{A}^{2}=\boldsymbol{E} , 则 r(\boldsymbol{A}+\boldsymbol{E})+r(\boldsymbol{A}-\boldsymbol{E})=n \
+(13) A x=0 的基础解系所含向量的个数 s=n-r(A) \
+(14) 若 \boldsymbol{A} \sim \boldsymbol{\Lambda} , 则 n</em>{i}=n-r\left(\lambda_{i} \boldsymbol{E}-\boldsymbol{A}\right) , 其中 \lambda_{i} 是 n_{i} 重特征根 \
+(15) 若 \boldsymbol{A} \sim \boldsymbol{\Lambda} , 则 r(\boldsymbol{A}) 等于非零特征值的个数, 重根按重数算 \
+\end{array}
+$$</p><ul><li><p>\beta2=\belta1+\frac{(\belta1,\alpha2)}{(\alpha2,\alpha2)}\alpha2</p></li><li><p>\beta3=\belta+\frac{(\belta1,\alpha2)}{(\alpha2,\alpha2)}\alpha2</p></li><li><p>$$
+|k A|=k^{n}|A| \
+\left{\begin{array}{l}
+(k A)^{\top}=k A^{\top} \
+(k A)^{<em>}=k^{n-1} A^{</em>} \
+(k A)^{-1}=\frac{1}{k} A^{-1}
+\end{array}\right.
+$$</p><ul><li>定义 A*B=E</li><li>$ A^{-1}=\frac{1}{|A|}A^* $</li><li>可逆矩阵一定可以经过若干次初等行变换，化为同阶的E. $ (A|E) \rightarrow (E|A^{-1}) $</li></ul></li></ul></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>0001-01-01</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/postgraduate/discrete_math/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">离散数学</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/postgraduate/english/><span class="next-text nav-default">英语</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://giscus.app/client.js data-repo=zput/utterances-comments data-repo-id=R_kgDOHhATGQ data-category=Announcements data-category-id=DIC_kwDOHhATGc4CPxca data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=1 data-input-position=top data-theme=light data-lang=zh-CN data-loading=lazy crossorigin=anonymous async></script></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:wkzxc@sina.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://zput.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

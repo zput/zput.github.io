@@ -1,0 +1,784 @@
+<!DOCTYPE html><html><head>
+      <title>&#x82F1;&#x8BED;</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      pre{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;padding:1em;margin:.5em 0;overflow:auto;line-height:1.5;tab-size:4;hyphens:none;color:#839496;background-color:#003b4a !important;border:#006c88;border-radius:3px}pre[class*="language-"]{padding:1em}code[class*="language-"] .token.comment,pre[class*="language-"] .token.comment,code[class*="language-"] .token.prolog,pre[class*="language-"] .token.prolog,code[class*="language-"] .token.doctype,pre[class*="language-"] .token.doctype,code[class*="language-"] .token.cdata,pre[class*="language-"] .token.cdata{color:#586e75;font-style:italic}code[class*="language-"] .token.punctuation,pre[class*="language-"] .token.punctuation{color:#586e75}code[class*="language-"] .namespace,pre[class*="language-"] .namespace{opacity:.7}code[class*="language-"] .token.property,pre[class*="language-"] .token.property{color:#859900}code[class*="language-"] .token.boolean,pre[class*="language-"] .token.boolean,code[class*="language-"] .token.number,pre[class*="language-"] .token.number,code[class*="language-"] .token.function-name,pre[class*="language-"] .token.function-name{color:#d33682}code[class*="language-"] .token.tag,pre[class*="language-"] .token.tag{color:#268bd2}code[class*="language-"] .token.selector,pre[class*="language-"] .token.selector{color:#859900}code[class*="language-"] .token.attr-name,pre[class*="language-"] .token.attr-name{color:#657b83}code[class*="language-"] .token.string,pre[class*="language-"] .token.string{color:#2aa198}code[class*="language-"] .token.char,pre[class*="language-"] .token.char{color:#cb4b16}code[class*="language-"] .token.builtin,pre[class*="language-"] .token.builtin{color:#859900}code[class*="language-"] .token.entity,pre[class*="language-"] .token.entity{color:#268bd2}code[class*="language-"] .token.url,pre[class*="language-"] .token.url{color:#586e75}code[class*="language-"] .token.atrule,pre[class*="language-"] .token.atrule,code[class*="language-"] .token.attr-value,pre[class*="language-"] .token.attr-value,code[class*="language-"] .token.keyword,pre[class*="language-"] .token.keyword{color:#859900}code[class*="language-"] .token.function,pre[class*="language-"] .token.function{color:#268bd2}code[class*="language-"] .token.class-name,pre[class*="language-"] .token.class-name{color:#268bd2}code[class*="language-"] .token.variable,pre[class*="language-"] .token.variable{color:#268bd2}code[class*="language-"] .token.regex,pre[class*="language-"] .token.regex,code[class*="language-"] .token.important,pre[class*="language-"] .token.important{color:#dc322f}code[class*="language-"] .token.important,pre[class*="language-"] .token.important,code[class*="language-"] .token.bold,pre[class*="language-"] .token.bold{font-weight:bold}code[class*="language-"] .token.italic,pre[class*="language-"] .token.italic{font-style:italic}code[class*="language-"] .token.entity,pre[class*="language-"] .token.entity{cursor:help}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:rgba(153,122,102,0.08);background:linear-gradient(to right, rgba(153,122,102,0.1) 70%, rgba(153,122,102,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:rgba(153,122,102,0.4);color:#f5f2f0;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px white}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#839496;background-color:#002b36;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#dbe0e1}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#afbabb}html body strong{color:#dbe0e1}html body del{color:#afbabb}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#afbabb;background-color:#004b5f;border-left:4px solid #006c88}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#006c88;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#dbe0e1}html body table td,html body table th{border:1px solid #006c88;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#dbe0e1;background-color:#004b5f;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#006c88;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#dbe0e1;border:1px solid #006c88;border-bottom:2px solid #005469;padding:2px 4px;background-color:#004b5f;border-radius:3px}@media print{html body{background-color:#002b36}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#dbe0e1;page-break-after:avoid}html body blockquote{color:#afbabb}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="%E8%8B%B1%E8%AF%AD">&#x82F1;&#x8BED;</h1>
+
+<div class="code-chunk" data-id="code-chunk-id-0" data-cmd="toc"><div class="input-div"><div class="btn-group"><div class="run-btn btn"><span>&#x25B6;&#xFE0E;</span></div><div class="run-all-btn btn">all</div></div><div class="status">running...</div></div><div class="output-div"></div></div><ul>
+<li><a href="#%E8%8B%B1%E8%AF%AD">&#x82F1;&#x8BED;</a></li>
+<li><a href="#the-order-of-doing-questions-in-the-examination">the order of doing questions in the examination</a>
+<ul>
+<li><a href="#%E4%BD%9C%E6%96%87">&#x4F5C;&#x6587;</a></li>
+<li><a href="#%E5%B0%8F%E4%BD%9C%E6%96%87">&#x5C0F;&#x4F5C;&#x6587;</a>
+<ul>
+<li><a href="#letter-of-advicesuggestion">Letter of Advice/Suggestion</a></li>
+<li><a href="#letter-of-complaint">Letter of Complaint</a></li>
+<li><a href="#letter-of-invitation">Letter of Invitation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#todo">TODO</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E7%B1%BB%E5%9E%8B">&#x9898;&#x76EE;&#x7C7B;&#x578B;</a>
+<ul>
+<li><a href="#use-of-english">Use of English</a></li>
+<li><a href="#reading-comprehension">Reading Comprehension</a>
+<ul>
+<li><a href="#%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3">&#x9605;&#x8BFB;&#x7406;&#x89E3;</a></li>
+<li><a href="#%E6%96%B0%E9%A2%98%E5%9E%8B">&#x65B0;&#x9898;&#x578B;</a></li>
+</ul>
+</li>
+<li><a href="#translation">Translation</a></li>
+<li><a href="#writing">writing</a>
+<ul>
+<li><a href="#%E5%B0%8F%E4%BD%9C%E6%96%87-1">&#x5C0F;&#x4F5C;&#x6587;</a></li>
+<li><a href="#%E5%A4%A7%E4%BD%9C%E6%96%87">&#x5927;&#x4F5C;&#x6587;</a></li>
+</ul>
+</li>
+<li><a href="#basic-knowledge">basic knowledge</a></li>
+<li><a href="#replicat">replicat</a>
+<ul>
+<li><a href="#self-introduction">self introduction</a>
+<ul>
+<li><a href="#1-make-a-self-introduction">1 make a self-introduction</a></li>
+<li><a href="#2-campus-and-work-experience">2 campus and work experience</a></li>
+<li><a href="#3-prospect">3 prospect</a></li>
+</ul>
+</li>
+<li><a href="#summary">summary</a></li>
+</ul>
+</li>
+<li><a href="#%E9%99%84%E5%BD%95">&#x9644;&#x5F55;</a></li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="the-order-of-doing-questions-in-the-examination">the order of doing questions in the examination</h1>
+
+<p>&#x4F5C;&#x6587;&#x2192;&#x9605;&#x8BFB;&#x7406;&#x89E3;&#x2192;&#x65B0;&#x9898;&#x578B;&#x2192;&#x7FFB;&#x8BD1;&#x2192;&#x5B8C;&#x5F62;&#x586B;&#x7A7A;</p>
+<h2 class="mume-header" id="%E4%BD%9C%E6%96%87">&#x4F5C;&#x6587;</h2>
+
+<ul>
+<li>
+<p>the fact that ......manifests,xxx&#x4E8B;&#x4EF6; &#x8868;&#x660E;</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>the&#xA0;fact</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red} \text{the fact}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">the&#xA0;fact</span></span></span></span></span></span>that only one earth providing everything we need to survive do we have <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;manifests&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red} \text{ manifests  } }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;manifests&#xA0;</span></span></span></span></span></span> that it&apos;s our <strong>inevitable duty</strong> to protect it.</li>
+</ul>
+</li>
+<li>
+<p>As philosophers told us,</p>
+<ul>
+<li>&quot;Failure is the mother of success&quot;.</li>
+<li>&quot;The economic base determines the superstructure&quot;.</li>
+</ul>
+</li>
+<li>
+<p>what can be determined is that...</p>
+<ul>
+<li>&#x4F17;&#x6240;&#x5468;&#x77E5;/&#x53EF;&#x4EE5;&#x786E;&#x8BA4;&#x7684;&#x662F;</li>
+</ul>
+</li>
+<li>
+<p>had done, would do (&#x4E0E;&#x73B0;&#x5728;&#x6216;&#x5C06;&#x6765;&#x4E8B;&#x5B9E;&#x76F8;&#x53CD;)</p>
+<ul>
+<li>I had studied hard, I would <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;be&#xA0;admitted&#xA0;to&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red} \text{ be admitted to } }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;be&#xA0;admitted&#xA0;to&#xA0;</span></span></span></span></span></span> a good university</li>
+</ul>
+</li>
+<li>
+<p>To crack this hard nut.</p>
+<ul>
+<li>&#x7834;&#x5C40;</li>
+</ul>
+</li>
+<li>
+<p>Before I saw this data, I thought...</p>
+<ul>
+<li>Before I saw this data, I thought that foreign cars would still sell better than domestic cars, because they had the advantages of durability. I didn&apos;t expect that domestic cars sold better in the data, and I felt very surprised and proud.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;</span></span></span></span></span></span><br>
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;the&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ the }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;the&#xA0;</span></span></span></span></span></span></p>
+<p>what is clearly presented in the above pie chart is <s>a</s><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;the&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ the }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;the&#xA0;</span></span></span></span></span></span> statistics of (mobile-subscriber) in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>a</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{a}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">a</span></span></span></span></span></span> certain college.</p>
+<hr>
+<p>To be specific,<br>
+the proportion of (mobile subscribe in developed country) accounts for (15%) <s>,</s> ranking the second <s>list,</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>.</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{.}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.1056em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">.</span></span></span></span></span></span></p>
+<p>the <s>percention</s><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;percentage&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ percentage }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8095em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;percentage&#xA0;</span></span></span></span></span></span> of (mobile subscribe in developing country) ranks first among all, <s>makes</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;making&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ making }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;making&#xA0;</span></span></span></span></span></span> up 30%.</p>
+<p>for the others,  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;we&#xA0;can&#xA0;find&#xA0;that&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ we can find that }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;we&#xA0;can&#xA0;find&#xA0;that&#xA0;</span></span></span></span></span></span> it takes up 55%.</p>
+<hr>
+<p>there <s>are</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;exist&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ exist }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6679em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;exist&#xA0;</span></span></span></span></span></span> a train of reasons that contribute to this phenomenon but some deserve special emphasis.</p>
+<p>First of all,<br>
+on the <s>basic</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;basis&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ basis }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;basis&#xA0;</span></span></span></span></span></span> of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;latest&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ latest }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;latest&#xA0;</span></span></span></span></span></span> <s>research</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;survey&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ survey }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;survey&#xA0;</span></span></span></span></span></span>,  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;with&#xA0;the&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ with the }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;with&#xA0;the&#xA0;</span></span></span></span></span></span> quickening pace <s>on</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;of&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ of }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;of&#xA0;</span></span></span></span></span></span> modern life and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;the&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ the }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;the&#xA0;</span></span></span></span></span></span> fierce competition <s>on</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;of&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ of }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;of&#xA0;</span></span></span></span></span></span> society, <s>many</s> people&apos;s values have changed gradually, a increasing <s>account</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;amount&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ amount }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;amount&#xA0;</span></span></span></span></span></span> of people <s>try</s> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;chose&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}\text{ chose }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;chose&#xA0;</span></span></span></span></span></span> to (purchased mobile), (money) is no longer as essential it used to be.</p>
+<p>mass media such as radio, internet approprately trumpeted the benefits of purchasing the mobile.</p>
+<p>the changes that enhanced and promoted by the supervior polities</p>
+<p>that is to say, it is the enforcement of pertinent law and regulations that changes can be made most use of.</p>
+<p>what has been argued, we can come to the conclusion that whatever causes it, but it established trend will continue in the fourthcoming years. the government and individuals should collaborate as much as possible to promote this industry. just with joint effort, makes current social system more socialble.</p>
+<ul>
+<li>table &#x8868;&#x683C;</li>
+<li>line chart &#x66F2;&#x7EBF;&#x56FE;</li>
+<li>bar chart &#x67F1;&#x72B6;&#x56FE;</li>
+<li>pie chart &#x997C;&#x72B6;&#x56FE;</li>
+</ul>
+<blockquote>
+<ul>
+<li>&#x52A8;&#x6001;&#x56FE;(2008-&gt;2009) <p align="right"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219153513.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>take place in &#x53D1;&#x751F;&#x5728;</li>
+<li>to be specific &#x5177;&#x4F53;&#x6765;&#x8BF4;</li>
+<li>gradually &#x6E10;&#x6E10;&#x5730;</li>
+</ul>
+</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219153248.png" width="60%" height="60%" alt="letter"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219153310.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>&#x9759;&#x6001;&#x56FE; <p align="right"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219153651.png" width="60%" height="60%" alt="letter"></p></li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219152230.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>
+<p>accounts for</p>
+<ul>
+<li>The dollar&#x2019;s closest rival, the euro, accounts for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;26.6%&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red} \text{ 26.6\% } }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;26.6%&#xA0;</span></span></span></span></span></span> of the world&#x2019;s reserves.</li>
+<li>Reading comprehension <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#xA0;accounts&#xA0;for&#xA0;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red} \text{ accounts for }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord"><span class="mord text" style="color:Red;"><span class="mord" style="color:Red;">&#xA0;accounts&#xA0;for&#xA0;</span></span></span></span></span></span> a good part in the CET-Band 4 and 6.</li>
+</ul>
+</li>
+<li>
+<p>making up 46%</p>
+</li>
+<li>
+<p>&#x5B9A;&#x8BED;&#x4ECE;&#x53E5;</p>
+</li>
+<li>
+<p>With due consideration of all these contributors, we may predict that with the speedy development of our society, ... in expanding numbers will attach upmost significance to ...</p>
+<ul>
+<li>&#x4E2D;&#x6587;&#x7FFB;&#x8BD1;&#xFF1A;&#x8003;&#x8651;&#x5230;&#x6240;&#x6709;&#x8FD9;&#x4E9B;&#x56E0;&#x7D20;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x9884;&#x8BA1;&#xFF0C;&#x968F;&#x7740;&#x793E;&#x4F1A;&#x7684;&#x8FC5;&#x901F;&#x53D1;&#x5C55;&#xFF0C;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x7684;...&#x5C06;&#x66F4;&#x52A0;&#x91CD;&#x89C6;...</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<hr>
+<ul>
+<li>(&#x627F;&#x4E0A;&#x542F;&#x4E0B;&#x53E5;)
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>As&#xA0;a&#xA0;matter&#xA0;of&#xA0;fact,&#xA0;what&#xA0;the&#xA0;author&#xA0;tries&#xA0;to&#xA0;show&#xA0;us&#xA0;is&#xA0;more&#xA0;than&#xA0;statistics.&#xA0;The&#xA0;table&#xA0;leads&#xA0;us&#xA0;to&#xA0;find&#xA0;out&#xA0;what&#xA0;causes&#xA0;the&#xA0;differences.&#xA0;</mtext></mrow><annotation encoding="application/x-tex">{ \bold{ \text{As a matter of fact, what the author tries to show us is more than statistics.}}  \bold{\text{ The table leads us to find out what causes the differences. }}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord text"><span class="mord">As&#xA0;a&#xA0;matter&#xA0;of&#xA0;fact,&#xA0;what&#xA0;the&#xA0;author&#xA0;tries&#xA0;to&#xA0;show&#xA0;us&#xA0;is&#xA0;more&#xA0;than&#xA0;statistics.</span></span><span class="mord text"><span class="mord">&#xA0;The&#xA0;table&#xA0;leads&#xA0;us&#xA0;to&#xA0;find&#xA0;out&#xA0;what&#xA0;causes&#xA0;the&#xA0;differences.&#xA0;</span></span></span></span></span></span></li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219160738.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>
+<p>&#x793E;&#x4F1A;&#x5C42;&#x9762;&#x7684;,&#x538B;&#x529B; </p><p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219161809.png" width="60%" height="60%" alt="letter"></p><p></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder accentunder="true"><mtext>&#xA0;money/&#xA0;foreign&#xA0;brands&#xA0;</mtext><mo stretchy="true">&#x203E;</mo></munder></mrow><annotation encoding="application/x-tex">\underline{\text{ money/ foreign brands }}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.45em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.75em;"><span style="top:-2.59em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">&#xA0;money/&#xA0;foreign&#xA0;brands&#xA0;</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.45em;"><span></span></span></span></span></span></span></span></span>  is no longer as essential it used to be.</li>
+</ul>
+</li>
+<li>
+<p>Media publicity </p><p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219161034.png" width="60%" height="60%" alt="letter"></p><p></p>
+<ul>
+<li>Many media misinformation misled the public.</li>
+</ul>
+</li>
+<li>
+<p>For policy reasons </p><p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219161409.png" width="60%" height="60%" alt="letter"></p><p></p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219162911.png" width="60%" height="60%" alt="letter"></p>
+</blockquote>
+<h2 class="mume-header" id="%E5%B0%8F%E4%BD%9C%E6%96%87">&#x5C0F;&#x4F5C;&#x6587;</h2>
+
+<ul>
+<li>
+<p>The purpose of writing this letter is to</p>
+<ul>
+<li>&#x5EFA;&#x8BAE;:give/provide/make some suggestions that I think are useful to improve the quality/service...</li>
+<li>&#x6295;&#x8BC9;:file a complaint about <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>a&#xA0;product&#xA0;I&#xA0;recently&#xA0;purchased.</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>the&#xA0;service&#xA0;I&#xA0;received&#xA0;during&#xA0;my&#xA0;November&#xA0;15&#xA0;visit&#xA0;to&#xA0;your&#xA0;store.</mtext></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l} \text{a product I recently purchased.}\\ \text{the service I received during my November 15 visit to your store.}\\ \end{array}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">a&#xA0;product&#xA0;I&#xA0;recently&#xA0;purchased.</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">the&#xA0;service&#xA0;I&#xA0;received&#xA0;during&#xA0;my&#xA0;November&#xA0;15&#xA0;visit&#xA0;to&#xA0;your&#xA0;store.</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></li>
+<li>&#x9080;&#x8BF7;: As a/an ___ | On behalf of the Student Union/our school/our club ..., <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">&#x25A1;</mi></mrow><annotation encoding="application/x-tex">\Box</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.675em;"></span><span class="mord amsrm">&#x25A1;</span></span></span></span> cordially invite you to be our distinguished guest
+<ul>
+<li>On behalf of the entire/whole staff,</li>
+</ul>
+</li>
+<li>&#x56DE;&#x9080;: extend my hearty gratitude to you inviting me to give a lecture.</li>
+<li>&#x81EA;&#x6325;:
+<ul>
+<li>enhance mutual understanding and seek some advice on living in your country.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219173228.png" width="60%" height="60%" alt="letter"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>I am very delighted</p>
+<ul>
+<li>to inform you that ___ is going to be held on ___ in ___</li>
+<li>that I could have the opportunity to introduce (Chinese culture) to the (international students)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p>&#x5F15;&#x51FA;&#x7B2C;&#x4E00;&#x70B9;/&#x7B2C;&#x4E8C;&#x70B9;/&#x6700;&#x540E;&#x4E00;&#x70B9;</p>
+<ul>
+<li>the main content of my lecture is as follows.</li>
+<li>the event/activity/competition mainly consists of the following parts.</li>
+</ul>
+</li>
+<li>
+<p>&#x5217;&#x51FA;<strong>&#x70B9;</strong></p>
+<ul>
+<li><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>To&#xA0;begin&#xA0;with,&#xA0;i&#xA0;do&#xA0;feel&#xA0;that&#xA0;_&#xA0;</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>In&#xA0;my&#xA0;opinion,&#xA0;first&#xA0;of&#xA0;all,</mtext></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mtext>&#xA0;&#xA0;</mtext><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>in&#xA0;addition</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>besides</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>Furthermore&#xA0;&#x5176;&#x6B21;</mtext></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mtext>&#xA0;&#xA0;</mtext><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>last&#xA0;but&#xA0;not&#xA0;least</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mtext>&#xA0;&#xA0;</mtext><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">\left[\begin{array}{l} \text{To begin with, i do feel that \_ } \\ \text{In my opinion, first of all,} \\ \end{array}\right]
+\
+\
+\left[\begin{array}{l} \text{}\\ \text{}\\ \end{array}\right]
+\left[\begin{array}{l} \text{in addition}\\ \text{besides}\\ \text{Furthermore &#x5176;&#x6B21;}\\\end{array}\right]
+\
+\
+\left[\begin{array}{l} \text{}\\ \text{}\\ \end{array}\right]
+\left[\begin{array}{l} \text{last but not least}\\ \text{}\\ \end{array}\right]
+\
+\
+\left[\begin{array}{l} \text{}\\ \text{}\\ \end{array}\right]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.6em;vertical-align:-1.55em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">To&#xA0;begin&#xA0;with,&#xA0;i&#xA0;do&#xA0;feel&#xA0;that&#xA0;_&#xA0;</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">In&#xA0;my&#xA0;opinion,&#xA0;first&#xA0;of&#xA0;all,</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace">&#xA0;</span><span class="mspace">&#xA0;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-2.25em;"><span class="pstrut" style="height:3.155em;"></span><span class="delimsizinginner delim-size4"><span>&#x23A3;</span></span></span><span style="top:-3.397em;"><span class="pstrut" style="height:3.155em;"></span><span style="height:0.016em;width:0.6667em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.6667em" height="0.016em" style="width:0.6667em" viewBox="0 0 666.67 16" preserveAspectRatio="xMinYMin"><path d="M319 0 H403 V16 H319z M319 0 H403 V16 H319z"/></svg></span></span><span style="top:-4.05em;"><span class="pstrut" style="height:3.155em;"></span><span class="delimsizinginner delim-size4"><span>&#x23A1;</span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">in&#xA0;addition</span></span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">besides</span></span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">Furthermore&#xA0;</span><span class="mord cjk_fallback">&#x5176;&#x6B21;</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-2.25em;"><span class="pstrut" style="height:3.155em;"></span><span class="delimsizinginner delim-size4"><span>&#x23A6;</span></span></span><span style="top:-3.397em;"><span class="pstrut" style="height:3.155em;"></span><span style="height:0.016em;width:0.6667em;"><svg xmlns="http://www.w3.org/2000/svg" width="0.6667em" height="0.016em" style="width:0.6667em" viewBox="0 0 666.67 16" preserveAspectRatio="xMinYMin"><path d="M263 0 H347 V16 H263z M263 0 H347 V16 H263z"/></svg></span></span><span style="top:-4.05em;"><span class="pstrut" style="height:3.155em;"></span><span class="delimsizinginner delim-size4"><span>&#x23A4;</span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span></span></span><span class="mspace">&#xA0;</span><span class="mspace">&#xA0;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">last&#xA0;but&#xA0;not&#xA0;least</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace">&#xA0;</span><span class="mspace">&#xA0;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span></span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p>&#x4E3B;+&#x8C13;+&#x5BBE;</p>
+<ul>
+<li>&#x4E3B;+&#x8C13;+(&#x4E30;&#x5BCC;&#x7684;&#x5BBE;&#x8BED;) + &#x4ECE;&#x53E5;
+<ul>
+<li>the development of Chinese culture, since it allows these students to understand China more comprehensively.</li>
+<li>the cultural exchange between China and foreign countries, which will help the students have a better grasp of Chinese culture.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>&#x597D;&#x7406;&#x7531;,&#x501F;&#x53E3;: </p><p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219172907.png" width="60%" height="60%" alt="letter"></p><p></p>
+</li>
+</ul>
+<hr>
+<p>looking forward to hearing/meeting/seeing you (soon)<br>
+thank you for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>&#x540D;&#x8BCD;:your&#xA0;invitation</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>&#x4ECE;&#x53E5;:giving&#xA0;me&#xA0;the&#xA0;chance&#xA0;to&#xA0;participate&#xA0;in&#xA0;such&#xA0;a&#xA0;great&#xA0;activity</mtext></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><annotation encoding="application/x-tex">\left[\begin{array}{l} \text{&#x540D;&#x8BCD;:your invitation}\\ \text{&#x4ECE;&#x53E5;:giving me the chance to participate in such a great activity}\\ \end{array}\right]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord cjk_fallback">&#x540D;&#x8BCD;</span><span class="mord">:your&#xA0;invitation</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord cjk_fallback">&#x4ECE;&#x53E5;</span><span class="mord">:giving&#xA0;me&#xA0;the&#xA0;chance&#xA0;to&#xA0;participate&#xA0;in&#xA0;such&#xA0;a&#xA0;great&#xA0;activity</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span></span></span></span></p>
+<hr>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211219174058.png" width="60%" height="60%" alt="letter"></p>
+<hr>
+<hr>
+<hr>
+<h3 class="mume-header" id="letter-of-advicesuggestion">Letter of Advice/Suggestion</h3>
+
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211201075429.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>who pay<strong>s</strong> high attention to drunk driving all the time.</li>
+<li>To crack this hard nut.</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211201075400.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>To&#xA0;begin&#xA0;with,&#xA0;i&#xA0;do&#xA0;feel&#xA0;that&#xA0;_&#xA0;</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>In&#xA0;my&#xA0;opinion,&#xA0;first&#xA0;of&#xA0;all,</mtext></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>in&#xA0;addition</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>besides</mtext></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>last&#xA0;but&#xA0;not&#xA0;least</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">\left[\begin{array}{l} \text{To begin with, i do feel that \_ } \\ \text{In my opinion, first of all,} \\ \end{array}\right] 
+\left[\begin{array}{l} \text{}\\ \text{}\\ \end{array}\right]
+\left[\begin{array}{l} \text{in addition}\\ \text{besides}\\ \end{array}\right]
+\left[\begin{array}{l} \text{}\\ \text{}\\ \end{array}\right]
+\left[\begin{array}{l} \text{last but not least}\\ \text{}\\ \end{array}\right]
+\left[\begin{array}{l} \text{}\\ \text{}\\ \end{array}\right]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">To&#xA0;begin&#xA0;with,&#xA0;i&#xA0;do&#xA0;feel&#xA0;that&#xA0;_&#xA0;</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">In&#xA0;my&#xA0;opinion,&#xA0;first&#xA0;of&#xA0;all,</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">in&#xA0;addition</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">besides</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">last&#xA0;but&#xA0;not&#xA0;least</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"><span class="mord text"></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span></span></span></span></span></p>
+<ul>
+<li>It is hightly recommended that ___</li>
+<li>it is necessary for ___ to ___
+<ul>
+<li>It is necessary for you to read the text every morning.</li>
+</ul>
+</li>
+<li>I thinkk it would be benficial if we could ___</li>
+<li>___ is of vital/great importance.
+<ul>
+<li>importance&#x662F;&#x540D;&#x8BCD;,important&#x662F;&#x5F62;&#x5BB9;&#x8BCD;</li>
+<li>vital&#x662F;&#x5F62;&#x5BB9;&#x8BCD;,vitally &#x662F;&#x526F;&#x8BCD;.</li>
+<li>it is of+adj.+n.&#x76F8;&#x5F53;&#x4E8E; it is+adv+adj.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>&#x5236;&#x5B9A;&#x6CD5;&#x5F8B;&#xFF0C;&#x8FDD;&#x6CD5;&#x5FC5;&#x7A76;</p>
+<ul>
+<li>to make a law to ban <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder accentunder="true"><mtext>drunk&#xA0;driving</mtext><mo stretchy="true">&#x203E;</mo></munder></mrow><annotation encoding="application/x-tex">\underline{\text{drunk driving}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0889em;vertical-align:-0.3944em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.6456em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">drunk&#xA0;driving</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.3944em;"><span></span></span></span></span></span></span></span></span>
+<ul>
+<li>anyone who violates the law should be regarded as a criminal,because stricter laws will take stronger effect on curbing this bad behavior.
+<ul>
+<li>destoryer&#x7834;&#x574F;&#x8005;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>&#x5BA3;&#x4F20;</p>
+<ul>
+<li>strengthen the education of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder accentunder="true"><mtext>traffic&#xA0;safety</mtext><mo stretchy="true">&#x203E;</mo></munder></mrow><annotation encoding="application/x-tex">\underline{\text{traffic safety}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0889em;vertical-align:-0.3944em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.6456em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">traffic&#xA0;safety</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.3944em;"><span></span></span></span></span></span></span></span></span> to   <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder accentunder="true"><mtext>the&#xA0;drivers&#xA0;by&#xA0;adding&#xA0;more&#xA0;warning&#xA0;slogans&#xA0;on&#xA0;the&#xA0;road</mtext><mo stretchy="true">&#x203E;</mo></munder></mrow><annotation encoding="application/x-tex">\underline{\text{the drivers  by adding more warning slogans on the road}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0889em;vertical-align:-0.3944em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.6456em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">the&#xA0;drivers&#xA0;by&#xA0;adding&#xA0;more&#xA0;warning&#xA0;slogans&#xA0;on&#xA0;the&#xA0;road</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.3944em;"><span></span></span></span></span></span></span></span></span>.</li>
+<li>publicize <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">[</mo><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>the&#xA0;dangers&#xA0;of&#xA0;</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>the&#xA0;benefits&#xA0;of&#xA0;</mtext></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><annotation encoding="application/x-tex">\left[\begin{array}{l} \text{the dangers of }\\ \text{the benefits of }\\ \end{array}\right]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">the&#xA0;dangers&#xA0;of&#xA0;</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">the&#xA0;benefits&#xA0;of&#xA0;</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span></span></span></span>
+<ul>
+<li>publicize the dangers of drinking and driving</li>
+<li>publicize the benefits of eating healthy foods</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder accentunder="true"><mtext>we&#xA0;should</mtext><mo stretchy="true">&#x203E;</mo></munder></mrow><annotation encoding="application/x-tex">\underline{\text{we should}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8944em;vertical-align:-0.2em;"></span><span class="mord underline"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.84em;"><span class="pstrut" style="height:3em;"></span><span class="underline-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">we&#xA0;should</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.2em;"><span></span></span></span></span></span></span></span></span> encourage this behavior</li>
+</ul>
+</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211201075304.png" width="60%" height="60%" alt="letter"></p>
+<hr>
+<h3 class="mume-header" id="letter-of-complaint">Letter of Complaint</h3>
+
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202064749.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>Dear Sir or Madam</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202065104.png" width="60%" height="60%" alt="letter"></p>
+<p><mark>&#x5F00;&#x95E8;&#x89C1;&#x5C71;&#x7684;&#x8BF4;&#x8FD9;&#x6B21;&#x5199;&#x4FE1;&#x662F;&#x6295;&#x8BC9; + &#x5728;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x8D2D;&#x4E70;&#x4E86;product/service + &#x8FD9;&#x4E2A;product/service&#x4E0D;&#x597D;&#xFF0C;&#x5199;&#x4E00;&#x4E2A;&#x539F;&#x56E0;</mark></p>
+<ul>
+<li>
+<p>&#x7B2C;&#x4E00;&#x53E5;&#xFF1A;</p>
+<ul>
+<li><strong>product</strong>: I am writing to complain about a product I recently purchased.</li>
+<li><strong>service</strong>: I&apos;m writing to file a complaint about the service I received during my November 15 visit to your store.</li>
+</ul>
+</li>
+<li>
+<p>&#x7B2C;&#x4E8C;&#x53E5;:</p>
+<ul>
+<li>On (&#x65F6;&#x95F4;), I (bought/leased/rented/repaired) a (book/machine/...) at (&#x5730;&#x70B9;/&#x5E73;&#x53F0;).</li>
+<li>enjoy a service.</li>
+</ul>
+</li>
+<li>
+<p>&#x7B2C;&#x4E09;&#x53E5;:</p>
+<ul>
+<li>Unfortunately, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext>your&#xA0;(product&#xA0;or&#xA0;service)&#xA0;has</mtext><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>performed&#xA0;bad</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>not&#xA0;performed&#xA0;good</mtext></mstyle></mtd></mtr></mtable></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>the&#xA0;service&#xA0;was&#xA0;inadequate</mtext></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l} \text{your (product or service) has} \begin{array}{l} \text{performed bad}\\ \text{not performed good}\\ \end{array} \\ \text{the service was inadequate}\\ \end{array}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.6em;vertical-align:-1.55em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.05em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mord text"><span class="mord">your&#xA0;(product&#xA0;or&#xA0;service)&#xA0;has</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">performed&#xA0;bad</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">not&#xA0;performed&#xA0;good</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span><span style="top:-2.26em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mord text"><span class="mord">the&#xA0;service&#xA0;was&#xA0;inadequate</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>because</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>I&#xA0;am&#xA0;disappointed&#xA0;because</mtext></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l} \text{because}\\ \text{I am disappointed because}\\ \end{array}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">because</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">I&#xA0;am&#xA0;disappointed&#xA0;because</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span>
+<blockquote>
+<ul>
+<li>the product does not work properly</li>
+<li>the service was not performed correctly</li>
+<li>I was billed the wrong amount</li>
+<li>something <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.16em" columnalign="left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>was&#xA0;not&#xA0;disclosed&#xA0;clearly</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext>was&#xA0;misrepresented</mtext></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l} \text{was not disclosed clearly}\\ \text{was misrepresented}\\ \end{array}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">was&#xA0;not&#xA0;disclosed&#xA0;clearly</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">was&#xA0;misrepresented</span></span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202065251.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>I <strong>claim</strong> a replacement or a refund under the terms of the warranty,
+<ul>
+<li>they said it was a <strong>man-made problem</strong> and I must pay for repair it.</li>
+</ul>
+</li>
+<li>so it is <strong>advisable</strong> for you to make a investigation into this faulty computer and give me a full refund.</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202065622.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>consumer protection agency</li>
+<li>customer service center</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="letter-of-invitation">Letter of Invitation</h3>
+
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202075647.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>&#x4EC0;&#x4E48;&#x6D3B;&#x52A8;-&#x65F6;&#x95F4;-&#x5730;&#x70B9;:&#x8FD9;&#x4E2A;&#x53E5;&#x5B50;&#x8981;&#x5217;&#x51FA;&#x6765;</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202080440.png" width="60%" height="60%" alt="letter"></p>
+<ul>
+<li>&#x8BDA;&#x631A;&#x5730;</li>
+</ul>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202080832.png" width="60%" height="60%" alt="letter"></p>
+<hr>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202081341.png" width="80%" height="80%" alt="letter"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202082603.png" width="60%" height="60%" alt="letter"></p>
+<hr>
+<p><a href="https://www.bilibili.com/video/BV1oZ4y1X7Qy?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1oZ4y1X7Qy?spm_id_from=333.999.0.0</a><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202085756.png" alt="20211202085756"></p>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202085143.png" alt="20211202085143"></p>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202085408.png" alt="20211202085408"></p>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211202085615.png" alt="20211202085615"></p>
+<hr>
+<hr>
+<hr>
+<ul>
+<li>which
+<ul>
+<li><a href="https://dictionary.cambridge.org/grammar/british-grammar/which">https://dictionary.cambridge.org/grammar/british-grammar/which</a></li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="todo">TODO</h1>
+
+<ul>
+<li>&#x6BCF;&#x5929;&#x6247;&#x8D1D;&#x6253;&#x5361;</li>
+<li>&#x5E94;&#x8BE5;&#x8FD8;&#x662F;&#x4F5C;&#x6587;&#x4F18;&#x5148;&#xFF0C;&#x6BCF;&#x5929;&#x5199;&#x4E00;&#x7BC7;&#x4F5C;&#x6587;&#xFF0C;&#x7136;&#x540E;&#x80CC;&#x8BF5;&#xFF0C;&#x5C31;&#x6709;20</li>
+<li>&#x65B0;&#x9898;&#x578B;</li>
+<li>&#x9605;&#x8BFB;&#x7406;&#x89E3;40</li>
+<li>&#x957F;&#x96BE;&#x53E5;</li>
+</ul>
+<h1 class="mume-header" id="%E9%A2%98%E7%9B%AE%E7%B1%BB%E5%9E%8B">&#x9898;&#x76EE;&#x7C7B;&#x578B;</h1>
+
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211120120550.png" alt="20211120120550"></p>
+<h2 class="mume-header" id="use-of-english">Use of English</h2>
+
+<ul>
+<li>
+<p>&#x5B8C;&#x5F62;&#x586B;&#x7A7A;</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1oP4y1V76n">https://www.bilibili.com/video/BV1oP4y1V76n</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://www.bilibili.com/video/BV1EV411a7Q5?from=search&amp;seid=3615784558865139795&amp;spm_id_from=333.337.0.0">&#x4F9D;&#x9760;&#x6280;&#x5DE7;</a></p>
+</li>
+<li>
+<p><a href="https://www.bilibili.com/video/BV1EJ411M7ra/?spm_id_from=autoNext">https://www.bilibili.com/video/BV1EJ411M7ra/?spm_id_from=autoNext</a></p>
+</li>
+</ul>
+<h2 class="mume-header" id="reading-comprehension">Reading Comprehension</h2>
+
+<h4 class="mume-header" id="%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3">&#x9605;&#x8BFB;&#x7406;&#x89E3;</h4>
+
+<ul>
+<li>
+<p>&#x4ED6;&#x9605;&#x8BFB;&#x7684;&#x5176;&#x5B9E;&#x8981;&#x627E;&#x5B9A;&#x4F4D;&#x627E;&#x5B8C;&#x5B9A;&#x4F4D;&#x4E4B;&#x540E;&#xFF0C;&#x6B63;&#x786E;&#x9009;&#x9879;&#x7B54;&#x6848;&#x4ED6;&#x7684;&#x5B9A;&#x4F4D;&#x7684;&#x90A3;&#x4E00;&#x4E2A;&#x8BCD;&#x662F;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x4ED6;&#x4F1A;&#x6539;&#x4E00;&#x4E0B;&#xFF0C;&#x4ED6;&#x7684;&#x5F62;&#x5BB9;&#x8BCD;&#x6216;&#x8005;&#x662F;&#x52A8;&#x8BCD;&#xFF0C;&#x4F46;&#x662F;&#x6539;&#x7684;&#x662F;&#x76F8;&#x8FD1;&#x8BCD;&#xFF0C;&#x7136;&#x540E;&#x5176;&#x4ED6;&#x7684;&#x5C31;&#x662F;&#x9519;&#x8BEF;&#x7B54;&#x6848;&#x5C31;&#x662F;&#x4ED6;&#x7684;&#x90A3;&#x79CD;&#xFF0C;&#x55EF;&#xFF0C;&#x76F4;&#x63A5;&#x5C31;&#x662F;&#x4E3B;&#x8C13;&#x5BBE;&#x7ED9;&#x4F60;&#x5077;&#x6362;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x8981;&#x4E0D;&#x5C31;&#x662F;&#x5F62;&#x5BB9;&#x8BCD;&#x5B8C;&#x5168;&#x76F8;&#x53CD;&#x3002;&#x5C31;&#x662F;&#x4F60;&#x62FF;&#x5230;&#x4E00;&#x7BC7;&#x9605;&#x8BFB;&#xFF0C;&#x4F60;&#x4E00;&#x5B9A;&#x4E0D;&#x8981;&#x5C31;&#x662F;&#x9A6C;&#x4E0A;&#x5C31;&#x770B;&#x9898;&#xFF0C;&#x4F60;&#x8981;&#x7A0D;&#x5FAE;&#x8BFB;&#x4E00;&#x4E0B;&#xFF0C;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x4E3B;&#x8981;&#x9898;&#x8BB2;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#x7136;&#x540E;&#x5462;&#xFF0C;&#x6839;&#x636E;&#x63D0;&#x95EE;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#x5728;&#x6587;&#x7AE0;&#x4E2D;&#x627E;&#x5B9A;&#x4F4D;&#xFF0C;&#x627E;&#x5230;&#x4E4B;&#x540E;&#x4ED6;&#x4E00;&#x822C;&#x5C31;&#x662F;&#x90A3;&#x4E00;&#x6BB5;&#xFF0C;&#x4F60;&#x53CD;&#x590D;&#x628A;&#x90A3;&#x4E00;&#x6BB5;&#x591A;&#x770B;&#x51E0;&#x904D;&#xFF0C;&#x4E00;&#x5B9A;&#x4E0D;&#x8981;&#x4EE5;&#x81EA;&#x5DF1;&#x7406;&#x89E3;&#x53BB;&#x601D;&#x8003;&#xFF0C;&#x4E00;&#x5B9A;&#x8981;&#x4EE5;&#x5728;&#x539F;&#x6587;&#x80FD;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#xFF0C;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#x7684;&#x610F;&#x601D;&#xFF0C;&#x4E00;&#x5B9A;&#x662F;&#x8981;&#x63A8;&#x51FA;&#x6765;&#x7684;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4F60;&#x60F3;&#x50CF;&#x51FA;&#x6765;&#x7684;&#x3002;</p>
+</li>
+<li>
+<p><a href="https://www.bilibili.com/video/BV1zQ4y1y7Mu?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1zQ4y1y7Mu?spm_id_from=333.999.0.0</a></p>
+</li>
+</ul>
+<p><a href="https://naotu.baidu.com/file/bdb2152e161cce38d6efb78197471a9b">&#x767E;&#x5EA6;&#x8111;&#x56FE;</a></p>
+<h4 class="mume-header" id="%E6%96%B0%E9%A2%98%E5%9E%8B">&#x65B0;&#x9898;&#x578B;</h4>
+
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x7528;&#x5E8F;&#x53F7;&#x6807;&#x51FA;&#x6BCF;&#x4E00;&#x53E5;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x7528;&#x5E8F;&#x53F7;&#x6807;&#x51FA;&#x6BCF;&#x4E00;&#x53E5;}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x7528;&#x5E8F;&#x53F7;&#x6807;&#x51FA;&#x6BCF;&#x4E00;&#x53E5;</span></span></span></span></span></p>
+<blockquote>
+<ul>
+<li>&#x4E8C;&#x3001;&#x505A;&#x9898;&#x6B65;&#x9AA4;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x627E;&#x5230;&#x8BED;&#x6BB5;</mtext><mo separator="true">,</mo><mtext>&#x7136;&#x540E;&#x63D0;&#x53D6;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x627E;&#x5230;&#x8BED;&#x6BB5;,&#x7136;&#x540E;&#x63D0;&#x53D6;}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x627E;&#x5230;&#x8BED;&#x6BB5;</span><span class="mpunct" style="color:red;">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord cjk_fallback" style="color:red;">&#x7136;&#x540E;&#x63D0;&#x53D6;</span></span></span></span></span><p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211120153406.png" width="60%" height="60%" alt="&#x5C0F;&#x6807;&#x9898;"></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x4E00;&#x4E2A;&#x6574;&#x4F53;</mtext><mo>:</mo></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x4E00;&#x4E2A;&#x6574;&#x4F53;:}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x4E00;&#x4E2A;&#x6574;&#x4F53;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel" style="color:red;">:</span></span></span></span></span>1&#x3001;&#x5148;&#x901A;&#x8BFB;&#x6807;&#x9898;&#xFF0C;&#x8BB0;&#x4F4F;&#x6807;&#x9898;&#x5BF9;&#x6587;&#x7AE0;&#x8FDB;&#x884C;&#x6574;&#x4F53;&#x7406;&#x89E3;&#x3002;</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x56DB;&#x4E2A;&#x8BED;&#x6BB5;</mtext><mo>:</mo><mtext>&#x4E00;&#x5B9A;&#x8981;&#x7528;&#x8BED;&#x6BB5;&#x6765;&#x627E;</mtext><mo separator="true">,</mo><mtext>&#x603B;&#x5206;</mtext><mi mathvariant="normal">/</mi><mtext>&#x5206;&#x603B;&#x5C31;&#x627E;&#x603B;</mtext><mo separator="true">;</mo><mtext>&#x8F6C;&#x6298;&#x8BA9;&#x6B65;&#x5C31;&#x627E;&#x8F6C;&#x6298;</mtext><mi mathvariant="normal">/</mi><mtext>&#x539F;&#x56E0;&#x7ED3;&#x679C;&#x90FD;&#x53EF;&#x4EE5;&#x627E;&#x4E0B;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x56DB;&#x4E2A;&#x8BED;&#x6BB5;:&#x4E00;&#x5B9A;&#x8981;&#x7528;&#x8BED;&#x6BB5;&#x6765;&#x627E;,&#x603B;&#x5206;/&#x5206;&#x603B;&#x5C31;&#x627E;&#x603B;;&#x8F6C;&#x6298;&#x8BA9;&#x6B65;&#x5C31;&#x627E;&#x8F6C;&#x6298;/&#x539F;&#x56E0;&#x7ED3;&#x679C;&#x90FD;&#x53EF;&#x4EE5;&#x627E;&#x4E0B;}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x56DB;&#x4E2A;&#x8BED;&#x6BB5;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel" style="color:red;">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord cjk_fallback" style="color:red;">&#x4E00;&#x5B9A;&#x8981;&#x7528;&#x8BED;&#x6BB5;&#x6765;&#x627E;</span><span class="mpunct" style="color:red;">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord cjk_fallback" style="color:red;">&#x603B;&#x5206;</span><span class="mord" style="color:red;">/</span><span class="mord cjk_fallback" style="color:red;">&#x5206;&#x603B;&#x5C31;&#x627E;&#x603B;</span><span class="mpunct" style="color:red;">;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord cjk_fallback" style="color:red;">&#x8F6C;&#x6298;&#x8BA9;&#x6B65;&#x5C31;&#x627E;&#x8F6C;&#x6298;</span><span class="mord" style="color:red;">/</span><span class="mord cjk_fallback" style="color:red;">&#x539F;&#x56E0;&#x7ED3;&#x679C;&#x90FD;&#x53EF;&#x4EE5;&#x627E;&#x4E0B;</span></span></span></span></span>2&#x3001;&#x505A;&#x9898;&#x65F6;&#x4E0D;&#x5FC5;&#x62D8;&#x6CE5;&#x4E8E;&#x539F;&#x6587;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x6700;&#x597D;&#x5148;&#x6613;&#x540E;&#x96BE;&#x3002;&#x5177;&#x4F53;&#x505A;&#x7684;&#x65F6;&#x5019;&#x5173;&#x6CE8;<strong>&#x6BB5;&#x9996;&#x548C;&#x8F6C;&#x6298;&#x540E;</strong>&#xFF08;<strong>&#x8F6C;&#x6298;&#x540E;&#x4F18;&#x5148;</strong>&#xFF09;&#xFF0C;&#x627E;&#x51FA;&#x8BED;&#x6BB5;&#x7279;&#x5F81;&#x3002;
+<ul>
+<li><mark>1&#x3001;&#x5206;&#x6790;&#x8BED;&#x6BB5;&#x7279;&#x5F81;&#xFF0C;-&gt; &#x627E;&#x51FA;&#x91CD;&#x70B9;&#x53E5;&#xFF1B;</mark>
+<ul>
+<li>1&#xFF09;&#x603B;-&#x5206;:<strong>&#x603B;</strong>&#x662F;&#x91CD;&#x70B9;&#xFF1B;</li>
+<li>2&#xFF09;&#x5206;-&#x603B;:<strong>&#x603B;</strong>&#x662F;&#x91CD;&#x70B9;&#xFF1B;</li>
+<li>3&#xFF09;&#x8F6C;&#x6298;-&#x8BA9;&#x6B65;:<strong>&#x8F6C;&#x6298;&#x90E8;&#x5206;</strong>&#x662F;&#x91CD;&#x70B9;&#xFF1B;</li>
+<li>4&#xFF09;&#x539F;&#x56E0;-&#x7ED3;&#x679C;:<strong>&#x7ED3;&#x679C;&#x90E8;&#x5206;</strong>&#x662F;&#x91CD;&#x70B9;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x4E8C;&#x4E2A;&#x5339;&#x914D;</mtext><mo>:</mo></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x4E8C;&#x4E2A;&#x5339;&#x914D;:}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x4E8C;&#x4E2A;&#x5339;&#x914D;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel" style="color:red;">:</span></span></span></span></span>3&#x3001;&#x4F5C;&#x51FA;&#x6700;&#x7EC8;&#x5224;&#x65AD;&#x65F6;&#xFF0C;&#x5FC5;&#x987B;&#x8981;&#x627E;&#x5230;&#x660E;&#x786E;&#x7684;&#x5339;&#x914D;&#x5173;&#x7CFB;&#x3002;&#xFF08;&#x5373;<strong>&#x540C;&#x4E49;&#x66FF;&#x6362;&#x6216;&#x590D;&#x73B0;</strong>&#xFF09;
+<ul>
+<li>3&#x3001;&#x5BFB;&#x627E;&#x5339;&#x914D;&#x5173;&#x7CFB;&#x3002;
+<ul>
+<li>1&#xFF09;<strong>&#x590D;&#x73B0;</strong></li>
+<li>2&#xFF09;<strong>&#x540C;&#x4E49;&#x66FF;&#x6362;</strong></li>
+<li>3&#xFF09;&#x4E0A;&#x4E0B;&#x4E49;</li>
+<li>4&#xFF09;&#x53D6;&#x53CD;&#x578B;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<hr>
+<blockquote>
+<ul>
+<li>&#x505A;&#x9898;&#x6B65;&#x9AA4;:<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="Red"><mtext>&#x8003;&#x67E5;&#x5185;&#x5BB9;&#x504F;&#x7EC6;&#x8282;&#xFF0C;&#x591A;&#x5173;&#x6CE8;&#x6587;&#x4E2D;&#x4EBA;&#x7269;&#x6240;&#x8BF4;&#x7684;&#x8BDD;&#xFF1B;&#x4E3B;&#x8981;&#x662F;&#x4EBA;&#x7269;&#x60F3;&#x8868;&#x8FBE;&#x7684;&#x601D;&#x60F3;</mtext></mstyle></mrow><annotation encoding="application/x-tex">{\color{Red}&#x8003;&#x67E5;&#x5185;&#x5BB9;&#x504F;&#x7EC6;&#x8282;&#xFF0C;&#x591A;&#x5173;&#x6CE8;&#x6587;&#x4E2D;&#x4EBA;&#x7269;&#x6240;&#x8BF4;&#x7684;&#x8BDD;&#xFF1B;&#x4E3B;&#x8981;&#x662F;&#x4EBA;&#x7269;&#x60F3;&#x8868;&#x8FBE;&#x7684;&#x601D;&#x60F3;}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:Red;">&#x8003;&#x67E5;&#x5185;&#x5BB9;&#x504F;&#x7EC6;&#x8282;&#xFF0C;&#x591A;&#x5173;&#x6CE8;&#x6587;&#x4E2D;&#x4EBA;&#x7269;&#x6240;&#x8BF4;&#x7684;&#x8BDD;&#xFF1B;&#x4E3B;&#x8981;&#x662F;&#x4EBA;&#x7269;&#x60F3;&#x8868;&#x8FBE;&#x7684;&#x601D;&#x60F3;</span></span></span></span></span> <p align="center"><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211120153659.png" width="60%" height="60%" alt="&#x5C0F;&#x6807;&#x9898;"></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x786E;&#x5B9A;&#x5B9A;&#x4F4D;&#x8BCD;</mtext><mo>:</mo></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x786E;&#x5B9A;&#x5B9A;&#x4F4D;&#x8BCD;:}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x786E;&#x5B9A;&#x5B9A;&#x4F4D;&#x8BCD;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel" style="color:red;">:</span></span></span></span></span>1.&#x8BFB;&#x5DE6;&#x4FA7;&#x4E00;&#x680F; 5 &#x9053;&#x9898;&#x5E72;, &#x786E;&#x5B9A;<mark>&#x5B9A;&#x4F4D;&#x8BCD;</mark>
+<ul>
+<li>&#x91CD;&#x8981;&#x6027;&#x987A;&#x5E8F; : &#x4E13;&#x6709;&#x540D;&#x8BCD;&gt;&#x666E;&#x901A;&#x540D;&#x8BCD;&gt;&#x52A8;&#x8BCD;&gt;&#x5F62;&#x5BB9;&#x8BCD;&#x6216;&#x526F;&#x8BCD;</li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x627E;&#x6240;&#x6709;&#x5B9A;&#x4F4D;&#x8BCD;</mtext><mo>:</mo></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x627E;&#x6240;&#x6709;&#x5B9A;&#x4F4D;&#x8BCD;:}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x627E;&#x6240;&#x6709;&#x5B9A;&#x4F4D;&#x8BCD;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel" style="color:red;">:</span></span></span></span></span>2.&#x627E;&#x5230;&#x5B9A;&#x4F4D;&#x8BCD;&#x5728;&#x539F;&#x6587;&#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x5168;&#x90E8;&#x4F4D;&#x7F6E;, &#x901A;&#x8BFB;&#x6240;&#x6709;&#x5B9A;&#x4F4D;&#x53E5;
+<ul>
+<li>&#x5B9A;&#x4F4D;&#x8BCD;&#x53EF;&#x80FD;&#x5728;&#x6587;&#x4E2D;&#x591A;&#x6B21;&#x51FA;&#x73B0;,<strong>&#x9700;&#x628A;&#x6BCF;&#x5904;&#x5185;&#x5BB9;&#x90FD;&#x770B;&#x5B8C;&#x518D;&#x5224;&#x65AD;&#xFF1B;</strong></li>
+</ul>
+</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathcolor="red"><mtext>&#x5DE6;&#x53F3;&#x5BF9;&#x6BD4;</mtext><mo>:</mo></mstyle></mrow><annotation encoding="application/x-tex">{\color{red} &#x5DE6;&#x53F3;&#x5BF9;&#x6BD4;:}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord cjk_fallback" style="color:red;">&#x5DE6;&#x53F3;&#x5BF9;&#x6BD4;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel" style="color:red;">:</span></span></span></span></span>3.&#x5DE6;&#x4FA7;&#x9898;&#x5E72;&#x5BF9;&#x6BD4;&#x53F3;&#x4FA7;&#x9009;&#x9879;, &#x627E;&#x590D;&#x73B0;&#x6216;&#x540C;&#x4E49;&#x66FF;&#x6362;&#x9009;&#x9879;
+<ul>
+<li>&#x590D;&#x73B0;&#xFF1A;&#x539F;&#x8BCD;&#x518D;&#x73B0;
+<ul>
+<li>&#x7B80;&#x5355;&#x590D;&#x73B0;&#x8BCD; : &#x4E13;&#x6709;&#x540D;&#x8BCD;&#x3001;&#x6570;&#x5B57;&#x3001;&#x5F15;&#x5BFC;&#x3001;&#x8F6C;&#x6298;&#x8BA9;&#x6B65;&#x8BCD;&#x3001;&#x5E76;&#x5217;</li>
+<li>&#x666E;&#x901A;&#x590D;&#x73B0;&#x8BCD; : &#x540D;&#x8BCD;&#x3001;&#x52A8;&#x8BCD;&#x3001;&#x5F62;&#x5BB9;&#x8BCD;&#x3001;&#x526F;&#x8BCD;</li>
+</ul>
+</li>
+<li>&#x540C;&#x4E49;&#x66FF;&#x6362; : &#x540C;&#x4E49;&#x8BCD;/&#x8FD1;&#x4E49;&#x8BCD;&#x6539;&#x5199;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>&#x90E8;&#x5206;&#x9898;&#x76EE;&#x6D89;&#x53CA;&#x957F;&#x96BE;&#x53E5;&#xFF0C;&#x5BF9;&#x4E8E;&#x547D;&#x9898;&#x957F;&#x96BE;&#x53E5;&#x9700;&#x62C6;&#x5206;&#x7406;&#x89E3;&#x3002;</li>
+</ul>
+</blockquote>
+</blockquote>
+<p><a href="https://pan.baidu.com/disk/home?_at_=1637384034495%23/all?vmode=list&amp;path=/%E8%80%83%E7%A0%94/%E8%8B%B1%E8%AF%AD%E5%A4%8D%E4%B9%A0/%E6%96%B0%E9%A2%98%E5%9E%8B/01.%E6%8A%80%E8%83%BD%E5%85%A8%E9%9D%A2%E6%8F%90%E5%8D%87/%E8%8B%B1%E8%AF%AD%E4%BA%8C#/all?vmode=list&amp;path=%2F%E8%80%83%E7%A0%94%2F%E8%8B%B1%E8%AF%AD%E5%A4%8D%E4%B9%A0%2F%E6%96%B0%E9%A2%98%E5%9E%8B%2F02.%E5%86%B2%E5%88%BA%E7%8F%AD%2F%E8%8B%B1%E8%AF%AD%E4%BA%8C">&#x51B2;&#x523A;:&gt;&#x82F1;&#x8BED;&#x590D;&#x4E60;&gt;&#x65B0;&#x9898;&#x578B;&gt;02.&#x51B2;&#x523A;&#x73ED;&gt;&#x82F1;&#x8BED;&#x4E8C;</a></p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211120131603.png" width="60%" height="60%" alt="&#x77E9;&#x9635;&#x7684;&#x8FD0;&#x7B97;">
+</p>
+<ul>
+<li><a href="https://pan.baidu.com/disk/home?_at_=1637384034495#/all?vmode=list&amp;path=%2F%E8%80%83%E7%A0%94%2F%E8%8B%B1%E8%AF%AD%E5%A4%8D%E4%B9%A0%2F%E6%96%B0%E9%A2%98%E5%9E%8B%2F01.%E6%8A%80%E8%83%BD%E5%85%A8%E9%9D%A2%E6%8F%90%E5%8D%87%2F%E8%8B%B1%E8%AF%AD%E4%BA%8C">&#x5218;&#x7426;&#x8001;&#x5E08;&#x7684;&#x65B0;&#x9898;&#x578B;</a></li>
+</ul>
+<h2 class="mume-header" id="translation">Translation</h2>
+
+<ul>
+<li>&#x62C6;-&#x8BD1;-&#x8C03;
+<ul>
+<li>&#x4E3B;-&#x8C13;-&#x5BBE;, &#x6293;&#x4E3B;&#x5E72;&#x7FFB;&#x8BD1;</li>
+<li>&#x5B9A;&#x8BED;&#x4ECE;&#x53E5;</li>
+</ul>
+</li>
+<li>&#x4E0D;&#x8981;&#x81EA;&#x5DF1;&#x6539;&#x539F;&#x6587;&#x7684;&#x610F;&#x601D;</li>
+</ul>
+<p><a href="https://t.bilibili.com/572107540957340839?share_medium=iphone&amp;share_plat=ios&amp;share_session_id=37FF57DC-29D0-4CF4-8ACE-8111C0A46281&amp;share_source=COPY&amp;share_tag=s_i&amp;timestamp=1636533615&amp;unique_k=MzaVq0https://t.bilibili.com/572107540957340839?share_medium=iphone&amp;share_plat=ios&amp;share_session_id=37FF57DC-29D0-4CF4-8ACE-8111C0A46281&amp;share_source=COPY&amp;share_tag=s_i&amp;timestamp=1636533615&amp;unique_k=MzaVq0">https://t.bilibili.com/572107540957340839?share_medium=iphone&amp;share_plat=ios&amp;share_session_id=37FF57DC-29D0-4CF4-8ACE-8111C0A46281&amp;share_source=COPY&amp;share_tag=s_i&amp;timestamp=1636533615&amp;unique_k=MzaVq0https://t.bilibili.com/572107540957340839?share_medium=iphone&amp;share_plat=ios&amp;share_session_id=37FF57DC-29D0-4CF4-8ACE-8111C0A46281&amp;share_source=COPY&amp;share_tag=s_i&amp;timestamp=1636533615&amp;unique_k=MzaVq0</a></p>
+<pre data-role="codeBlock" data-info class="language-"><code>&#x8D27;&#xFF1A;&#x5510;&#x9759;&#x7FFB;&#x8BD1;&#x6280;&#x5DE7;+&#x8FD1;12&#x5E74;&#x7FFB;&#x8BD1;&#x5E38;&#x8003;&#x8BCD;&#x6C47;&#x603B;&#x7ED3;[&#x80DC;&#x5229;]
+Pdf&#x5728;&#x516C;&#x4E3B;&#x53F7;&#x3010;&#x7A7A;&#x5361;&#x7A7A;&#x5361;&#x7A7A;&#x7A7A;&#x5361;&#x3011;&#x56DE;fu&#x201C;&#x7FFB;&#x8BD1;&#x201D;&#x9886;&#x53D6;
+&#x6709;&#x65F6;&#x95F4;&#x7684;&#x53EF;&#x4EE5;&#x770B;&#x5510;&#x9759;&#x8001;&#x5E08;&#x7684;&#x8BFE;&#xFF0C;&#x6CA1;&#x65F6;&#x95F4;&#x7684;&#x76F4;&#x63A5;&#x770B;&#x8FD9;&#x4E2A;&#x8111;&#x56FE;&#x81EA;&#x5DF1;&#x5237;&#x9898;~
+</code></pre><h2 class="mume-header" id="writing">writing</h2>
+
+<h4 class="mume-header" id="%E5%B0%8F%E4%BD%9C%E6%96%87-1">&#x5C0F;&#x4F5C;&#x6587;</h4>
+
+<p>&#x5171;&#x4E09;&#x8282;&#xFF1A;&#x5C0F;&#x4F5C;&#x6587;&#x3001;&#x82F1;&#x4E00;&#x5927;&#x4F5C;&#x6587;&#x548C;&#x82F1;&#x4E8C;&#x5927;&#x4F5C;&#x6587;&#xFF08;&#x540E;&#x7EED;&#x66F4;&#x65B0;&#xFF09;<br>
+&#x5C0F;&#x4F5C;&#x6587;&#x5206;&#x503C;&#xFF1A;10&#x5206;<br>
+&#x7C7B;&#x578B;&#xFF1A;&#x5EFA;&#x8BAE;&#x4FE1;&#x3001;&#x9080;&#x8BF7;&#x4FE1;&#x3001;&#x6295;&#x8BC9;/&#x62B1;&#x6028;&#x4FE1;&#x3001;&#x901A;&#x77E5;&#x4FE1;&#x548C;&#x544A;&#x793A;</p>
+<p>&#x514D;&#x8D39;&#x8D44;&#x6599;&#xFF1A;&#x5728;&#x516C;&#x4E3B;&#x53F7;&#x3010;&#x7A7A;&#x5361;&#x7A7A;&#x5361;&#x7A7A;&#x7A7A;&#x5361;&#x3011;&#x56DE;fu&#x201C;&#x4F5C;&#x6587;&#x201D;&#x83B7;&#x53D6;&#xFF0C;&#x5148;&#x9886;&#x518D;&#x542C;&#x8BFE;&#x54C8;~</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Dear Json,
+there is different on sunday i will go to play basketball.
+
+because,
+   it is first time to me studying on abord
+
+I would appreciate it if you can give me 
+some living advice, abort foods, environment. 
+
+Dear Json,
+  I&apos;m writing this letter to hope you can give me some advice about living on your country. besides, interviewing myself to you is perfect method to promote our relationship.
+  first of all, I share some my living habits. I always go to study in 6am in everyday, and go to sleep in 11pm. fish is my faviorate food.
+  because It is first time for me to study on abord, i&apos;m not sure whether i can adapt the environment.Could you tell me some information or advices about it? like foods, weather.
+  I will appreciate it if you can give me some advices, looking forward to hear from you. 
+             Your Sincerely 
+                Li Ming
+
+&#x6211;&#x5199;&#x8FD9;&#x5C01;&#x4FE1;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4E3A;&#x4E86;&#x589E;&#x8FDB;&#x5F7C;&#x6B64;&#x7684;&#x4E86;&#x89E3;&#xFF0C;&#x548C;&#x5BFB;&#x6C42;&#x4E00;&#x4E9B;&#x5173;&#x4E8E;&#x5728;&#x4F60;&#x7684;&#x56FD;&#x5BB6;&#x751F;&#x6D3B;&#x7684;&#x5EFA;&#x8BAE;&#x3002;
+&#x9996;&#x5148;&#xFF0C;&#x6211;&#x60F3;&#x5206;&#x4EAB;&#x4E00;&#x4E9B;&#x6211;&#x4E2A;&#x4EBA;&#x7684;&#x751F;&#x6D3B;&#x4E60;&#x60EF;&#xFF0C;&#x6211;&#x4E00;&#x822C;&#x65E9;&#x4E0A;&#x516D;&#x70B9;&#x8D77;&#x5E8A;&#xFF0C;&#x665A;&#x4E0A;&#x5341;&#x4E00;&#x70B9;&#x7761;&#x89C9;&#xFF0C;&#x5468;&#x672B;&#x4F1A;&#x53BB;&#x6253;&#x4E00;&#x573A;&#x7BEE;&#x7403;&#x3002;&#x56E0;&#x4E3A;&#x6211;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x53BB;&#x5916;&#x56FD;&#x5B66;&#x4E60;&#xFF0C;&#x60F3;&#x5411;&#x4F60;&#x8BE2;&#x95EE;&#x4E00;&#x4E9B;&#x5728;&#x4F60;&#x7684;&#x56FD;&#x5BB6;&#x751F;&#x6D3B;&#x7684;&#x5EFA;&#x8BAE;&#x3002;&#x6BD4;&#x5982;&#x98DF;&#x7269;&#xFF0C;&#x6C14;&#x5019;&#x7B49;&#x7B49;&#x3002;
+&#x671F;&#x5F85;&#x4F60;&#x7684;&#x56DE;&#x4FE1;&#x3002;
+
+The purpose of writing this letter is to enhance mutual understanding and seek some advice on living in your country.
+First of all, I want to share some of my personal habits. I usually get up at six in the morning, go to bed at eleven in the evening, and play a game of basketball on weekends. Because it is my first time to study abroad, I want to ask you some advice on living in your country. Such as food, climate and so on.
+Look forward to your reply.
+</code></pre><ul>
+<li>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211211194411.png" alt="20211211194411"></p>
+</li>
+<li>
+<p><img src="https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20211211201438.png" alt="20211211201438"></p>
+</li>
+</ul>
+<p>Dear Professor Smith,<br>
+I&apos;m writing this letter to apologize for canceling our meeting next month.</p>
+<p>First of all, it suddenly happened that my classmate was ill. It leads to the result that I have to take care of him every day besides. My new research about robots is still not finished. I also need to take my energy to finish it. So. I suggest that I will visit you next year.</p>
+<p>Looking forward to hearing from you and pleased Free feel to express your opinions.</p>
+<p>yours sincerely<br>
+Li Ming</p>
+<h4 class="mume-header" id="%E5%A4%A7%E4%BD%9C%E6%96%87">&#x5927;&#x4F5C;&#x6587;</h4>
+
+<h2 class="mume-header" id="basic-knowledge">basic knowledge</h2>
+
+<ul>
+<li>&#x9650;&#x5236;&#x6027;&#x4E0E;&#x975E;&#x9650;&#x5236;&#x6027;&#x5B9A;&#x8BED;&#x4ECE;&#x53E5;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x4E25;&#x683C;&#x6765;&#x8BF4;&#xFF0C;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x201C;&#x8BED;&#x5883;+&#x8BED;&#x4E49;&#x201D;&#x6765;&#x5224;&#x522B;: &#x5176;&#x4FEE;&#x9970;&#x7684;&#x540D;&#x8BCD;&#x8FDB;&#x884C;&#x8303;&#x56F4;&#x4E0A;&#x7684;&#x9650;&#x5B9A;.
+<ul>
+<li>&#x975E;&#x9650;&#x5236;&#x6027;&#x5B9A;&#x8BED;&#x4ECE;&#x53E5;: &#x548C;&#x4E3B;&#x53E5;&#x5173;&#x7CFB;&#x4E0D;&#x662F;&#x5F88;&#x5BC6;&#x5207;, &#x53EA;&#x662F;&#x5BF9;&#x5148;&#x884C; &#x8BCD;&#x4F5C;&#x4E9B;&#x9644;&#x52A0;&#x8BF4;&#x660E;, &#x5982;&#x679C;&#x53BB;&#x6389;, &#x4E3B;&#x53E5;&#x7684; &#x610F;&#x601D;&#x4ECD;&#x7136;&#x6E05;&#x695A;&#x3002;&#x8FD9;&#x79CD;&#x4ECE;&#x53E5;,&#x5199;&#x65F6;&#x5F80;&#x5F80;
+<ul>
+<li>&#x9650;&#x5236;&#x6027;&#x5B9A;&#x8BED;&#x4ECE;&#x53E5;&#x548C;&#x975E;&#x9650;&#x5236;&#x6027;&#x5B9A;&#x8BED;&#x4ECE;&#x53E5;&#x6709;&#x4EC0;&#x4E48;&#x533A;&#x522B;&#xFF1F; - &#x4F1F;&#x9E4F;&#x7684;&#x56DE;&#x7B54; - &#x77E5;&#x4E4E; <a href="https://www.zhihu.com/question/365966252/answer/973118140">https://www.zhihu.com/question/365966252/answer/973118140</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 class="mume-header" id="replicat">replicat</h2>
+
+<h3 class="mume-header" id="self-introduction">self introduction</h3>
+
+<h5 class="mume-header" id="1-make-a-self-introduction">1 make a self-introduction</h5>
+
+<ul>
+<li>&#x7B2C;&#x4E00;&#x6BB5;(&#x5F00;&#x5934;&#x53E5;&#xFF0C;&#x81EA;&#x6211;&#x4ECB;&#x7ECD;):
+<ul>
+<li>&#x5C0A;&#x656C;&#x7684;&#x5404;&#x4F4D;&#x8001;&#x5E08;&#xFF0C;&#x5927;&#x5BB6;&#x4E0A;&#x5348;/&#x4E0B;&#x5348;&#x597D;!&#x5F88;&#x9AD8;&#x5174;&#x6709;&#x673A;&#x4F1A;&#x5750;&#x5728;&#x8FD9;&#x91CC;&#x53C2;&#x52A0;&#x9762;&#x8BD5;&#x3002;&#x6211;&#x53EB; XX&#xFF0C;&#x4ECA;&#x5E74; XX &#x5C81;&#xFF0C;&#x6765;&#x81EA; XX &#x7701; XX &#x5E02;&#x3002;&#x5BB6;&#x4E61;&#x4EE5;XXXX&#x95FB;&#x540D;&#x3002;</li>
+<li>&#x672C;&#x79D1;&#x6BD5;&#x4E1A;&#x4E8E; XXXX &#x5B66;&#x6821;&#xFF0C;&#x4E3B;&#x4FEE; XXX &#x4E13;&#x4E1A;&#xFF0C;XXXX &#x5E74; &#x6211;&#x5B8C;&#x6210;&#x4E86;&#x672C;&#x79D1;&#x7684;&#x5B66;&#x4E60;&#x3002;</li>
+<li>&#x73B0;&#x5728;&#x8BF7;&#x5141;&#x8BB8;&#x6211;&#x4ECE;&#x672C;&#x79D1;&#x7ECF;&#x5386;&#x3001;(&#x5DE5;&#x4F5C;&#x7ECF;&#x5386;)&#x3001;&#x79D1;&#x7814;&#x3001;&#x793E;&#x4F1A;&#x5B9E;&#x8DF5;&#x3001;&#x62A5;&#x8003; &#x52A8;&#x673A;&#x53CA;&#x89C4;&#x5212;&#x8FD9;&#x51E0;&#x4E2A;&#x65B9;&#x9762;&#x5C55;&#x5F00;&#x6211;&#x7684;&#x81EA;&#x6211;&#x4ECB;&#x7ECD;&#x3002; &#x3010;&#x4E00;&#x822C;&#x8BF4;2--3&#x70B9;&#x5373;&#x53EF;&#x3011;</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Good morning/afternoon, dear teachers! I am very glad to have the opportunity to sit here for the interview.</p>
+<blockquote>
+<ul>
+<li>My name is XXX, I am XX years old, and I come from XX City, XX Province. my hometown is famous for XXXXX.</li>
+<li>I graduated from <code>XXXX</code> as an undergraduate majoring in XXXX . I have finished my undergraduate study in <code>XXXX</code>.</li>
+<li>Now please allow me to introduce myself from the aspects of learning experience (work experience), social practice, learning motivation and planning.</li>
+</ul>
+</blockquote>
+</blockquote>
+<h5 class="mume-header" id="2-campus-and-work-experience">2 campus and work experience</h5>
+
+<ul>
+<li>
+<p>&#x5728;&#x804C;&#x751F;(&#x6821;&#x56ED;&#x7ECF;&#x5386;+&#x5DE5;&#x4F5C;&#x7ECF;&#x5386;):</p>
+<ul>
+<li>&#x5728;&#x4E0A;&#x5B66;&#x671F;&#x95F4;&#xFF0C;&#x6211;&#x8BA4;&#x771F;&#x523B;&#x82E6;&#xFF0C;&#x5B8C;&#x6210;&#x7684;&#x6240;&#x6709;&#x7684;&#x5B66;&#x79D1;&#x3002;&#x6211;&#x7684;&#x6210;&#x7EE9;&#x4E00;&#x76F4;&#x540D;&#x5217;&#x524D;&#x8305;&#x3002;&#x6211;&#x7ECF;&#x5E38;&#x53C2;&#x52A0;&#x793E;&#x56E2;&#x6D3B;&#x52A8;&#x5E76;&#x62C5;&#x4EFB;&#x793E;&#x957F;&#xFF0C;&#x4F8B;&#x5982;&#x7FBD;&#x6BDB;&#x7403;&#x793E;&#xFF0C;&#x6211;&#x8FD8;&#x53C2;&#x52A0;&#x4E86;&#x7FBD;&#x6BDB;&#x7403;&#x6BD4;&#x8D5B;&#xFF0C;&#x83B7;&#x5F97;&#x7B2C;&#x4E09;&#x540D;&#xFF0C;&#x6211;&#x5F88;&#x559C;&#x6B22;&#x8FD0;&#x52A8;&#xFF0C;&#x8FD9;&#x63D0;&#x9AD8;&#x4E86;&#x6211;&#x7684;&#x56E2;&#x961F; &#x534F;&#x4F5C;&#x80FD;&#x529B;&#x3002;</li>
+<li>&#x5176;&#x6B21;&#xFF0C;&#x6211;&#x8FD8;&#x79EF;&#x6781;&#x53C2;&#x4E0E;&#x4E13;&#x4E1A;&#x79D1;&#x7814;&#x6D3B;&#x52A8;&#xFF0C;&#x53D1;&#x8868;&#x4E86;&#x76F8;&#x5173;&#x8BBA;&#x6587;&#xFF0C;&#x8FD9;&#x8BA9;&#x6211;&#x52A0;&#x6DF1;&#x4E86;&#x5BF9;&#x4E13;&#x4E1A;&#x77E5;&#x8BC6;&#x7684;&#x7406;&#x89E3;&#x3002;</li>
+</ul>
+</li>
+<li>
+<p>&#x6BD5;&#x4E1A;&#x540E;&#x6211;&#x53BB;&#x5230; ForChange &#x4F01;&#x4E1A;&#x5DE5;&#x4F5C;&#xFF0C;&#x5728;&#x5DE5;&#x4F5C;&#x4E2D;&#xFF0C;&#x6211;&#x5145;&#x5206;&#x953B;&#x70BC;&#x4E86;&#x81EA;&#x5DF1;&#x7684;&#x5206;&#x6790;&#x548C;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x80FD;&#x529B;&#xFF0C;&#x4E5F;&#x5B66;&#x4F1A;&#x4E86;&#x5982;&#x4F55;&#x5904;&#x7406;&#x597D;&#x4EBA;&#x9645;&#x5173;&#x7CFB;&#x3002;</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>I worked hard at school and completed all my subjects. My grades have always been at the top. I often participated in club activities and served as president, such as badminton club. I also participated in the badminton competition and won the third place. I like sports very much, which improves my teamwork ability.</li>
+</ul>
+<blockquote>
+<ul>
+<li>Secondly, I have also participated in professional research activities and published relevant papers, which deepened my understanding of professional knowledge.</li>
+</ul>
+</blockquote>
+<ul>
+<li>After graduation, I went to work in ForChange company. During the work, I fully practiced my analysis and problem-solving ability, and also learned how to deal with interpersonal relationship.</li>
+</ul>
+</blockquote>
+<h5 class="mume-header" id="3-prospect">3 prospect</h5>
+
+<ul>
+<li>
+<p>&#x9009;&#x62E9;&#x8BFB;&#x7814;&#x7684;&#x539F;&#x56E0;:&#x9009;&#x62E9;&#x8003;&#x7814;&#x7A76;&#x751F;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x60F3;&#x8FDB;&#x4E00;&#x6B65;&#x63D0;&#x9AD8;&#x81EA;&#x5DF1;&#x7684;&#x4E13;&#x4E1A;&#x6C34;&#x5E73;&#xFF0C;&#x6DF1;&#x5316;&#x5BF9;&#x4E13;&#x4E1A;&#x7684; &#x7406;&#x89E3;&#x548C;&#x63A5;&#x89E6;&#x66F4;&#x4F18;&#x79C0;&#x7684;&#x8001;&#x5E08;&#x548C;&#x540C;&#x5B66;&#x3002;&#x5176;&#x6B21;&#xFF0C;&#x5F53;&#x4E0B;&#x7684;&#x793E;&#x4F1A;&#x5BF9;&#x9AD8;&#x5B66;&#x5386;&#x5B66;&#x751F;&#x7684;&#x9700;&#x6C42;&#x4E5F;&#x5728;&#x53D8;&#x5927;&#xFF0C;&#x8BFB;&#x7814;&#x7A76; &#x751F;&#x80FD;&#x4EE5;&#x66F4;&#x597D;&#x7684;&#x59FF;&#x6001;&#x53BB;&#x9002;&#x5E94;&#x73B0;&#x5728;&#x7684;&#x793E;&#x4F1A;&#x3002;</p>
+</li>
+<li>
+<p>&#x9009;&#x62E9;&#x8FD9;&#x4E2A;&#x5B66;&#x6821;&#x7684;&#x539F;&#x56E0;:xx &#x5927;&#x5B66;&#x662F;&#x5728;&#x8FD9;&#x4E00;&#x9886;&#x57DF;&#x5F88;&#x8457;&#x540D;&#x548C;&#x6770;&#x51FA;&#x7684;&#x3002;&#x6700;&#x5438;&#x5F15;&#x6211;&#x7684;&#x662F;&#x8D35;&#x6821;&#x7684;&#x5404;&#x7C7B;&#x914D;&#x7F6E;&#xFF0C;&#x5982;&#x56FE;&#x4E66;&#x9986;&#xFF0C;&#x5404;&#x79CD;&#x5B66;&#x4E60;&#x548C;&#x5DE5;&#x4F5C;&#x8D44;&#x6E90;&#x3002;&#x6B64;&#x5916;&#xFF0C;&#x8FD9;&#x91CC;&#x6709;&#x5F88;&#x591A;&#x4F18;&#x79C0;&#x7684;&#x6559;&#x5E08;&#xFF0C;&#x53EF;&#x4EE5;&#x7ED9;&#x5B66;&#x751F;&#x76F8;&#x5BF9; &#x5168;&#x9762;&#x7684;&#x6307;&#x5BFC;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x60F3;&#x5728;&#x8FD9;&#x91CC;&#x5B66;&#x4E60;&#x3002;</p>
+</li>
+<li>
+<p>&#x7814;&#x7A76;&#x751F;&#x89C4;&#x5212;:&#x4E3A;&#x4E86;&#x6210;&#x4E3A;&#x4E00;&#x540D;&#x5408;&#x683C;&#x7684;&#x7814;&#x7A76;&#x751F;&#xFF0C;&#x6211;&#x4E3A;&#x5373;&#x5C06;&#x5230;&#x6765;&#x7684;&#x7814;&#x7A76;&#x751F;&#x751F;&#x6DAF;&#x4F5C;&#x51FA;&#x4E86;&#x5982;&#x4E0B;&#x89C4;&#x5212;: &#x9996;&#x5148;&#xFF0C;&#x7B2C;&#x4E00;&#x5E74;&#x6211;&#x7684;&#x8BA1;&#x5212;&#x662F;&#x8BA4;&#x771F;&#x5B66;&#x4E60;&#x5404;&#x95E8;&#x8BFE;&#x7A0B;&#xFF0C;&#x63D0;&#x9AD8;&#x81EA;&#x5DF1;&#x7684;&#x77E5;&#x8BC6;&#x50A8;&#x5907;&#x548C;&#x62D3;&#x5C55;&#x81EA;&#x5DF1;&#x7684;&#x77E5;&#x8BC6;&#x9762;&#x3002;&#x7B2C; &#x4E8C;&#x5E74;&#xFF0C;&#x6211;&#x5C06;&#x9605;&#x8BFB;&#x5927;&#x91CF;&#x6587;&#x732E;&#x5E76;&#x9009;&#x5B9A;&#x8BBA;&#x6587;&#x9898;&#x76EE;&#x3002;&#x7B2C;&#x4E09;&#x5E74;&#x6DF1;&#x5316;&#x7814;&#x7A76;&#xFF0C;&#x5B8C;&#x6210;&#x7855;&#x58EB;&#x8BBA;&#x6587;&#xFF0C;&#x8FDB;&#x884C;&#x6BD5;&#x4E1A;&#x7B54;&#x8FA9;&#x3002;</p>
+</li>
+<li>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x6211;&#x7684;&#x81EA;&#x6211;&#x4ECB;&#x7ECD;&#xFF0C;&#x8C22;&#x8C22;&#x3002;</p>
+</li>
+</ul>
+<blockquote>
+<p>The reason why I choose to take the postgraduate examination is that I want to further improve my professional level, deepen my understanding of the major and contact with more excellent teachers and classmates. Secondly, the demand for highly educated students in the current society is also increasing, and graduate students can adapt to the present society with a better attitude.</p>
+</blockquote>
+<blockquote>
+<p>guangdong University of technology is famous and outstanding in this field. What attracts me most is the various configurations of your school, such as the library and various learning resources. In addition, there are many excellent teachers here who can give students relatively comprehensive guidance. So I want to study here.</p>
+</blockquote>
+<blockquote>
+<p>In order to become a qualified graduate student, I have made the following plan for the coming graduate career. Firstly, in the first year, my plan is to study all courses seriously and improve my knowledge reserve. In the second year, I will read a lot of literature and choose a thesis topic. In the third year, I will deepen my research and complete my master&apos;s thesis and graduation defense.</p>
+</blockquote>
+<blockquote>
+<p>The above is my self-introduction.Thank you.</p>
+</blockquote>
+<h3 class="mume-header" id="summary">summary</h3>
+
+<blockquote>
+<p>Good morning/afternoon, dear teachers! I am very glad to have the opportunity to sit here for the interview.</p>
+<blockquote>
+<ul>
+<li>My name is XXX , I am XXXX years old, and I come from XX City, XXX Province. my hometown is famous for XXXX.</li>
+<li>I graduated from <code>XXXX</code> as an undergraduate majoring in XXXX . I have finished my undergraduate study in <code>XXXX</code>.</li>
+<li>Now please allow me to introduce myself from the aspects of learning experience, social practice, learning motivation and planning.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<ul>
+<li>I worked hard at school and completed all my subjects. My grades have always been at the top. I often participated in club activities and served as president, such as badminton club. I also participated in the badminton competition and won the third place. I like sports very much, which improves my teamwork ability.</li>
+</ul>
+<blockquote>
+<ul>
+<li>Secondly, I have also participated in professional research activities and published relevant papers, which deepened my understanding of professional knowledge.</li>
+</ul>
+</blockquote>
+<ul>
+<li>After graduation, I went to work in ForChange company. During the work, I fully practiced my analysis and problem-solving ability, and also learned how to deal with interpersonal relationship.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>The reason why I choose to take the postgraduate examination is that I want to further improve my professional level, deepen my understanding of the major and contact with more excellent teachers and classmates. Secondly, the demand for highly educated students in the current society is also increasing, and graduate students can adapt to the present society with a better attitude.</p>
+</blockquote>
+<blockquote>
+<p>XXXX is famous and outstanding in this field. What attracts me most is the various configurations of your school, such as the library and various learning resources. In addition, there are many excellent teachers here who can give students relatively comprehensive guidance. So I want to study here.</p>
+</blockquote>
+<blockquote>
+<p>In order to become a qualified graduate student, I have made the following plan for the coming graduate career. Firstly, in the first year, my plan is to study all courses seriously and improve my knowledge reserve. In the second year, I will read a lot of literature and choose a thesis topic. In the third year, I will deepen my research and complete my master&apos;s thesis and graduation defense.</p>
+</blockquote>
+<blockquote>
+<p>The above is my self-introduction.Thank you.</p>
+</blockquote>
+<h2 class="mume-header" id="%E9%99%84%E5%BD%95">&#x9644;&#x5F55;</h2>
+
+<ul>
+<li>
+<p><a href="https://space.bilibili.com/16671656/channel/seriesdetail?sid=233865">https://space.bilibili.com/16671656/channel/seriesdetail?sid=233865</a></p>
+</li>
+<li>
+<p>MICROSOFTLOVEAIMWRITING: <a href="http://aimwriting.mtutor.engkoo.com/dashboard/evaluate">http://aimwriting.mtutor.engkoo.com/dashboard/evaluate</a></p>
+</li>
+<li>
+<p>&#x6709;&#x9053;writing: <a href="https://write.youdao.com/edit/#/home?from=index">https://write.youdao.com/edit/#/home?from=index</a></p>
+</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
