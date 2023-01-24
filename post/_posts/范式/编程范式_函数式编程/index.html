@@ -1,696 +1,7 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>编程范式-函数编程 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="编程范式"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E8%8C%83%E5%BC%8F/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F_%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="编程范式-函数编程"><meta property="og:description" content="编程范式"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E8%8C%83%E5%BC%8F/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F_%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-10-20T15:00:00+00:00"><meta property="article:modified_time" content="2020-10-20T15:00:00+00:00"><meta itemprop=name content="编程范式-函数编程"><meta itemprop=description content="编程范式"><meta itemprop=datePublished content="2020-10-20T15:00:00+00:00"><meta itemprop=dateModified content="2020-10-20T15:00:00+00:00"><meta itemprop=wordCount content="2982"><meta itemprop=keywords content="范式,"><meta name=twitter:card content="summary"><meta name=twitter:title content="编程范式-函数编程"><meta name=twitter:description content="编程范式"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>编程范式-函数编程 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="编程范式"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E8%8C%83%E5%BC%8F/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F_%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="编程范式-函数编程"><meta property="og:description" content="编程范式"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E8%8C%83%E5%BC%8F/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F_%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-10-20T15:00:00+00:00"><meta property="article:modified_time" content="2020-10-20T15:00:00+00:00"><meta itemprop=name content="编程范式-函数编程"><meta itemprop=description content="编程范式"><meta itemprop=datePublished content="2020-10-20T15:00:00+00:00"><meta itemprop=dateModified content="2020-10-20T15:00:00+00:00"><meta itemprop=wordCount content="1837"><meta itemprop=keywords content="范式,"><meta name=twitter:card content="summary"><meta name=twitter:title content="编程范式-函数编程"><meta name=twitter:description content="编程范式"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>编程范式-函数编程</h1><div class=post-meta><span class=post-time>2020-10-20</span><div class=post-category><a href=/categories/%E8%8C%83%E5%BC%8F/>范式</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#函数编程>函数编程</a><ul><li><ul><li><a href=#golang>golang</a></li></ul></li><li><a href=#附录>附录</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h1 id=函数编程>函数编程</h1><h3 id=golang>golang</h3><p>仅当一个函数将一个或多个函数作为参数或作为结果返回另一个函数时，才可以将其视为高阶函数。</p><h4 id=正宗的函数编程的概念是什么>正宗的函数编程的概念是什么？</h4><ul><li>stateless：函数不维护任何状态。函数式编程的核心精神是stateless，简而言之就是它不能存在状态，打个比方，你给我数据我处理完扔出来。里面的数据是不变的。</li><li>immutable：输入数据是不能动的，动了输入数据就有危险，所以要返回新的数据集。</li></ul><blockquote><p>劣势:</p><blockquote><p>数据复制比较严重。</p><blockquote><p>注：有一些人可能会觉得这会对性能造成影响。其实，这个劣势不见得会导致性能不好。因为没有状态，所以代码在并行上根本不需要锁（不需要对状态修改的锁），所以可以拼命地并发，反而可以让性能很不错。比如：Erlang 就是其中的代表。<a href=https://time.geekbang.org/column/article/107560>reference</a></p></blockquote></blockquote></blockquote><p>函数式语言有三套件，Map、Reduce 和 Filter。</p><h4 id=如果用golang实现正宗的函数编程概念那么会变成什么样子>如果用golang实现正宗的函数编程概念，那么会变成什么样子?</h4><blockquote><p>Functional programming examples in Go</p></blockquote><ol><li>Updating a string</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl> <span class=nx>name</span> <span class=o>:=</span> <span class=s>&#34;first name&#34;</span>
-</span></span><span class=line><span class=cl> <span class=nx>name</span> <span class=o>:=</span> <span class=nx>name</span> <span class=o>+</span> <span class=s>&#34; last name&#34;</span>
-</span></span><span class=line><span class=cl><span class=c1>//-------------------------------
-</span></span></span><span class=line><span class=cl><span class=c1></span> <span class=nx>firstname</span> <span class=o>:=</span> <span class=s>&#34;first&#34;</span>
-</span></span><span class=line><span class=cl> <span class=nx>lastname</span> <span class=o>:=</span> <span class=s>&#34;last&#34;</span>
-</span></span><span class=line><span class=cl> <span class=nx>fullname</span> <span class=o>:=</span> <span class=nx>firstname</span> <span class=o>+</span> <span class=s>&#34; &#34;</span> <span class=o>+</span> <span class=nx>lastname</span>
-</span></span></code></pre></td></tr></table></div></div><ol start=2><li>Avoid updating arrays</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span><span class=lnt>7
-</span><span class=lnt>8
-</span><span class=lnt>9
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>names</span> <span class=o>:=</span> <span class=p>[</span><span class=mi>3</span><span class=p>]</span><span class=kt>string</span><span class=p>{</span><span class=s>&#34;Tom&#34;</span><span class=p>,</span> <span class=s>&#34;Ben&#34;</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=c1>// Add Lucas to the array
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>names</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=p>=</span> <span class=s>&#34;Lucas&#34;</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>//-------------------------------
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>names</span> <span class=o>:=</span> <span class=p>[]</span><span class=kt>string</span><span class=p>{</span><span class=s>&#34;Tom&#34;</span><span class=p>,</span> <span class=s>&#34;Ben&#34;</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>    <span class=nx>allNames</span> <span class=o>:=</span> <span class=nb>append</span><span class=p>(</span><span class=nx>names</span><span class=p>,</span> <span class=s>&#34;Lucas&#34;</span><span class=p>)</span>
-</span></span></code></pre></td></tr></table></div></div><ol start=3><li>Avoid updating maps</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>fruits</span> <span class=o>:=</span> <span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span><span class=p>{</span><span class=s>&#34;bananas&#34;</span><span class=p>:</span> <span class=mi>11</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=c1>// Buy five apples
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>fruits</span><span class=p>[</span><span class=s>&#34;apples&#34;</span><span class=p>]</span> <span class=p>=</span> <span class=mi>5</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>//-------------------------------
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>fruits</span> <span class=o>:=</span> <span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span><span class=p>{</span><span class=s>&#34;bananas&#34;</span><span class=p>:</span> <span class=mi>11</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>    <span class=nx>newFruits</span> <span class=o>:=</span> <span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span><span class=p>{</span><span class=s>&#34;apples&#34;</span><span class=p>:</span> <span class=mi>5</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=nx>allFruits</span> <span class=o>:=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span><span class=p>,</span> <span class=nb>len</span><span class=p>(</span><span class=nx>fruits</span><span class=p>)</span> <span class=o>+</span> <span class=nb>len</span><span class=p>(</span><span class=nx>newFruits</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=nx>k</span><span class=p>,</span> <span class=nx>v</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>fruits</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>        <span class=nx>allFruits</span><span class=p>[</span><span class=nx>k</span><span class=p>]</span> <span class=p>=</span> <span class=nx>v</span>
-</span></span><span class=line><span class=cl>    <span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=nx>k</span><span class=p>,</span> <span class=nx>v</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>newFruits</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>        <span class=nx>allFruits</span><span class=p>[</span><span class=nx>k</span><span class=p>]</span> <span class=p>=</span> <span class=nx>v</span>
-</span></span><span class=line><span class=cl>    <span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><ol start=4><li>Higher-order functions and currying</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>add</span><span class=p>(</span><span class=nx>x</span> <span class=kt>int</span><span class=p>)</span> <span class=kd>func</span><span class=p>(</span><span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span>
-</span></span><span class=line><span class=cl>    <span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=c1>//-------------------------------
-</span></span></span><span class=line><span class=cl><span class=c1></span>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=c1>// Create more variations
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>add10</span> <span class=o>:=</span> <span class=nf>add</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>    <span class=nx>add20</span> <span class=o>:=</span> <span class=nf>add</span><span class=p>(</span><span class=mi>20</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>    <span class=c1>// Currying
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nf>add10</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=c1>// 11
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nf>add20</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=c1>// 21
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><ol start=5><li>Recursion</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>factorial</span><span class=p>(</span><span class=nx>fac</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=nx>result</span> <span class=o>:=</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>;</span> <span class=nx>fac</span> <span class=p>&gt;</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>fac</span><span class=o>--</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>        <span class=nx>result</span> <span class=o>*=</span> <span class=nx>fac</span>
-</span></span><span class=line><span class=cl>    <span class=p>}</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>result</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=c1>//-------------------------------
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>calculateFactorial</span><span class=p>(</span><span class=nx>fac</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nx>fac</span> <span class=o>==</span> <span class=mi>0</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>    <span class=p>}</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>fac</span> <span class=o>*</span> <span class=nf>calculateFactorial</span><span class=p>(</span><span class=nx>fac</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h5 id=mapreduce-和-filter>Map、Reduce 和 Filter</h5><p>因为没有泛型，
-所以类型不能泛型，容器不能泛型，算法不能泛型。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span><span class=lnt>7
-</span><span class=lnt>8
-</span><span class=lnt>9
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>template</span><span class=o>&lt;</span><span class=k>class</span> <span class=nc>Iter</span><span class=p>,</span> <span class=k>class</span> <span class=nc>T</span><span class=p>,</span> <span class=k>class</span> <span class=nc>Op</span><span class=o>&gt;</span>
-</span></span><span class=line><span class=cl><span class=n>T</span> <span class=n>reduce</span> <span class=p>(</span><span class=n>Iter</span> <span class=n>start</span><span class=p>,</span> <span class=n>Iter</span> <span class=n>end</span><span class=p>,</span> <span class=n>T</span> <span class=n>init</span><span class=p>,</span> <span class=n>Op</span> <span class=n>op</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>  <span class=n>T</span> <span class=n>result</span> <span class=o>=</span> <span class=n>init</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=p>(</span> <span class=n>start</span> <span class=o>!=</span> <span class=n>end</span> <span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=n>result</span> <span class=o>=</span> <span class=n>op</span><span class=p>(</span> <span class=n>result</span><span class=p>,</span> <span class=o>*</span><span class=n>start</span> <span class=p>);</span>
-</span></span><span class=line><span class=cl>    <span class=n>start</span><span class=o>++</span><span class=p>;</span>
-</span></span><span class=line><span class=cl>  <span class=p>}</span>
-</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>result</span><span class=p>;</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><p><a href=https://github.com/yanatan16/itertools>使用这个工具</a></p><ul><li>Map</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>mapper</span> <span class=o>:=</span> <span class=kd>func</span> <span class=p>(</span><span class=nx>i</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kd>interface</span><span class=p>{}</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>strings</span><span class=p>.</span><span class=nf>ToUpper</span><span class=p>(</span><span class=nx>i</span><span class=p>.(</span><span class=kt>string</span><span class=p>))</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=nf>Map</span><span class=p>(</span><span class=nx>mapper</span><span class=p>,</span> <span class=nf>New</span><span class=p>(</span><span class=err>“</span><span class=nx>milu</span><span class=err>”</span><span class=p>,</span> <span class=err>“</span><span class=nx>rantanplan</span><span class=err>”</span><span class=p>))</span>
-</span></span><span class=line><span class=cl><span class=c1>//[“MILU”, “RANTANPLAN”]
-</span></span></span></code></pre></td></tr></table></div></div><ul><li>Filter</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>pred</span> <span class=o>:=</span> <span class=kd>func</span> <span class=p>(</span><span class=nx>i</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kt>bool</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>i</span><span class=p>.(</span><span class=kt>uint64</span><span class=p>)</span> <span class=p>&gt;</span> <span class=mi>5</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=nf>Filter</span><span class=p>(</span><span class=nx>pred</span><span class=p>,</span> <span class=nf>Uint64</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=p>,</span><span class=mi>4</span><span class=p>,</span><span class=mi>5</span><span class=p>,</span><span class=mi>6</span><span class=p>,</span><span class=mi>7</span><span class=p>,</span><span class=mi>8</span><span class=p>,</span><span class=mi>9</span><span class=p>,</span><span class=mi>10</span><span class=p>))</span>
-</span></span><span class=line><span class=cl><span class=c1>//[6, 7, 8, 9, 10]
-</span></span></span></code></pre></td></tr></table></div></div><ul><li>Reduce</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>acumullator</span> <span class=o>:=</span> <span class=kd>func</span> <span class=p>(</span><span class=nx>memo</span> <span class=kd>interface</span><span class=p>{},</span> <span class=nx>el</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kd>interface</span><span class=p>{}</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>len</span><span class=p>(</span><span class=nx>memo</span><span class=p>.(</span><span class=kt>string</span><span class=p>))</span> <span class=o>+</span> <span class=nb>len</span><span class=p>(</span><span class=nx>el</span><span class=p>.(</span><span class=kt>string</span><span class=p>))</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=nf>Reduce</span><span class=p>(</span><span class=nf>New</span><span class=p>(</span><span class=err>“</span><span class=nx>milu</span><span class=err>”</span><span class=p>,</span> <span class=err>“</span><span class=nx>rantanplan</span><span class=err>”</span><span class=p>),</span> <span class=nx>acumullator</span><span class=p>,</span> <span class=kt>string</span><span class=p>).(</span><span class=kt>uint64</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=c1>// result 14
-</span></span></span></code></pre></td></tr></table></div></div><h5 id=decorated-function>decorated function</h5><h6 id=add-print-content>add print content</h6><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>decorator</span><span class=p>(</span><span class=nx>f</span> <span class=kd>func</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>))</span> <span class=kd>func</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Started&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nf>f</span><span class=p>(</span><span class=nx>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Done&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Hello</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nf>decorator</span><span class=p>(</span><span class=nx>Hello</span><span class=p>)(</span><span class=s>&#34;Hello, World!&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h6 id=lazy-evalutions>lazy evalutions</h6><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span><span class=lnt>30
-</span><span class=lnt>31
-</span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span><span class=lnt>35
-</span><span class=lnt>36
-</span><span class=lnt>37
-</span><span class=lnt>38
-</span><span class=lnt>39
-</span><span class=lnt>40
-</span><span class=lnt>41
-</span><span class=lnt>42
-</span><span class=lnt>43
-</span><span class=lnt>44
-</span><span class=lnt>45
-</span><span class=lnt>46
-</span><span class=lnt>47
-</span><span class=lnt>48
-</span><span class=lnt>49
-</span><span class=lnt>50
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;reflect&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;runtime&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;time&#34;</span>
-</span></span><span class=line><span class=cl><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>SumFunc</span> <span class=kd>func</span><span class=p>(</span><span class=kt>int64</span><span class=p>,</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>getFunctionName</span><span class=p>(</span><span class=nx>i</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kt>string</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>runtime</span><span class=p>.</span><span class=nf>FuncForPC</span><span class=p>(</span><span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>i</span><span class=p>).</span><span class=nf>Pointer</span><span class=p>()).</span><span class=nf>Name</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>timedSumFunc</span><span class=p>(</span><span class=nx>f</span> <span class=nx>SumFunc</span><span class=p>)</span> <span class=nx>SumFunc</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=k>defer</span> <span class=kd>func</span><span class=p>(</span><span class=nx>t</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Time</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>			<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;--- Time Elapsed (%s): %v ---\n&#34;</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>				<span class=nf>getFunctionName</span><span class=p>(</span><span class=nx>f</span><span class=p>),</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Since</span><span class=p>(</span><span class=nx>t</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>		<span class=p>}(</span><span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nf>f</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Sum1</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>sum</span> <span class=kt>int64</span>
-</span></span><span class=line><span class=cl>	<span class=nx>sum</span> <span class=p>=</span> <span class=mi>0</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>start</span> <span class=p>&gt;</span> <span class=nx>end</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=p>=</span> <span class=nx>end</span><span class=p>,</span> <span class=nx>start</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=nx>start</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;=</span> <span class=nx>end</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>sum</span> <span class=o>+=</span> <span class=nx>i</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>sum</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Sum2</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>start</span> <span class=p>&gt;</span> <span class=nx>end</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=p>=</span> <span class=nx>end</span><span class=p>,</span> <span class=nx>start</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=p>(</span><span class=nx>end</span> <span class=o>-</span> <span class=nx>start</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span> <span class=o>*</span> <span class=p>(</span><span class=nx>end</span> <span class=o>+</span> <span class=nx>start</span><span class=p>)</span> <span class=o>/</span> <span class=mi>2</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nx>sum1</span> <span class=o>:=</span> <span class=nf>timedSumFunc</span><span class=p>(</span><span class=nx>Sum1</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=nx>sum2</span> <span class=o>:=</span> <span class=nf>timedSumFunc</span><span class=p>(</span><span class=nx>Sum2</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d, %d\n&#34;</span><span class=p>,</span> <span class=nf>sum1</span><span class=p>(</span><span class=o>-</span><span class=mi>10000</span><span class=p>,</span> <span class=mi>10000000</span><span class=p>),</span> <span class=nf>sum2</span><span class=p>(</span><span class=o>-</span><span class=mi>10000</span><span class=p>,</span> <span class=mi>10000000</span><span class=p>))</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h6 id=http-server>http server</h6><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
-</span><span class=lnt>  2
-</span><span class=lnt>  3
-</span><span class=lnt>  4
-</span><span class=lnt>  5
-</span><span class=lnt>  6
-</span><span class=lnt>  7
-</span><span class=lnt>  8
-</span><span class=lnt>  9
-</span><span class=lnt> 10
-</span><span class=lnt> 11
-</span><span class=lnt> 12
-</span><span class=lnt> 13
-</span><span class=lnt> 14
-</span><span class=lnt> 15
-</span><span class=lnt> 16
-</span><span class=lnt> 17
-</span><span class=lnt> 18
-</span><span class=lnt> 19
-</span><span class=lnt> 20
-</span><span class=lnt> 21
-</span><span class=lnt> 22
-</span><span class=lnt> 23
-</span><span class=lnt> 24
-</span><span class=lnt> 25
-</span><span class=lnt> 26
-</span><span class=lnt> 27
-</span><span class=lnt> 28
-</span><span class=lnt> 29
-</span><span class=lnt> 30
-</span><span class=lnt> 31
-</span><span class=lnt> 32
-</span><span class=lnt> 33
-</span><span class=lnt> 34
-</span><span class=lnt> 35
-</span><span class=lnt> 36
-</span><span class=lnt> 37
-</span><span class=lnt> 38
-</span><span class=lnt> 39
-</span><span class=lnt> 40
-</span><span class=lnt> 41
-</span><span class=lnt> 42
-</span><span class=lnt> 43
-</span><span class=lnt> 44
-</span><span class=lnt> 45
-</span><span class=lnt> 46
-</span><span class=lnt> 47
-</span><span class=lnt> 48
-</span><span class=lnt> 49
-</span><span class=lnt> 50
-</span><span class=lnt> 51
-</span><span class=lnt> 52
-</span><span class=lnt> 53
-</span><span class=lnt> 54
-</span><span class=lnt> 55
-</span><span class=lnt> 56
-</span><span class=lnt> 57
-</span><span class=lnt> 58
-</span><span class=lnt> 59
-</span><span class=lnt> 60
-</span><span class=lnt> 61
-</span><span class=lnt> 62
-</span><span class=lnt> 63
-</span><span class=lnt> 64
-</span><span class=lnt> 65
-</span><span class=lnt> 66
-</span><span class=lnt> 67
-</span><span class=lnt> 68
-</span><span class=lnt> 69
-</span><span class=lnt> 70
-</span><span class=lnt> 71
-</span><span class=lnt> 72
-</span><span class=lnt> 73
-</span><span class=lnt> 74
-</span><span class=lnt> 75
-</span><span class=lnt> 76
-</span><span class=lnt> 77
-</span><span class=lnt> 78
-</span><span class=lnt> 79
-</span><span class=lnt> 80
-</span><span class=lnt> 81
-</span><span class=lnt> 82
-</span><span class=lnt> 83
-</span><span class=lnt> 84
-</span><span class=lnt> 85
-</span><span class=lnt> 86
-</span><span class=lnt> 87
-</span><span class=lnt> 88
-</span><span class=lnt> 89
-</span><span class=lnt> 90
-</span><span class=lnt> 91
-</span><span class=lnt> 92
-</span><span class=lnt> 93
-</span><span class=lnt> 94
-</span><span class=lnt> 95
-</span><span class=lnt> 96
-</span><span class=lnt> 97
-</span><span class=lnt> 98
-</span><span class=lnt> 99
-</span><span class=lnt>100
-</span><span class=lnt>101
-</span><span class=lnt>102
-</span><span class=lnt>103
-</span><span class=lnt>104
-</span><span class=lnt>105
-</span><span class=lnt>106
-</span><span class=lnt>107
-</span><span class=lnt>108
-</span><span class=lnt>109
-</span><span class=lnt>110
-</span><span class=lnt>111
-</span><span class=lnt>112
-</span><span class=lnt>113
-</span><span class=lnt>114
-</span><span class=lnt>115
-</span><span class=lnt>116
-</span><span class=lnt>117
-</span><span class=lnt>118
-</span><span class=lnt>119
-</span><span class=lnt>120
-</span><span class=lnt>121
-</span><span class=lnt>122
-</span><span class=lnt>123
-</span><span class=lnt>124
-</span><span class=lnt>125
-</span><span class=lnt>126
-</span><span class=lnt>127
-</span><span class=lnt>128
-</span><span class=lnt>129
-</span><span class=lnt>130
-</span><span class=lnt>131
-</span><span class=lnt>132
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;log&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;net/http&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;reflect&#34;</span>
-</span></span><span class=line><span class=cl>	<span class=s>&#34;strings&#34;</span>
-</span></span><span class=line><span class=cl><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>WithServerHeader</span><span class=p>(</span><span class=nx>h</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span><span class=p>)</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;---&gt;WithServerHeader()&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>w</span><span class=p>.</span><span class=nf>Header</span><span class=p>().</span><span class=nf>Set</span><span class=p>(</span><span class=s>&#34;Server&#34;</span><span class=p>,</span> <span class=s>&#34;HelloServer v0.0.1&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nf>h</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>WithAuthCookie</span><span class=p>(</span><span class=nx>h</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span><span class=p>)</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;---&gt;WithAuthCookie()&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>cookie</span> <span class=o>:=</span> <span class=o>&amp;</span><span class=nx>http</span><span class=p>.</span><span class=nx>Cookie</span><span class=p>{</span><span class=nx>Name</span><span class=p>:</span> <span class=s>&#34;Auth&#34;</span><span class=p>,</span> <span class=nx>Value</span><span class=p>:</span> <span class=s>&#34;Pass&#34;</span><span class=p>,</span> <span class=nx>Path</span><span class=p>:</span> <span class=s>&#34;/&#34;</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>		<span class=nx>http</span><span class=p>.</span><span class=nf>SetCookie</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>cookie</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nf>h</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>WithBasicAuth</span><span class=p>(</span><span class=nx>h</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span><span class=p>)</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;---&gt;WithBasicAuth()&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>cookie</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>r</span><span class=p>.</span><span class=nf>Cookie</span><span class=p>(</span><span class=s>&#34;Auth&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=o>||</span> <span class=nx>cookie</span><span class=p>.</span><span class=nx>Value</span> <span class=o>!=</span> <span class=s>&#34;Pass&#34;</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>			<span class=nx>w</span><span class=p>.</span><span class=nf>WriteHeader</span><span class=p>(</span><span class=nx>http</span><span class=p>.</span><span class=nx>StatusForbidden</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=k>return</span>
-</span></span><span class=line><span class=cl>		<span class=p>}</span>
-</span></span><span class=line><span class=cl>		<span class=nf>h</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>WithDebugLog</span><span class=p>(</span><span class=nx>h</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span><span class=p>)</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;---&gt;WithDebugLog&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>r</span><span class=p>.</span><span class=nf>ParseForm</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r</span><span class=p>.</span><span class=nx>Form</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;path&#34;</span><span class=p>,</span> <span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Path</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;scheme&#34;</span><span class=p>,</span> <span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Scheme</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r</span><span class=p>.</span><span class=nx>Form</span><span class=p>[</span><span class=s>&#34;url_long&#34;</span><span class=p>])</span>
-</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=nx>k</span><span class=p>,</span> <span class=nx>v</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>r</span><span class=p>.</span><span class=nx>Form</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>			<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;key:&#34;</span><span class=p>,</span> <span class=nx>k</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=nx>log</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;val:&#34;</span><span class=p>,</span> <span class=nx>strings</span><span class=p>.</span><span class=nf>Join</span><span class=p>(</span><span class=nx>v</span><span class=p>,</span> <span class=s>&#34;&#34;</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>		<span class=p>}</span>
-</span></span><span class=line><span class=cl>		<span class=nf>h</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>hello</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nx>log</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;Received Request %s from %s\n&#34;</span><span class=p>,</span> <span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Path</span><span class=p>,</span> <span class=nx>r</span><span class=p>.</span><span class=nx>RemoteAddr</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Fprintf</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=s>&#34;Hello, World! &#34;</span><span class=o>+</span><span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Path</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>example1</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nx>http</span><span class=p>.</span><span class=nf>HandleFunc</span><span class=p>(</span><span class=s>&#34;/v1/hello&#34;</span><span class=p>,</span> <span class=nf>WithServerHeader</span><span class=p>(</span><span class=nf>WithAuthCookie</span><span class=p>(</span><span class=nx>hello</span><span class=p>)))</span>
-</span></span><span class=line><span class=cl>	<span class=nx>http</span><span class=p>.</span><span class=nf>HandleFunc</span><span class=p>(</span><span class=s>&#34;/v2/hello&#34;</span><span class=p>,</span> <span class=nf>WithServerHeader</span><span class=p>(</span><span class=nf>WithBasicAuth</span><span class=p>(</span><span class=nx>hello</span><span class=p>)))</span>
-</span></span><span class=line><span class=cl>	<span class=nx>http</span><span class=p>.</span><span class=nf>HandleFunc</span><span class=p>(</span><span class=s>&#34;/v3/hello&#34;</span><span class=p>,</span> <span class=nf>WithServerHeader</span><span class=p>(</span><span class=nf>WithBasicAuth</span><span class=p>(</span><span class=nf>WithDebugLog</span><span class=p>(</span><span class=nx>hello</span><span class=p>))))</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>http</span><span class=p>.</span><span class=nf>HandleFunc</span><span class=p>(</span><span class=s>&#34;/v4/hello&#34;</span><span class=p>,</span> <span class=nf>Handler</span><span class=p>(</span><span class=nx>hello</span><span class=p>,</span> <span class=nx>WithServerHeader</span><span class=p>,</span> <span class=nx>WithBasicAuth</span><span class=p>,</span> <span class=nx>WithDebugLog</span><span class=p>))</span>
-</span></span><span class=line><span class=cl>	<span class=nx>err</span> <span class=o>:=</span> <span class=nx>http</span><span class=p>.</span><span class=nf>ListenAndServe</span><span class=p>(</span><span class=s>&#34;:8080&#34;</span><span class=p>,</span> <span class=kc>nil</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=s>&#34;ListenAndServe: &#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>HttpHandlerDecorator</span> <span class=kd>func</span><span class=p>(</span><span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span><span class=p>)</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Handler</span><span class=p>(</span><span class=nx>h</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span><span class=p>,</span> <span class=nx>decors</span> <span class=o>...</span><span class=nx>HttpHandlerDecorator</span><span class=p>)</span> <span class=nx>http</span><span class=p>.</span><span class=nx>HandlerFunc</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>decors</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>d</span> <span class=o>:=</span> <span class=nx>decors</span><span class=p>[</span><span class=nb>len</span><span class=p>(</span><span class=nx>decors</span><span class=p>)</span><span class=o>-</span><span class=mi>1</span><span class=o>-</span><span class=nx>i</span><span class=p>]</span> <span class=c1>// iterate in reverse
-</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=nx>h</span> <span class=p>=</span> <span class=nf>d</span><span class=p>(</span><span class=nx>h</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>h</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nf>example3</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=c1>//example2()
-</span></span></span><span class=line><span class=cl><span class=c1></span>
-</span></span><span class=line><span class=cl>	<span class=c1>//example1()
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>example3</span><span class=p>(){</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>mybar</span> <span class=o>:=</span> <span class=nx>bar</span>
-</span></span><span class=line><span class=cl>	<span class=nf>Decorator</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>mybar</span><span class=p>,</span> <span class=nx>bar</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=nf>mybar</span><span class=p>(</span><span class=s>&#34;hello,&#34;</span><span class=p>,</span> <span class=s>&#34;world!&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>example2</span><span class=p>(){</span>
-</span></span><span class=line><span class=cl>	<span class=kd>type</span> <span class=nx>MyFoo</span> <span class=kd>func</span><span class=p>(</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span>
-</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>myfoo</span> <span class=nx>MyFoo</span>
-</span></span><span class=line><span class=cl>	<span class=nf>Decorator</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>myfoo</span><span class=p>,</span> <span class=nx>foo</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=nf>myfoo</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>foo</span><span class=p>(</span><span class=nx>a</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=nx>c</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d, %d, %d \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=nx>c</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>a</span> <span class=o>+</span> <span class=nx>b</span> <span class=o>+</span> <span class=nx>c</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>bar</span><span class=p>(</span><span class=nx>a</span><span class=p>,</span> <span class=nx>b</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>string</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%s, %s \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=nx>b</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>a</span> <span class=o>+</span> <span class=nx>b</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Decorator</span><span class=p>(</span><span class=nx>decoPtr</span><span class=p>,</span> <span class=nx>fn</span> <span class=kd>interface</span><span class=p>{})</span> <span class=p>(</span><span class=nx>err</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>decoratedFunc</span><span class=p>,</span> <span class=nx>targetFunc</span> <span class=nx>reflect</span><span class=p>.</span><span class=nx>Value</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>decoratedFunc</span> <span class=p>=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>decoPtr</span><span class=p>).</span><span class=nf>Elem</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=nx>targetFunc</span> <span class=p>=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>fn</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>v</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>MakeFunc</span><span class=p>(</span><span class=nx>targetFunc</span><span class=p>.</span><span class=nf>Type</span><span class=p>(),</span>
-</span></span><span class=line><span class=cl>		<span class=kd>func</span><span class=p>(</span><span class=nx>in</span> <span class=p>[]</span><span class=nx>reflect</span><span class=p>.</span><span class=nx>Value</span><span class=p>)</span> <span class=p>(</span><span class=nx>out</span> <span class=p>[]</span><span class=nx>reflect</span><span class=p>.</span><span class=nx>Value</span><span class=p>)</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>			<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;before&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=nx>out</span> <span class=p>=</span> <span class=nx>targetFunc</span><span class=p>.</span><span class=nf>Call</span><span class=p>(</span><span class=nx>in</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;after&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>			<span class=k>return</span>
-</span></span><span class=line><span class=cl>		<span class=p>})</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>decoratedFunc</span><span class=p>.</span><span class=nf>Set</span><span class=p>(</span><span class=nx>v</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h5 id=现有的golang支持的泛型>现有的golang支持的泛型</h5><blockquote><p>type InterfaceType interface; interface{}; reflect;</p></blockquote><h6 id=interface-type>interface type</h6><ul><li>what is interface type?<ul><li>concept: type and interface<ul><li>interface types, which represent fixed sets of methods. An interface variable can store any concrete (non-interface) value as long as that value implements the interface&rsquo;s methods.</li></ul></li><li>the representation of an interface<ul><li><a href=https://research.swtch.com/interfaces>Go Data Structures: Interfaces</a></li><li>A variable of interface type stores a pair:<ul><li>the value is the underlying concrete data item that implements the interface</li><li>the type describes the full type of that item</li></ul></li></ul></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>var</span> <span class=nx>r</span> <span class=nx>io</span><span class=p>.</span><span class=nx>Reader</span>
-</span></span><span class=line><span class=cl><span class=nx>tty</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>os</span><span class=p>.</span><span class=nf>OpenFile</span><span class=p>(</span><span class=s>&#34;/dev/tty&#34;</span><span class=p>,</span> <span class=nx>os</span><span class=p>.</span><span class=nx>O_RDWR</span><span class=p>,</span> <span class=mi>0</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>nil</span><span class=p>,</span> <span class=nx>err</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span><span class=line><span class=cl><span class=nx>r</span> <span class=p>=</span> <span class=nx>tty</span>
-</span></span></code></pre></td></tr></table></div></div><p>//r contains, schematically, the <strong>(value, type) pair</strong>, <code>(tty, *os.File)</code>.</p><h6 id=reflectrelation-between-reflect-and-interface-type>reflect(relation between reflect and interface type)</h6><blockquote><p>the relation between reflect and interface type</p></blockquote><ul><li>the laws of reflection:<ul><li>Reflection goes from interface value to reflection object.</li><li>Reflection goes from reflection object to interface value.</li><li>To modify a reflection object, the value must be settable.</li></ul></li></ul><ol><li>Reflection goes from interface value to reflection object.</li></ol><ul><li><p>give access to the contents of an interface variable</p><ul><li>two type<ul><li><a href=https://golang.org/pkg/reflect/#Type>Type</a></li><li><a href=https://golang.org/pkg/reflect/#Value>Value</a></li></ul></li><li>two function to retrieve reflect.Type and reflect.Value(Two type) from interface variable<ul><li>reflect.TypeOf</li><li>reflect.ValueOf</li></ul></li></ul></li><li><p>singling out</p><ul><li>first: to keep the API simple, the &ldquo;getter&rdquo; and &ldquo;setter&rdquo; methods of Value operate on the largest type that can hold the value: int64 for all the signed integers</li><li>second: the Kind of a reflection object describes the underlying type, not the static type. If a reflection object contains a value of a user-defined integer type</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>var</span> <span class=nx>x</span> <span class=kt>uint8</span> <span class=p>=</span> <span class=sc>&#39;x&#39;</span>
-</span></span><span class=line><span class=cl><span class=nx>v</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;type:&#34;</span><span class=p>,</span> <span class=nx>v</span><span class=p>.</span><span class=nf>Type</span><span class=p>())</span>                            <span class=c1>// uint8.
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;kind is uint8: &#34;</span><span class=p>,</span> <span class=nx>v</span><span class=p>.</span><span class=nf>Kind</span><span class=p>()</span> <span class=o>==</span> <span class=nx>reflect</span><span class=p>.</span><span class=nx>Uint8</span><span class=p>)</span> <span class=c1>// true.
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>x</span> <span class=p>=</span> <span class=nb>uint8</span><span class=p>(</span><span class=nx>v</span><span class=p>.</span><span class=nf>Uint</span><span class=p>())</span>                                       <span class=c1>// v.Uint returns a uint64.
-</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>type</span> <span class=nx>MyInt</span> <span class=kt>int</span>
-</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>x</span> <span class=nx>MyInt</span> <span class=p>=</span> <span class=mi>7</span>
-</span></span><span class=line><span class=cl><span class=nx>v</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span>
-</span></span></code></pre></td></tr></table></div></div><ol start=2><li>Reflection goes from reflection object to interface value.</li></ol><ul><li>from reflect.Value to interface value<ul><li><code>func (v Value) Interface() interface{}</code></li></ul></li></ul><ol start=3><li>To modify a reflection object, the value must be settable.</li></ol><ul><li>Settability is a property of a reflection Value, and not all reflection Values have it.<ul><li>The CanSet method of Value reports the settability of a Value.</li><li>Settability<ul><li>Settability is determined by whether the reflection object holds the original item</li></ul></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>var</span> <span class=nx>x</span> <span class=kt>float64</span> <span class=p>=</span> <span class=mf>3.4</span>
-</span></span><span class=line><span class=cl><span class=nx>v</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=nx>v</span><span class=p>.</span><span class=nf>SetFloat</span><span class=p>(</span><span class=mf>7.1</span><span class=p>)</span> <span class=c1>// Error: will panic.
-</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>var</span> <span class=nx>x</span> <span class=kt>float64</span> <span class=p>=</span> <span class=mf>3.4</span>
-</span></span><span class=line><span class=cl><span class=nx>p</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>x</span><span class=p>)</span> <span class=c1>// Note: take the address of x.
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;type of p:&#34;</span><span class=p>,</span> <span class=nx>p</span><span class=p>.</span><span class=nf>Type</span><span class=p>())</span><span class=c1>// type of p: *float64
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;settability of p:&#34;</span><span class=p>,</span> <span class=nx>p</span><span class=p>.</span><span class=nf>CanSet</span><span class=p>())</span><span class=c1>// settability of p: false
-</span></span></span><span class=line><span class=cl><span class=c1></span>
-</span></span><span class=line><span class=cl><span class=nx>v</span> <span class=o>:=</span> <span class=nx>p</span><span class=p>.</span><span class=nf>Elem</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;settability of v:&#34;</span><span class=p>,</span> <span class=nx>v</span><span class=p>.</span><span class=nf>CanSet</span><span class=p>())</span><span class=c1>// settability of v: true
-</span></span></span><span class=line><span class=cl><span class=c1></span>
-</span></span><span class=line><span class=cl><span class=nx>v</span><span class=p>.</span><span class=nf>SetFloat</span><span class=p>(</span><span class=mf>7.1</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>v</span><span class=p>.</span><span class=nf>Interface</span><span class=p>())</span><span class=c1>// 7.1
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>x</span><span class=p>)</span><span class=c1>// 7.1
-</span></span></span></code></pre></td></tr></table></div></div><blockquote><p>struct</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>reflectStruct</span><span class=p>(){</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=kd>type</span> <span class=nx>T</span> <span class=kd>struct</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>A</span> <span class=kt>int</span>
-</span></span><span class=line><span class=cl>		<span class=nx>B</span> <span class=kt>string</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=nx>t</span> <span class=o>:=</span> <span class=nx>T</span><span class=p>{</span><span class=mi>23</span><span class=p>,</span> <span class=s>&#34;skidoo&#34;</span><span class=p>}</span>
-</span></span><span class=line><span class=cl>	<span class=nx>s</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>t</span><span class=p>)</span>	<span class=c1>//&amp;t).Elem()
-</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>typeOfT</span> <span class=o>:=</span> <span class=nx>s</span><span class=p>.</span><span class=nf>Type</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=nx>s</span><span class=p>.</span><span class=nf>NumField</span><span class=p>();</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>f</span> <span class=o>:=</span> <span class=nx>s</span><span class=p>.</span><span class=nf>Field</span><span class=p>(</span><span class=nx>i</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d: %s %s = %v\n&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>			<span class=nx>typeOfT</span><span class=p>.</span><span class=nf>Field</span><span class=p>(</span><span class=nx>i</span><span class=p>).</span><span class=nx>Name</span><span class=p>,</span> <span class=nx>f</span><span class=p>.</span><span class=nf>Type</span><span class=p>(),</span> <span class=nx>f</span><span class=p>.</span><span class=nf>Interface</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=p>&lt;</span> <span class=nx>typeOfT</span><span class=p>.</span><span class=nf>NumField</span><span class=p>();</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>		<span class=nx>f</span> <span class=o>:=</span> <span class=nx>s</span><span class=p>.</span><span class=nf>Field</span><span class=p>(</span><span class=nx>i</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d: %s %s = %v\n&#34;</span><span class=p>,</span> <span class=nx>i</span><span class=p>,</span>
-</span></span><span class=line><span class=cl>			<span class=nx>typeOfT</span><span class=p>.</span><span class=nf>Field</span><span class=p>(</span><span class=nx>i</span><span class=p>).</span><span class=nx>Name</span><span class=p>,</span> <span class=nx>f</span><span class=p>.</span><span class=nf>Type</span><span class=p>(),</span> <span class=nx>f</span><span class=p>.</span><span class=nf>Interface</span><span class=p>())</span>
-</span></span><span class=line><span class=cl>	<span class=p>}</span>
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>	<span class=nx>sMutable</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>t</span><span class=p>).</span><span class=nf>Elem</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=nx>sMutable</span><span class=p>.</span><span class=nf>Field</span><span class=p>(</span><span class=mi>0</span><span class=p>).</span><span class=nf>SetInt</span><span class=p>(</span><span class=mi>77</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=nx>sMutable</span><span class=p>.</span><span class=nf>Field</span><span class=p>(</span><span class=mi>1</span><span class=p>).</span><span class=nf>SetString</span><span class=p>(</span><span class=s>&#34;Sunset Strip&#34;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;t is now&#34;</span><span class=p>,</span> <span class=nx>t</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h4 id=把函数编程的概念扩大一些如果函数可以作为参数第一公民就把它叫做函数编程>把函数编程的概念扩大一些：如果函数可以作为参数(第一公民),就把它叫做函数编程</h4><h5 id=闭包函数>闭包函数</h5><p>它的实际是:它允许将函数与其所操作的某些数据（环境）关联起来。这显然类似于面向对象编程(对象允许我们将某些数据（对象的属性）与一个或者多个方法相关联)&ndash;>所以闭包函数可以看作，就是一个类(它只有一个方法)的对象的方法，</p><h6 id=exampledotake>example:DoTake()</h6><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>编程范式-函数编程</h1><div class=post-meta><span class=post-time>2020-10-20</span><div class=post-category><a href=/categories/%E8%8C%83%E5%BC%8F/>范式</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#函数编程>函数编程</a><ul><li><a href=#正宗的函数编程的概念是什么>正宗的函数编程的概念是什么？</a><ul><li><a href=#闭包函数>闭包函数</a></li><li><a href=#currying柯里化>currying（柯里化）</a></li><li><a href=#mapreduce-和-filter>Map、Reduce 和 Filter</a></li><li><a href=#装饰函数>装饰函数</a></li></ul></li><li><a href=#附录>附录</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h1 id=函数编程>函数编程</h1><p>仅当一个函数将一个或多个函数作为参数或作为结果返回另一个函数时，才可以将其视为高阶函数。</p><h2 id=正宗的函数编程的概念是什么>正宗的函数编程的概念是什么？</h2><ul><li>stateless：函数不维护任何状态。函数式编程的核心精神是stateless，简而言之就是它不能存在状态，打个比方，你给我数据我处理完扔出来。里面的数据是不变的。</li><li>immutable：输入数据是不能动的，动了输入数据就有危险，所以要返回新的数据集。</li></ul><blockquote><p>劣势:</p><blockquote><p>数据复制比较严重。</p><blockquote><p>注：有一些人可能会觉得这会对性能造成影响。其实，这个劣势不见得会导致性能不好。因为没有状态，所以代码在并行上根本不需要锁（不需要对状态修改的锁），所以可以拼命地并发，反而可以让性能很不错。比如：Erlang 就是其中的代表。<a href=https://time.geekbang.org/column/article/107560>reference</a></p></blockquote></blockquote></blockquote><h3 id=闭包函数>闭包函数</h3><p>它的实际是:它允许将函数与其所操作的某些数据（环境）关联起来。这显然类似于面向对象编程(对象允许我们将某些数据（对象的属性）与一个或者多个方法相关联)&ndash;>所以闭包函数可以看作，就是一个类(它只有一个方法)的对象的方法。</p><h4 id=exampledotake>example:DoTake()</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -806,7 +117,7 @@
 </span></span></span><span class=line><span class=cl><span class=cm>	*/</span>
 </span></span><span class=line><span class=cl>	<span class=k>return</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h6 id=examplefunction-option>example:function Option</h6><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><h4 id=examplefunction-option>example:function Option</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -938,7 +249,7 @@
 </span></span><span class=line><span class=cl>	<span class=nx>_</span> <span class=p>=</span> <span class=nx>s2</span>
 </span></span><span class=line><span class=cl>	<span class=nx>_</span> <span class=p>=</span> <span class=nx>s3</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></td></tr></table></div></div><h5 id=lazy-evaluations>lazy evaluations</h5><ul><li>示例:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><h4 id=lazy-evaluations>lazy evaluations</h4><ul><li>示例:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -1060,7 +371,212 @@
 </span></span></span><span class=line><span class=cl><span class=cm>executing multiply
 </span></span></span><span class=line><span class=cl><span class=cm>16
 </span></span></span><span class=line><span class=cl><span class=cm>*/</span>
-</span></span></code></pre></td></tr></table></div></div><h5 id=visitor-model>visitor model</h5><p><a href=https://zput.github.io/2020/11/24/%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/>visitor实战</a></p><h2 id=附录>附录</h2><p><a href=https://deepu.tech/functional-programming-in-go/>7 Easy functional programming techniques in Go</a></p><p><a href=https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4>https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4</a></p><p><a href=https://www.packtpub.com/product/learning-functional-programming-in-go/9781787281394>Learning Functional Programming in Go</a></p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=visitor-model>visitor model</h4><p><a href=https://zput.github.io/2020/11/24/%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/>visitor实战</a></p><h3 id=currying柯里化>currying（柯里化）</h3><p>currying（柯里化） ：将一个函数的多个参数分解成多个函数， 然后将函数多层封装起来，每层函数都返回一个函数去接收下一个参数，这可以简化函数的多个参数。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>add</span><span class=p>(</span><span class=nx>x</span> <span class=kt>int</span><span class=p>)</span> <span class=kd>func</span><span class=p>(</span><span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Create more variations
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>add10</span> <span class=o>:=</span> <span class=nf>add</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>add20</span> <span class=o>:=</span> <span class=nf>add</span><span class=p>(</span><span class=mi>20</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Currying
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nf>add10</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=c1>// 11
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nf>add20</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=c1>// 21
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=mapreduce-和-filter>Map、Reduce 和 Filter</h3><p>函数式语言有三套件，Map、Reduce 和 Filter。</p><p>因为没有泛型，
+所以类型不能泛型，容器不能泛型，算法不能泛型。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>template</span><span class=o>&lt;</span><span class=k>class</span> <span class=nc>Iter</span><span class=p>,</span> <span class=k>class</span> <span class=nc>T</span><span class=p>,</span> <span class=k>class</span> <span class=nc>Op</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=n>T</span> <span class=n>reduce</span> <span class=p>(</span><span class=n>Iter</span> <span class=n>start</span><span class=p>,</span> <span class=n>Iter</span> <span class=n>end</span><span class=p>,</span> <span class=n>T</span> <span class=n>init</span><span class=p>,</span> <span class=n>Op</span> <span class=n>op</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>T</span> <span class=n>result</span> <span class=o>=</span> <span class=n>init</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=p>(</span> <span class=n>start</span> <span class=o>!=</span> <span class=n>end</span> <span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>result</span> <span class=o>=</span> <span class=n>op</span><span class=p>(</span> <span class=n>result</span><span class=p>,</span> <span class=o>*</span><span class=n>start</span> <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>start</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p><a href=https://github.com/yanatan16/itertools>使用这个工具</a></p><ul><li>Map</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>mapper</span> <span class=o>:=</span> <span class=kd>func</span> <span class=p>(</span><span class=nx>i</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kd>interface</span><span class=p>{}</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>strings</span><span class=p>.</span><span class=nf>ToUpper</span><span class=p>(</span><span class=nx>i</span><span class=p>.(</span><span class=kt>string</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nf>Map</span><span class=p>(</span><span class=nx>mapper</span><span class=p>,</span> <span class=nf>New</span><span class=p>(</span><span class=err>“</span><span class=nx>milu</span><span class=err>”</span><span class=p>,</span> <span class=err>“</span><span class=nx>rantanplan</span><span class=err>”</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>//[“MILU”, “RANTANPLAN”]
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Filter</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>pred</span> <span class=o>:=</span> <span class=kd>func</span> <span class=p>(</span><span class=nx>i</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kt>bool</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>i</span><span class=p>.(</span><span class=kt>uint64</span><span class=p>)</span> <span class=p>&gt;</span> <span class=mi>5</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nf>Filter</span><span class=p>(</span><span class=nx>pred</span><span class=p>,</span> <span class=nf>Uint64</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=p>,</span><span class=mi>4</span><span class=p>,</span><span class=mi>5</span><span class=p>,</span><span class=mi>6</span><span class=p>,</span><span class=mi>7</span><span class=p>,</span><span class=mi>8</span><span class=p>,</span><span class=mi>9</span><span class=p>,</span><span class=mi>10</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>//[6, 7, 8, 9, 10]
+</span></span></span></code></pre></td></tr></table></div></div><ul><li>Reduce</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=nx>acumullator</span> <span class=o>:=</span> <span class=kd>func</span> <span class=p>(</span><span class=nx>memo</span> <span class=kd>interface</span><span class=p>{},</span> <span class=nx>el</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kd>interface</span><span class=p>{}</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>len</span><span class=p>(</span><span class=nx>memo</span><span class=p>.(</span><span class=kt>string</span><span class=p>))</span> <span class=o>+</span> <span class=nb>len</span><span class=p>(</span><span class=nx>el</span><span class=p>.(</span><span class=kt>string</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nf>Reduce</span><span class=p>(</span><span class=nf>New</span><span class=p>(</span><span class=err>“</span><span class=nx>milu</span><span class=err>”</span><span class=p>,</span> <span class=err>“</span><span class=nx>rantanplan</span><span class=err>”</span><span class=p>),</span> <span class=nx>acumullator</span><span class=p>,</span> <span class=kt>string</span><span class=p>).(</span><span class=kt>uint64</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>// result 14
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=装饰函数>装饰函数</h3><p>所谓高阶函数就是函数当参数，把传入的函数做一个封装，然后返回这个封装函数。现象上就是函数传进传出。</p><h4 id=add-print-content>add print content</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span> <span class=nf>decorator</span><span class=p>(</span><span class=nx>f</span> <span class=kd>func</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>))</span> <span class=kd>func</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Started&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nf>f</span><span class=p>(</span><span class=nx>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Done&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Hello</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nf>decorator</span><span class=p>(</span><span class=nx>Hello</span><span class=p>)(</span><span class=s>&#34;Hello, World!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=lazy-evalutions>lazy evalutions</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;reflect&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;runtime&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;time&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>SumFunc</span> <span class=kd>func</span><span class=p>(</span><span class=kt>int64</span><span class=p>,</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>getFunctionName</span><span class=p>(</span><span class=nx>i</span> <span class=kd>interface</span><span class=p>{})</span> <span class=kt>string</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>runtime</span><span class=p>.</span><span class=nf>FuncForPC</span><span class=p>(</span><span class=nx>reflect</span><span class=p>.</span><span class=nf>ValueOf</span><span class=p>(</span><span class=nx>i</span><span class=p>).</span><span class=nf>Pointer</span><span class=p>()).</span><span class=nf>Name</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>timedSumFunc</span><span class=p>(</span><span class=nx>f</span> <span class=nx>SumFunc</span><span class=p>)</span> <span class=nx>SumFunc</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>defer</span> <span class=kd>func</span><span class=p>(</span><span class=nx>t</span> <span class=nx>time</span><span class=p>.</span><span class=nx>Time</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;--- Time Elapsed (%s): %v ---\n&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>				<span class=nf>getFunctionName</span><span class=p>(</span><span class=nx>f</span><span class=p>),</span> <span class=nx>time</span><span class=p>.</span><span class=nf>Since</span><span class=p>(</span><span class=nx>t</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>		<span class=p>}(</span><span class=nx>time</span><span class=p>.</span><span class=nf>Now</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nf>f</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Sum1</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kd>var</span> <span class=nx>sum</span> <span class=kt>int64</span>
+</span></span><span class=line><span class=cl>	<span class=nx>sum</span> <span class=p>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>start</span> <span class=p>&gt;</span> <span class=nx>end</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=p>=</span> <span class=nx>end</span><span class=p>,</span> <span class=nx>start</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=nx>i</span> <span class=o>:=</span> <span class=nx>start</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;=</span> <span class=nx>end</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>sum</span> <span class=o>+=</span> <span class=nx>i</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>sum</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>Sum2</span><span class=p>(</span><span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=kt>int64</span><span class=p>)</span> <span class=kt>int64</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>start</span> <span class=p>&gt;</span> <span class=nx>end</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>start</span><span class=p>,</span> <span class=nx>end</span> <span class=p>=</span> <span class=nx>end</span><span class=p>,</span> <span class=nx>start</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=p>(</span><span class=nx>end</span> <span class=o>-</span> <span class=nx>start</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span> <span class=o>*</span> <span class=p>(</span><span class=nx>end</span> <span class=o>+</span> <span class=nx>start</span><span class=p>)</span> <span class=o>/</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>sum1</span> <span class=o>:=</span> <span class=nf>timedSumFunc</span><span class=p>(</span><span class=nx>Sum1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>sum2</span> <span class=o>:=</span> <span class=nf>timedSumFunc</span><span class=p>(</span><span class=nx>Sum2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d, %d\n&#34;</span><span class=p>,</span> <span class=nf>sum1</span><span class=p>(</span><span class=o>-</span><span class=mi>10000</span><span class=p>,</span> <span class=mi>10000000</span><span class=p>),</span> <span class=nf>sum2</span><span class=p>(</span><span class=o>-</span><span class=mi>10000</span><span class=p>,</span> <span class=mi>10000000</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=附录>附录</h2><p><a href=https://deepu.tech/functional-programming-in-go/>7 Easy functional programming techniques in Go</a></p><p><a href=https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4>https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4</a></p><p><a href=https://www.packtpub.com/product/learning-functional-programming-in-go/9781787281394>Learning Functional Programming in Go</a></p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2020-10-20</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/%E8%8C%83%E5%BC%8F/>范式</a></div><nav class=post-nav><a class=prev href=/post/_posts/%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">访问者模式</span>
