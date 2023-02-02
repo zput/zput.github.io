@@ -1,0 +1,143 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>面向对象比较 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="封装 访问控制 我们可以根据访问权限总结出不同的访问类型，如下所示： 语言 访问 public protected private C++ 同一个类 yes yes yes PHP 同一个类 yes yes yes C++ 派生类(不管是何种继承方式("><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/object_oriented/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.fdb1035139209ff03fa34c28400ff54f04900828b7cafe0d2cfb1f48b70a2ffd.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="面向对象比较"><meta property="og:description" content="封装 访问控制 我们可以根据访问权限总结出不同的访问类型，如下所示： 语言 访问 public protected private C++ 同一个类 yes yes yes PHP 同一个类 yes yes yes C++ 派生类(不管是何种继承方式("><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/object_oriented/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-01-19T19:00:00+00:00"><meta property="article:modified_time" content="2023-01-19T19:00:00+00:00"><meta itemprop=name content="面向对象比较"><meta itemprop=description content="封装 访问控制 我们可以根据访问权限总结出不同的访问类型，如下所示： 语言 访问 public protected private C++ 同一个类 yes yes yes PHP 同一个类 yes yes yes C++ 派生类(不管是何种继承方式("><meta itemprop=datePublished content="2023-01-19T19:00:00+00:00"><meta itemprop=dateModified content="2023-01-19T19:00:00+00:00"><meta itemprop=wordCount content="841"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="面向对象比较"><meta name=twitter:description content="封装 访问控制 我们可以根据访问权限总结出不同的访问类型，如下所示： 语言 访问 public protected private C++ 同一个类 yes yes yes PHP 同一个类 yes yes yes C++ 派生类(不管是何种继承方式("><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>面向对象比较</h1><div class=post-meta><span class=post-time>2023-01-19</span><div class=post-category><a href=/categories/systemandprotocol/>systemAndProtocol</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><ul><li><a href=#封装>封装</a></li><li><a href=#继承>继承</a></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h3 id=封装>封装</h3><h4 id=访问控制>访问控制</h4><p>我们可以根据访问权限总结出不同的访问类型，如下所示：</p><table><thead><tr><th>语言</th><th>访问</th><th>public</th><th>protected</th><th>private</th></tr></thead><tbody><tr><td>C++</td><td>同一个类</td><td>yes</td><td>yes</td><td>yes</td></tr><tr><td>PHP</td><td>同一个类</td><td>yes</td><td>yes</td><td>yes</td></tr><tr><td>C++</td><td>派生类(不管是何种继承方式(public、protected或private))</td><td>yes</td><td>yes</td><td>no</td></tr><tr><td>PHP</td><td>派生类(重定义基类的公有和保护成员在派生类中是何种成员)</td><td>yes</td><td>yes</td><td>no</td></tr><tr><td>C++</td><td>外部的类</td><td>yes</td><td>no</td><td>no</td></tr><tr><td>PHP</td><td>外部的类</td><td>yes</td><td>no</td><td>no</td></tr></tbody></table><blockquote><p>派生类可以访问基类中所有的<strong>非私有成员</strong>。若基类成员如果不想被派生类的成员函数访问，则应在基类中声明为 private。</p></blockquote><h3 id=继承>继承</h3><p>C++继承的时候，可以通过<strong>继承方式</strong>(<code>public、protected或private</code>)设置基类的公有和保护成员在派生类中是何种成员:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>class</span> <span class=err>&lt;派生类名</span><span class=o>&gt;:&lt;</span><span class=err>继承方式</span><span class=mi>1</span><span class=o>&gt;&lt;</span><span class=err>基类名</span><span class=mi>1</span><span class=o>&gt;</span><span class=p>,</span><span class=o>&lt;</span><span class=err>继承方式</span><span class=mi>2</span><span class=o>&gt;&lt;</span><span class=err>基类名</span><span class=mi>2</span><span class=o>&gt;</span><span class=p>,</span><span class=err>…</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=o>&lt;</span><span class=err>派生类类体</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>对于成员函数继承：一个派生类继承了所有的基类方法，除了：<ul><li>基类的构造函数、析构函数和拷贝构造函数。</li><li>基类的重载运算符。</li><li>基类的友元函数。</li></ul></li></ul><p>php继承的时候，没有类似<strong>继承方式</strong>, 而是使用<code>public和protected</code>进行重定义基类的公有和保护成员在派生类中是何种成员。
+方法，属性和常量的 可见性 可以放宽，例如 protected 方法可以标记为 public， 但不能增加限制，例如标记 public 属性为 private。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=err>&lt;</span><span class=nc>基类名</span><span class=o>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$public</span> <span class=o>=</span> <span class=s1>&#39;Public&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>protected</span> <span class=nv>$protected</span> <span class=o>=</span> <span class=s1>&#39;Protected&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$private</span> <span class=o>=</span> <span class=s1>&#39;Private&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=err>&lt;</span><span class=nc>派生类名</span><span class=o>&gt;</span> <span class=k>extends</span> <span class=o>&lt;</span><span class=nx>基类名</span><span class=o>&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 可以对 public 和 protected 进行重定义，但 private 而不能
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>public</span> <span class=nv>$public</span> <span class=o>=</span> <span class=s1>&#39;Public2&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>protected</span> <span class=nv>$protected</span> <span class=o>=</span> <span class=s1>&#39;Protected2&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=nx>派生类类体</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><a href=https://www.php.net/manual/zh/language.oop5.inheritance.php>https://www.php.net/manual/zh/language.oop5.inheritance.php</a></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>FatherClass</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$public</span> <span class=o>=</span> <span class=s1>&#39;Public&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>protected</span> <span class=nv>$protected</span> <span class=o>=</span> <span class=s1>&#39;Protected&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$private</span> <span class=o>=</span> <span class=s1>&#39;Private&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>function</span> <span class=nf>printHello</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>public</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>protected</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>private</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=sd>/**
+</span></span></span><span class=line><span class=cl><span class=sd> * Define MyClass2
+</span></span></span><span class=line><span class=cl><span class=sd> */</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>SonClass</span> <span class=k>extends</span> <span class=nx>FatherClass</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 可以对 public 和 protected 进行重定义，但 private 而不能
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>public</span> <span class=nv>$public</span> <span class=o>=</span> <span class=s1>&#39;Public2&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>protected</span> <span class=nv>$protected</span> <span class=o>=</span> <span class=s1>&#39;Protected2&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>function</span> <span class=nf>printHello</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>public</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>protected</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=s2>&#34;</span><span class=se>\n</span><span class=s2>=========================</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// echo $this-&gt;private;
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$son</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>SonClass</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nv>$son</span><span class=o>-&gt;</span><span class=na>public</span><span class=p>;</span> <span class=c1>// 这行能被正常执行
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// echo $son-&gt;protected; // 这行会产生一个致命错误
+</span></span></span><span class=line><span class=cl><span class=c1>// echo $son-&gt;private; // 未定义 private
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$son</span><span class=o>-&gt;</span><span class=na>printHello</span><span class=p>();</span> <span class=c1>// 输出 Public2、Protected2 和 Undefined
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2023-01-19</span></p></div><footer class=post-footer><nav class=post-nav><a class=next href=/post/_posts/%E6%A6%82%E5%BF%B5%E5%8E%9F%E7%90%86%E7%9A%84%E6%80%9D%E8%80%83/invocation_relation/><span class="next-text nav-default">调用关系</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://giscus.app/client.js data-repo=zput/utterances-comments data-repo-id=R_kgDOHhATGQ data-category=Announcements data-category-id=DIC_kwDOHhATGc4CPxca data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=1 data-input-position=top data-theme=light data-lang=zh-CN data-loading=lazy crossorigin=anonymous async></script></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:wkzxc@sina.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://zput.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
