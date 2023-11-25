@@ -1,7 +1,7 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>k近邻算法 - Zput's blog</title>
-<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="k近邻算法"><meta property="og:description" content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-02T19:00:00+00:00"><meta property="article:modified_time" content="2023-11-02T19:00:00+00:00"><meta itemprop=name content="k近邻算法"><meta itemprop=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta itemprop=datePublished content="2023-11-02T19:00:00+00:00"><meta itemprop=dateModified content="2023-11-02T19:00:00+00:00"><meta itemprop=wordCount content="1966"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="k近邻算法"><meta name=twitter:description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="k近邻算法"><meta property="og:description" content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-02T19:00:00+00:00"><meta property="article:modified_time" content="2023-11-02T19:00:00+00:00"><meta itemprop=name content="k近邻算法"><meta itemprop=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta itemprop=datePublished content="2023-11-02T19:00:00+00:00"><meta itemprop=dateModified content="2023-11-02T19:00:00+00:00"><meta itemprop=wordCount content="3105"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="k近邻算法"><meta name=twitter:description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>k近邻算法</h1><div class=post-meta><span class=post-time>2023-11-02</span><div class=post-category><a href=/categories/applicationandsoftware/>applicationAndSoftware</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#knn>kNN</a><ul><li><a href=#原理>原理</a></li><li><a href=#举例>举例</a></li><li><a href=#优缺点>优缺点</a></li></ul></li><li><a href=#交叉验证>交叉验证</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=knn>kNN</h2><p>kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测试样本，在训练数据中找到与其距离最近的 k 个训练样本，然后根据这 k 个样本的标签进行预测。</p><h3 id=原理>原理</h3><p>对于给定的一个测试样本x，kNN 算法的分类过程如下：</p><ul><li>计算测试样本 x 与每个训练样本之间的距离；</li><li>选取距离最近的 k 个训练样本；</li><li>根据这 k 个样本的标签，通过投票的方式确定测试样本的类别。</li></ul><p>对于回归问题而言，kNN 算法的过程也是类似的，只不过最后的预测结果是这k个样本的平均值。</p><p>在实现时，我们需要选择一个合适的距离度量方法和一个合适的 k 值。
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>k近邻算法</h1><div class=post-meta><span class=post-time>2023-11-02</span><div class=post-category><a href=/categories/applicationandsoftware/>applicationAndSoftware</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#knn>kNN</a><ul><li><a href=#原理>原理</a></li><li><a href=#举例>举例</a></li><li><a href=#优缺点>优缺点</a></li></ul></li><li><a href=#超参数>超参数</a><ul><li><a href=#交叉验证>交叉验证</a></li><li><a href=#超参数搜索-网格搜索grid-search>超参数搜索-网格搜索(Grid Search)</a></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=knn>kNN</h2><p>kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测试样本，在训练数据中找到与其距离最近的 k 个训练样本，然后根据这 k 个样本的标签进行预测。</p><h3 id=原理>原理</h3><p>对于给定的一个测试样本x，kNN 算法的分类过程如下：</p><ul><li>计算测试样本 x 与每个训练样本之间的距离；</li><li>选取距离最近的 k 个训练样本；</li><li>根据这 k 个样本的标签，通过投票的方式确定测试样本的类别。</li></ul><p>对于回归问题而言，kNN 算法的过程也是类似的，只不过最后的预测结果是这k个样本的平均值。</p><p>在实现时，我们需要选择一个合适的距离度量方法和一个合适的 k 值。
 通常，欧式距离是最常用的距离度量方法。而 k 的取值则需要通过交叉验证等方法来确定。</p><h3 id=举例>举例</h3><p>假设我们有如下的数据集，其中每个样本包含两个特征 $x_1$ 和 $x_2$，以及它们对应的类别标签：</p><table><thead><tr><th>x1</th><th>x2</th><th>标签</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>A</td></tr><tr><td>2</td><td>2</td><td>A</td></tr><tr><td>2</td><td>1</td><td>A</td></tr><tr><td>5</td><td>3</td><td>B</td></tr><tr><td>6</td><td>2</td><td>B</td></tr><tr><td>6</td><td>4</td><td>B</td></tr></tbody></table><p>现在我们要对以下测试样本进行分类：</p><table><thead><tr><th>$x_1$</th><th>$x_2$</th></tr></thead><tbody><tr><td>3</td><td>2</td></tr></tbody></table><p>我们使用 kNN 算法进行分类，假设 k=3。首先计算测试样本与训练集中每个样本之间的距离：</p><table><thead><tr><th>距离</th><th>标签</th></tr></thead><tbody><tr><td>$\sqrt{(3-1)^2+(2-1)^2}=\sqrt{5}$</td><td>A</td></tr><tr><td>$\sqrt{(3-2)^2+(2-2)^2}=1$</td><td>A</td></tr><tr><td>$\sqrt{(3-2)^2+(2-1)^2=\sqrt{2}}$</td><td>A</td></tr><tr><td>$\sqrt{(3-5)^2+(2-3)^2}=\sqrt{3}$</td><td>B</td></tr><tr><td>$\sqrt{(3-6)^2+(2-2)^2}=3$</td><td>B</td></tr><tr><td>$\sqrt{(3-6)^2+(2-4)^2}=\sqrt{13}$</td><td>B</td></tr></tbody></table><p>可以发现，距离最近的三个样本分别是 $(2,2)$、$(2,1)$ 和 $(5,3)$，它们的类别分别是 A、A 和 B。因此，这三个样本的投票结果是 A，所以测试样本 $(3,2)$ 被归类为 A 类。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
@@ -82,7 +82,7 @@
 </span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>    <span class=c1># 代码1： 用KNN算法对鸢尾花进行分类</span>
 </span></span><span class=line><span class=cl>    <span class=n>knn_iris</span><span class=p>()</span>
-</span></span></code></pre></td></tr></table></div></div><h3 id=优缺点>优缺点</h3><ul><li><p>kNN 算法的优点包括：</p><ul><li>简单、易于理解和实现；</li><li>对于多分类问题效果很好；</li><li>适用于大规模数据集，需要的存储空间少。</li></ul></li><li><p>kNN 算法的缺点包括：</p><ul><li>需要事先确定k的取值；</li><li>对于高维数据或者特征空间非常稀疏的数据，效果较差；</li><li>需要计算测试样本与所有训练样本之间的距离，计算量较大；</li><li>对于不平衡数据集的处理较为困难。</li></ul></li></ul><h2 id=交叉验证>交叉验证</h2><p>在机器学习任务中，为了得到最优模型, 我们需要将数据集划分成训练集，验证集和测试集。
+</span></span></code></pre></td></tr></table></div></div><h3 id=优缺点>优缺点</h3><ul><li><p>kNN 算法的优点包括：</p><ul><li>简单、易于理解和实现；</li><li>对于多分类问题效果很好；</li><li>适用于大规模数据集，需要的存储空间少。</li></ul></li><li><p>kNN 算法的缺点包括：</p><ul><li>需要事先确定k的取值；</li><li>对于高维数据或者特征空间非常稀疏的数据，效果较差；</li><li>需要计算测试样本与所有训练样本之间的距离，计算量较大；</li><li>对于不平衡数据集的处理较为困难。</li></ul></li></ul><h2 id=超参数>超参数</h2><blockquote><p>什么是超参数？</p></blockquote><p>通常情况下，有很多参数是需要手动指定的（如k-近邻算法中的K值），这种叫<strong>超参数</strong>。但是手动过程繁杂，所以需要对模型预设几种超参数组合。每组超参数都采用交叉验证来进行评估。最后选出最优参数组合建立模型。</p><h3 id=交叉验证>交叉验证</h3><p>在机器学习任务中，为了得到最优模型, 我们需要将数据集划分成训练集，验证集和测试集。
 测试集不参与训练模型,只用于评估最终模型的精度，训练模型的任务由训练集来完成，验证集会帮助我们<strong>调节超参数</strong>，从而找到一组<strong>最优的超参数组合</strong>，这里的最优是指的模型在验证集上的最好评估效果。</p><p>调节超参数的过程如下：我们将超参数值作为横坐标，模型评估值作为纵坐标，不同的超参数训练出的模型，在验证集上会产生不同的评估结果。
 模型评估值随着超参数值的变化而变化，进而会得到一条曲线：
 <img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231123222756.png alt=20231123222756></p><p>曲线上评估值最高的点对应的超参数值，就是我们要找的最优超参数，当数据集数量较多的时候，我们可以用上述调参流程来确定超参数。 但当数据集的数量不够充足时，比如数量不足1万时，这种方法就会导致验证集的数量过少，<strong>使得验证集无法完全覆盖所有训练样本的特征分布</strong>。</p><blockquote><p>举个极端一点的例子，比如在某个人脸检测任务中，只有三个样本，一个是亚洲人的脸，一个是欧洲人的脸，一个是非洲人的脸，她们的特征差异都非常大，如果只拿其中一种人脸做验证集，显然很难评估出模型在其他人脸上的表现能力，也就是说，如果<strong>验证集</strong>的数量数据太少，不能完全表示训练集的特征分布，那验证集评估出来的模型效果也是不可靠的。</p></blockquote><p>这个时候我们选一部分数据做验证集，得到评估曲线</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
@@ -100,7 +100,187 @@
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>[验证集]_训练集_..._训练集_|测试集
 </span></span><span class=line><span class=cl>训练集_[验证集]_..._训练集_|测试集
-</span></span></code></pre></td></tr></table></div></div><ul><li>这种将训练集拆分成K份的方法又称为K折交叉验证。</li><li>在数据极度缺乏的情况下，我们每次只取一个样本做验证集，此时的K和数据的个数相等。这种验证方式叫做<strong>留一交叉验证</strong>,主要用于数据极少的情况下。</li></ul></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li>这种将训练集拆分成K份的方法又称为K折交叉验证。</li><li>在数据极度缺乏的情况下，我们每次只取一个样本做验证集，此时的K和数据的个数相等。这种验证方式叫做<strong>留一交叉验证</strong>,主要用于数据极少的情况下。</li></ul><h3 id=超参数搜索-网格搜索grid-search>超参数搜索-网格搜索(Grid Search)</h3><ul><li>sklearn.model_selection.GridSearchCV(estimator,param_grid=None,cv=None): 对估计器的指定参数值进行详尽搜索<ul><li>estimator:估计器对象</li><li>param_grid:估计器参数(dict)M“n_neighbors":[1,3,5]}</li><li>cv:指定几折交叉验证</li></ul></li><li>fit():输入训练数据</li><li>score():准确率</li><li>结果分析：<ul><li>最佳参数：best_params_</li><li>最佳结果：best_score_</li><li>最佳估计器：best_estimator_</li><li>交叉验证结果：cv_results_</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.datasets</span> <span class=kn>import</span> <span class=n>load_iris</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>train_test_split</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.preprocessing</span> <span class=kn>import</span> <span class=n>StandardScaler</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.neighbors</span> <span class=kn>import</span> <span class=n>KNeighborsClassifier</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>GridSearchCV</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.datasets</span> <span class=kn>import</span> <span class=n>fetch_20newsgroups</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.feature_extraction.text</span> <span class=kn>import</span> <span class=n>TfidfVectorizer</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.naive_bayes</span> <span class=kn>import</span> <span class=n>MultinomialNB</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.tree</span> <span class=kn>import</span> <span class=n>DecisionTreeClassifier</span><span class=p>,</span> <span class=n>export_graphviz</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>knn_iris_gscv</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>    用KNN算法对鸢尾花进行分类，添加网格搜索和交叉验证
+</span></span></span><span class=line><span class=cl><span class=s2>    :return:
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 1）获取数据</span>
+</span></span><span class=line><span class=cl>    <span class=n>iris</span> <span class=o>=</span> <span class=n>load_iris</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 2）划分数据集</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_train</span><span class=p>,</span> <span class=n>x_test</span><span class=p>,</span> <span class=n>y_train</span><span class=p>,</span> <span class=n>y_test</span> <span class=o>=</span> <span class=n>train_test_split</span><span class=p>(</span><span class=n>iris</span><span class=o>.</span><span class=n>data</span><span class=p>,</span> <span class=n>iris</span><span class=o>.</span><span class=n>target</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>22</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 3）特征工程：标准化</span>
+</span></span><span class=line><span class=cl>    <span class=n>transfer</span> <span class=o>=</span> <span class=n>StandardScaler</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_train</span> <span class=o>=</span> <span class=n>transfer</span><span class=o>.</span><span class=n>fit_transform</span><span class=p>(</span><span class=n>x_train</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_test</span> <span class=o>=</span> <span class=n>transfer</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>x_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 4）KNN算法预估器</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span> <span class=o>=</span> <span class=n>KNeighborsClassifier</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 加入网格搜索与交叉验证</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 参数准备</span>
+</span></span><span class=line><span class=cl>    <span class=n>param_dict</span> <span class=o>=</span> <span class=p>{</span><span class=s2>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>7</span><span class=p>,</span> <span class=mi>9</span><span class=p>,</span> <span class=mi>11</span><span class=p>]}</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span> <span class=o>=</span> <span class=n>GridSearchCV</span><span class=p>(</span><span class=n>estimator</span><span class=p>,</span> <span class=n>param_grid</span><span class=o>=</span><span class=n>param_dict</span><span class=p>,</span> <span class=n>cv</span><span class=o>=</span><span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>x_train</span><span class=p>,</span> <span class=n>y_train</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 5）模型评估</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 方法1：直接比对真实值和预测值</span>
+</span></span><span class=line><span class=cl>    <span class=n>y_predict</span> <span class=o>=</span> <span class=n>estimator</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>x_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;y_predict:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>y_predict</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;直接比对真实值和预测值:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>y_test</span> <span class=o>==</span> <span class=n>y_predict</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 方法2：计算准确率</span>
+</span></span><span class=line><span class=cl>    <span class=n>score</span> <span class=o>=</span> <span class=n>estimator</span><span class=o>.</span><span class=n>score</span><span class=p>(</span><span class=n>x_test</span><span class=p>,</span> <span class=n>y_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;准确率为：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>score</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 最佳参数：best_params_</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;最佳参数：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>best_params_</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 最佳结果：best_score_</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;最佳结果：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>best_score_</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 最佳估计器：best_estimator_</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;最佳估计器:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>best_estimator_</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 交叉验证结果：cv_results_</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;交叉验证结果:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>cv_results_</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>None</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>y_predict:
+</span></span><span class=line><span class=cl> [0 2 1 2 1 1 1 2 1 0 2 1 2 2 0 2 1 1 1 1 0 2 0 1 2 0 2 2 2 2 0 0 1 1 1 0 0
+</span></span><span class=line><span class=cl> 0]
+</span></span><span class=line><span class=cl>直接比对真实值和预测值:
+</span></span><span class=line><span class=cl> [ True  True  True  True  True  True  True  True  True  True  True  True
+</span></span><span class=line><span class=cl>  True  True  True  True  True  True False  True  True  True  True  True
+</span></span><span class=line><span class=cl>  True  True  True  True  True  True  True  True  True  True  True  True
+</span></span><span class=line><span class=cl>  True  True]
+</span></span><span class=line><span class=cl>准确率为：
+</span></span><span class=line><span class=cl> 0.9736842105263158
+</span></span><span class=line><span class=cl>最佳参数：
+</span></span><span class=line><span class=cl> {&#39;n_neighbors&#39;: 3}
+</span></span><span class=line><span class=cl>最佳结果：
+</span></span><span class=line><span class=cl> 0.9553030303030303
+</span></span><span class=line><span class=cl>最佳估计器:
+</span></span><span class=line><span class=cl> KNeighborsClassifier(n_neighbors=3)
+</span></span><span class=line><span class=cl>交叉验证结果:
+</span></span><span class=line><span class=cl> {&#39;mean_fit_time&#39;: array([0.00032661, 0.00018132, 0.00017796, 0.0001781 , 0.00017376,
+</span></span><span class=line><span class=cl>       0.00017049]), &#39;std_fit_time&#39;: array([2.66920081e-04, 1.97445278e-05, 1.24659862e-05, 1.50660924e-05,
+</span></span><span class=line><span class=cl>       7.76805637e-06, 4.59900725e-06]), &#39;mean_score_time&#39;: array([0.0009202 , 0.00060892, 0.00062206, 0.00060441, 0.00059748,
+</span></span><span class=line><span class=cl>       0.00058217]), &#39;std_score_time&#39;: array([4.13560598e-04, 5.06432715e-05, 4.99454147e-05, 2.94694333e-05,
+</span></span><span class=line><span class=cl>       3.02990525e-05, 1.56016863e-05]), &#39;param_n_neighbors&#39;: masked_array(data=[1, 3, 5, 7, 9, 11],
+</span></span><span class=line><span class=cl>             mask=[False, False, False, False, False, False],
+</span></span><span class=line><span class=cl>       fill_value=&#39;?&#39;,
+</span></span><span class=line><span class=cl>            dtype=object), &#39;params&#39;: [{&#39;n_neighbors&#39;: 1}, {&#39;n_neighbors&#39;: 3}, {&#39;n_neighbors&#39;: 5}, {&#39;n_neighbors&#39;: 7}, {&#39;n_neighbors&#39;: 9}, {&#39;n_neighbors&#39;: 11}], &#39;split0_test_score&#39;: array([0.91666667, 0.91666667, 1.        , 1.        , 0.91666667,
+</span></span><span class=line><span class=cl>       0.91666667]), &#39;split1_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;split2_test_score&#39;: array([0.90909091, 0.90909091, 0.90909091, 0.90909091, 0.90909091,
+</span></span><span class=line><span class=cl>       0.90909091]), &#39;split3_test_score&#39;: array([0.90909091, 1.        , 0.90909091, 0.90909091, 0.90909091,
+</span></span><span class=line><span class=cl>       1.        ]), &#39;split4_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;split5_test_score&#39;: array([0.90909091, 0.90909091, 0.90909091, 0.90909091, 0.90909091,
+</span></span><span class=line><span class=cl>       0.90909091]), &#39;split6_test_score&#39;: array([0.90909091, 0.90909091, 0.90909091, 1.        , 1.        ,
+</span></span><span class=line><span class=cl>       1.        ]), &#39;split7_test_score&#39;: array([0.90909091, 0.90909091, 0.81818182, 0.81818182, 0.81818182,
+</span></span><span class=line><span class=cl>       0.81818182]), &#39;split8_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;split9_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;mean_test_score&#39;: array([0.94621212, 0.95530303, 0.94545455, 0.95454545, 0.94621212,
+</span></span><span class=line><span class=cl>       0.95530303]), &#39;std_test_score&#39;: array([0.04397204, 0.0447483 , 0.06030227, 0.06098367, 0.05988683,
+</span></span><span class=line><span class=cl>       0.0604591 ]), &#39;rank_test_score&#39;: array([4, 1, 6, 3, 4, 1], dtype=int32)}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Process finished with exit code 0
+</span></span></code></pre></td></tr></table></div></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2023-11-02</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/sklearn/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">sklearn</span>
