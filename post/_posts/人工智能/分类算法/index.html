@@ -89,7 +89,7 @@
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>训练集_训练集_验证集|测试集
 </span></span></code></pre></td></tr></table></div></div><p>之后换成另一部分做验证集, 得到另一条评估曲线。之前表现最优的超参数现在又不是了。那面对这样的情况，我们该如何解决呢？</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>验证集_训练集_训练集|测试集
-</span></span></code></pre></td></tr></table></div></div><p>一般使用交叉验证(cross-Validation)的方法来确定最优的超参数组合。交叉是指训练集和验证集之间的数据相互转换，让测试集依旧保持不动，将训练集分成K份，每次取其中一份做验证集, 剩下的K-1份还是训练集， 之后再取第二份做验证集， 剩下的K-1份也还是训练集。这样经过K次之后所有的数据就都参与了训练，也都参与了验证， 得到了K条<strong>参数-评估值曲线</strong>。把这些曲线取均值，就会得到一条均值曲线，评估值最高的点对应的超参数值， 就是我们要找的最优超参数。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></span></code></pre></td></tr></table></div></div><p>一般使用交叉验证(cross-Validation)的方法来确定最优的超参数组合。交叉是指<strong>训练集和验证集之间的数据相互转换，让测试集依旧保持不动</strong>。将训练集分成K份，每次取其中一份做验证集, 剩下的K-1份还是训练集， 之后再取第二份做验证集， 剩下的K-1份也还是训练集。这样经过K次之后所有的数据就都参与了训练，也都参与了验证， 得到了K条<strong>参数-评估值曲线</strong>。把这些曲线取均值，就会得到一条均值曲线，评估值最高的点对应的超参数值， 就是我们要找的最优超参数。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
