@@ -1,5 +1,5 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>k近邻算法 - Zput's blog</title>
-<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="k近邻算法"><meta property="og:description" content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-02T19:00:00+00:00"><meta property="article:modified_time" content="2023-11-02T19:00:00+00:00"><meta itemprop=name content="k近邻算法"><meta itemprop=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta itemprop=datePublished content="2023-11-02T19:00:00+00:00"><meta itemprop=dateModified content="2023-11-02T19:00:00+00:00"><meta itemprop=wordCount content="3105"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="k近邻算法"><meta name=twitter:description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="k近邻算法"><meta property="og:description" content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-02T19:00:00+00:00"><meta property="article:modified_time" content="2023-11-02T19:00:00+00:00"><meta itemprop=name content="k近邻算法"><meta itemprop=description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><meta itemprop=datePublished content="2023-11-02T19:00:00+00:00"><meta itemprop=dateModified content="2023-11-02T19:00:00+00:00"><meta itemprop=wordCount content="3279"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="k近邻算法"><meta name=twitter:description content="kNN kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
 <span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>k近邻算法</h1><div class=post-meta><span class=post-time>2023-11-02</span><div class=post-category><a href=/categories/applicationandsoftware/>applicationAndSoftware</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#knn>kNN</a><ul><li><a href=#原理>原理</a></li><li><a href=#举例>举例</a></li><li><a href=#优缺点>优缺点</a></li></ul></li><li><a href=#超参数>超参数</a><ul><li><a href=#交叉验证>交叉验证</a></li><li><a href=#超参数搜索-网格搜索grid-search>超参数搜索-网格搜索(Grid Search)</a></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=knn>kNN</h2><p>kNN（k-Nearest Neighbors）算法是一种简单但常用的分类和回归算法。它的核心思想是基于相似性来做预测。具体来说，对于一个测试样本，在训练数据中找到与其距离最近的 k 个训练样本，然后根据这 k 个样本的标签进行预测。</p><h3 id=原理>原理</h3><p>对于给定的一个测试样本x，kNN 算法的分类过程如下：</p><ul><li>计算测试样本 x 与每个训练样本之间的距离；</li><li>选取距离最近的 k 个训练样本；</li><li>根据这 k 个样本的标签，通过投票的方式确定测试样本的类别。</li></ul><p>对于回归问题而言，kNN 算法的过程也是类似的，只不过最后的预测结果是这k个样本的平均值。</p><p>在实现时，我们需要选择一个合适的距离度量方法和一个合适的 k 值。
 通常，欧式距离是最常用的距离度量方法。而 k 的取值则需要通过交叉验证等方法来确定。</p><h3 id=举例>举例</h3><p>假设我们有如下的数据集，其中每个样本包含两个特征 $x_1$ 和 $x_2$，以及它们对应的类别标签：</p><table><thead><tr><th>x1</th><th>x2</th><th>标签</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>A</td></tr><tr><td>2</td><td>2</td><td>A</td></tr><tr><td>2</td><td>1</td><td>A</td></tr><tr><td>5</td><td>3</td><td>B</td></tr><tr><td>6</td><td>2</td><td>B</td></tr><tr><td>6</td><td>4</td><td>B</td></tr></tbody></table><p>现在我们要对以下测试样本进行分类：</p><table><thead><tr><th>$x_1$</th><th>$x_2$</th></tr></thead><tbody><tr><td>3</td><td>2</td></tr></tbody></table><p>我们使用 kNN 算法进行分类，假设 k=3。首先计算测试样本与训练集中每个样本之间的距离：</p><table><thead><tr><th>距离</th><th>标签</th></tr></thead><tbody><tr><td>$\sqrt{(3-1)^2+(2-1)^2}=\sqrt{5}$</td><td>A</td></tr><tr><td>$\sqrt{(3-2)^2+(2-2)^2}=1$</td><td>A</td></tr><tr><td>$\sqrt{(3-2)^2+(2-1)^2=\sqrt{2}}$</td><td>A</td></tr><tr><td>$\sqrt{(3-5)^2+(2-3)^2}=\sqrt{3}$</td><td>B</td></tr><tr><td>$\sqrt{(3-6)^2+(2-2)^2}=3$</td><td>B</td></tr><tr><td>$\sqrt{(3-6)^2+(2-4)^2}=\sqrt{13}$</td><td>B</td></tr></tbody></table><p>可以发现，距离最近的三个样本分别是 $(2,2)$、$(2,1)$ 和 $(5,3)$，它们的类别分别是 A、A 和 B。因此，这三个样本的投票结果是 A，所以测试样本 $(3,2)$ 被归类为 A 类。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
@@ -210,76 +210,372 @@
 </span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;交叉验证结果:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>cv_results_</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>None</span>
-</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span><span class=lnt>30
-</span><span class=lnt>31
-</span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span><span class=lnt>35
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>y_predict:
-</span></span><span class=line><span class=cl> [0 2 1 2 1 1 1 2 1 0 2 1 2 2 0 2 1 1 1 1 0 2 0 1 2 0 2 2 2 2 0 0 1 1 1 0 0
-</span></span><span class=line><span class=cl> 0]
-</span></span><span class=line><span class=cl>直接比对真实值和预测值:
-</span></span><span class=line><span class=cl> [ True  True  True  True  True  True  True  True  True  True  True  True
-</span></span><span class=line><span class=cl>  True  True  True  True  True  True False  True  True  True  True  True
-</span></span><span class=line><span class=cl>  True  True  True  True  True  True  True  True  True  True  True  True
-</span></span><span class=line><span class=cl>  True  True]
-</span></span><span class=line><span class=cl>准确率为：
-</span></span><span class=line><span class=cl> 0.9736842105263158
-</span></span><span class=line><span class=cl>最佳参数：
-</span></span><span class=line><span class=cl> {&#39;n_neighbors&#39;: 3}
-</span></span><span class=line><span class=cl>最佳结果：
-</span></span><span class=line><span class=cl> 0.9553030303030303
-</span></span><span class=line><span class=cl>最佳估计器:
-</span></span><span class=line><span class=cl> KNeighborsClassifier(n_neighbors=3)
-</span></span><span class=line><span class=cl>交叉验证结果:
-</span></span><span class=line><span class=cl> {&#39;mean_fit_time&#39;: array([0.00032661, 0.00018132, 0.00017796, 0.0001781 , 0.00017376,
-</span></span><span class=line><span class=cl>       0.00017049]), &#39;std_fit_time&#39;: array([2.66920081e-04, 1.97445278e-05, 1.24659862e-05, 1.50660924e-05,
-</span></span><span class=line><span class=cl>       7.76805637e-06, 4.59900725e-06]), &#39;mean_score_time&#39;: array([0.0009202 , 0.00060892, 0.00062206, 0.00060441, 0.00059748,
-</span></span><span class=line><span class=cl>       0.00058217]), &#39;std_score_time&#39;: array([4.13560598e-04, 5.06432715e-05, 4.99454147e-05, 2.94694333e-05,
-</span></span><span class=line><span class=cl>       3.02990525e-05, 1.56016863e-05]), &#39;param_n_neighbors&#39;: masked_array(data=[1, 3, 5, 7, 9, 11],
-</span></span><span class=line><span class=cl>             mask=[False, False, False, False, False, False],
-</span></span><span class=line><span class=cl>       fill_value=&#39;?&#39;,
-</span></span><span class=line><span class=cl>            dtype=object), &#39;params&#39;: [{&#39;n_neighbors&#39;: 1}, {&#39;n_neighbors&#39;: 3}, {&#39;n_neighbors&#39;: 5}, {&#39;n_neighbors&#39;: 7}, {&#39;n_neighbors&#39;: 9}, {&#39;n_neighbors&#39;: 11}], &#39;split0_test_score&#39;: array([0.91666667, 0.91666667, 1.        , 1.        , 0.91666667,
-</span></span><span class=line><span class=cl>       0.91666667]), &#39;split1_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;split2_test_score&#39;: array([0.90909091, 0.90909091, 0.90909091, 0.90909091, 0.90909091,
-</span></span><span class=line><span class=cl>       0.90909091]), &#39;split3_test_score&#39;: array([0.90909091, 1.        , 0.90909091, 0.90909091, 0.90909091,
-</span></span><span class=line><span class=cl>       1.        ]), &#39;split4_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;split5_test_score&#39;: array([0.90909091, 0.90909091, 0.90909091, 0.90909091, 0.90909091,
-</span></span><span class=line><span class=cl>       0.90909091]), &#39;split6_test_score&#39;: array([0.90909091, 0.90909091, 0.90909091, 1.        , 1.        ,
-</span></span><span class=line><span class=cl>       1.        ]), &#39;split7_test_score&#39;: array([0.90909091, 0.90909091, 0.81818182, 0.81818182, 0.81818182,
-</span></span><span class=line><span class=cl>       0.81818182]), &#39;split8_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;split9_test_score&#39;: array([1., 1., 1., 1., 1., 1.]), &#39;mean_test_score&#39;: array([0.94621212, 0.95530303, 0.94545455, 0.95454545, 0.94621212,
-</span></span><span class=line><span class=cl>       0.95530303]), &#39;std_test_score&#39;: array([0.04397204, 0.0447483 , 0.06030227, 0.06098367, 0.05988683,
-</span></span><span class=line><span class=cl>       0.0604591 ]), &#39;rank_test_score&#39;: array([4, 1, 6, 3, 4, 1], dtype=int32)}
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>Process finished with exit code 0
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=err>y_predict:</span>
+</span></span><span class=line><span class=cl> <span class=p>[</span><span class=mi>0</span> <span class=mi>2</span> <span class=mi>1</span> <span class=mi>2</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>2</span> <span class=mi>1</span> <span class=mi>0</span> <span class=mi>2</span> <span class=mi>1</span> <span class=mi>2</span> <span class=mi>2</span> <span class=mi>0</span> <span class=mi>2</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>0</span> <span class=mi>2</span> <span class=mi>0</span> <span class=mi>1</span> <span class=mi>2</span> <span class=mi>0</span> <span class=mi>2</span> <span class=mi>2</span> <span class=mi>2</span> <span class=mi>2</span> <span class=mi>0</span> <span class=mi>0</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>1</span> <span class=mi>0</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl> <span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=err>直接比对真实值和预测值:</span>
+</span></span><span class=line><span class=cl> <span class=p>[</span> <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>
+</span></span><span class=line><span class=cl>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span> <span class=err>False</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>
+</span></span><span class=line><span class=cl>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>  <span class=err>True</span>
+</span></span><span class=line><span class=cl>  <span class=err>True</span>  <span class=err>True</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=err>准确率为：</span>
+</span></span><span class=line><span class=cl> <span class=mf>0.9736842105263158</span>
+</span></span><span class=line><span class=cl><span class=err>最佳参数：</span>
+</span></span><span class=line><span class=cl> <span class=p>{</span><span class=err>&#39;n_neighbors&#39;:</span> <span class=err>3</span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=err>最佳结果：</span>
+</span></span><span class=line><span class=cl> <span class=mf>0.9553030303030303</span>
+</span></span><span class=line><span class=cl><span class=err>最佳估计器:</span>
+</span></span><span class=line><span class=cl> <span class=err>KNeighborsClassifier(n_neighbors=</span><span class=mi>3</span><span class=err>)</span>
+</span></span><span class=line><span class=cl><span class=err>交叉验证结果:</span>
+</span></span><span class=line><span class=cl> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;mean_fit_time&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00033779144287109374</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00017638206481933593</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00017495155334472655</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00017383098602294922</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00017740726470947266</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00017175674438476562</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;std_fit_time&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.00039807055683951107</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>3.656131614057078e-06</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>2.388473469995154e-06</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>4.909860029031385e-06</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.150277608441172e-05</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>2.1115865540966536e-06</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;mean_score_time&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.000801992416381836</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.0006023883819580078</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.000600886344909668</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.0005937337875366211</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.0006319761276245117</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.0005918264389038086</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;std_score_time&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.0004498697772650859</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.9847598505666974e-05</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>2.815662854970172e-05</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.3391422114781752e-05</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>6.705592367020572e-05</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.2143465964991082e-05</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;param_n_neighbors&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>5</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>7</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>9</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>11</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;params&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=mi>5</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=mi>7</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=mi>9</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&#34;n_neighbors&#34;</span><span class=p>:</span> <span class=mi>11</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split0_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9166666666666666</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9166666666666666</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9166666666666666</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9166666666666666</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split1_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split2_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split3_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split4_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split5_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split6_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split7_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9090909090909091</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.8181818181818182</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.8181818181818182</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.8181818181818182</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.8181818181818182</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split8_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;split9_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.0</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;mean_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9462121212121211</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9553030303030303</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9454545454545455</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9545454545454547</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9462121212121211</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.9553030303030303</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;std_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.043972035942216534</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.04474830128976474</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.06030226891555273</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.06098367211363062</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.05988683083021718</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mf>0.060459102129481135</span>
+</span></span><span class=line><span class=cl>    <span class=p>],</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;rank_test_score&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=mi>4</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>6</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>4</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></td></tr></table></div></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2023-11-02</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/sklearn/><i class="iconfont icon-left"></i>
