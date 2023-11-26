@@ -1,7 +1,7 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>- Zput's blog</title>
-<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content><meta property="og:description" content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"><meta property="article:section" content="post"><meta itemprop=name content><meta itemprop=description content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><meta itemprop=wordCount content="2833"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content><meta property="og:description" content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"><meta property="article:section" content="post"><meta itemprop=name content><meta itemprop=description content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><meta itemprop=wordCount content="5947"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="线性回归 线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title></h1><div class=post-meta><span class=post-time>0001-01-01</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#线性回归>线性回归</a><ul><li><a href=#线性回归的特征与目标的关系分析>线性回归的特征与目标的关系分析</a></li></ul></li><li><a href=#线性回归的损失和优化原理>线性回归的损失和优化原理</a><ul><li><ul><li><a href=#优化算法>优化算法</a><ul><li><a href=#正规方程>正规方程</a></li><li><a href=#梯度下降>梯度下降</a></li></ul></li></ul></li></ul></li><li><a href=#api>Api</a></li><li><a href=#欠拟合与过拟合>欠拟合与过拟合</a><ul><li><a href=#正则化类别>正则化类别</a></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=线性回归>线性回归</h2><p>线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种分析方式。
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title></h1><div class=post-meta><span class=post-time>0001-01-01</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#线性回归>线性回归</a><ul><li><a href=#线性回归的特征与目标的关系分析>线性回归的特征与目标的关系分析</a></li></ul></li><li><a href=#线性回归的损失和优化原理>线性回归的损失和优化原理</a><ul><li><ul><li><a href=#优化算法>优化算法</a><ul><li><a href=#正规方程>正规方程</a></li><li><a href=#梯度下降>梯度下降</a></li></ul></li></ul></li></ul></li><li><a href=#api>Api</a></li><li><a href=#欠拟合与过拟合>欠拟合与过拟合</a><ul><li><a href=#正则化类别>正则化类别</a></li></ul></li><li><a href=#线性回归的改进-岭回归>线性回归的改进-岭回归</a><ul><li><a href=#带有l2正则化的线性回归-岭回归>带有L2正则化的线性回归-岭回归</a></li></ul></li><li><a href=#分类算法-逻辑回归与二分类>分类算法-逻辑回归与二分类</a><ul><li><a href=#辑回归的原理>辑回归的原理</a><ul><li><a href=#输入>输入</a></li><li><a href=#激活函数>激活函数</a></li><li><a href=#损失以及优化>损失以及优化</a><ul><li><a href=#优化>优化</a></li></ul></li></ul></li><li><a href=#逻辑回归ap1>逻辑回归AP1</a></li><li><a href=#二分类的模型评估>二分类的模型评估</a></li><li><a href=#精确率与召回率>精确率与召回率</a><ul><li><a href=#分类评估报告api>分类评估报告API</a></li><li><a href=#如何衡量样本不均衡下的评估>如何衡量样本不均衡下的评估？</a><ul><li><a href=#roc曲线与auc指标>ROC曲线与AUC指标</a></li></ul></li></ul></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=线性回归>线性回归</h2><p>线性回归Linear regression)是利用回归方程（函数）对一个或多个自变量（特征值）和因变量（目标值）之间关系进行建模的一种分析方式。
 特点：只有一个自变量的情况称为单变量回归，多于一个自变量情况的叫做多元回归</p><p>通用公式:
 $$
 h(w)=w_{1} x_{1}+w_{2} x_{2}+w_{3} x_{3} \ldots+\mathrm{b}=w^{T} x+b
@@ -204,7 +204,144 @@ $$</p><blockquote><p>注：y为预测值，y为真实值</p></blockquote><ul><li
 $$
 J(w)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{w}\left(x_{i}\right)-y_{i}\right)^{2}+\lambda \sum_{j=1}^{n} w_{j}^{2}
 $$</li></ul><blockquote><p>注：m为样本数，n为特征数
-$h_w(x_i)$ 为预测值，$y_i$ 为真实值，L1正则化就是把 $w_{j}^{2}$ 改为 $|w_j|$</p></blockquote></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+$h_w(x_i)$ 为预测值，$y_i$ 为真实值，L1正则化就是把 $w_{j}^{2}$ 改为 $|w_j|$</p></blockquote><h2 id=线性回归的改进-岭回归>线性回归的改进-岭回归</h2><p>·目标
+。说明岭回归的原理即与线性回归的不同之处
+。说明正则化对于权重参数的影响
+说明L1和L2正则化的区别
+应用
+。波士顿房价预测
+·内容预览
+。4.3.1带有L2正则化的线性回归-岭回归
+■1API
+·2观察正则化程度的变化，对结果的影响？
+·3波士顿房价预测</p><h3 id=带有l2正则化的线性回归-岭回归>带有L2正则化的线性回归-岭回归</h3><p>岭回归，其实也是一种线性回归。只不过在算法建立回归方程时候，加上正则化的限制，从而达到解决过拟合的效果</p><p>sklearn.linear_model.Ridge(alpha=1.0,fit_intercept=True,solver=&ldquo;auto&rdquo;,
+normalize=False)
+。具有2正则化的线性回归
+0
+alpha:正则化力度，也叫入
+SAG
+■λ取值：0~11~10
+。solver:会根据数据自动选择优化方法
+·sag如果数据集、特征都比较大，选择该随机梯度下降优化
+。normalize:数据是否进行标准化
+normalize=False:可以在fit之前调用preprocessing.StandardScaler标准
+化数据
+o Ridge.coef:回归权重
+o Ridge.intercept:回归偏置</p><p>Ridge方法相当于SGDRegressor(penalty:=&lsquo;I2&rsquo;,loss=&ldquo;squared_loss&rdquo;),只不过SGDRegressor3实现了一个普通的随机梯度下降学习，推荐使用Ridge(实现了SAG)</p><ul><li>sklearn.linear_model.RidgeCV(BaseRidgeCV,RegressorMixin)<ul><li>具有2正则化的线性回归，可以进行交叉验证</li><li>coef:回归系数</li></ul></li></ul><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126221132.png alt=20231126221132></p><p>正则化力度越大，权重系数会越小
+正则化力度越小，权重系数会越大</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.datasets</span> <span class=kn>import</span> <span class=n>load_boston</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>train_test_split</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.preprocessing</span> <span class=kn>import</span> <span class=n>StandardScaler</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.linear_model</span> <span class=kn>import</span> <span class=n>LinearRegression</span><span class=p>,</span> <span class=n>SGDRegressor</span><span class=p>,</span><span class=n>Ridge</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.metrics</span> <span class=kn>import</span> <span class=n>mean_squared_error</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>linear3</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>    岭回归对波士顿房价进行预测
+</span></span></span><span class=line><span class=cl><span class=s2>    :return:
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 1）获取数据</span>
+</span></span><span class=line><span class=cl>    <span class=n>boston</span> <span class=o>=</span> <span class=n>load_boston</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;特征数量：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>boston</span><span class=o>.</span><span class=n>data</span><span class=o>.</span><span class=n>shape</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 2）划分数据集</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_train</span><span class=p>,</span> <span class=n>x_test</span><span class=p>,</span> <span class=n>y_train</span><span class=p>,</span> <span class=n>y_test</span> <span class=o>=</span> <span class=n>train_test_split</span><span class=p>(</span><span class=n>boston</span><span class=o>.</span><span class=n>data</span><span class=p>,</span> <span class=n>boston</span><span class=o>.</span><span class=n>target</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>22</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 3）标准化</span>
+</span></span><span class=line><span class=cl>    <span class=n>transfer</span> <span class=o>=</span> <span class=n>StandardScaler</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_train</span> <span class=o>=</span> <span class=n>transfer</span><span class=o>.</span><span class=n>fit_transform</span><span class=p>(</span><span class=n>x_train</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_test</span> <span class=o>=</span> <span class=n>transfer</span><span class=o>.</span><span class=n>transform</span><span class=p>(</span><span class=n>x_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>#4）预估器</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span> <span class=o>=</span> <span class=n>Ridge</span><span class=p>(</span><span class=n>alpha</span><span class=o>=</span><span class=mf>0.5</span><span class=p>,</span> <span class=n>max_iter</span><span class=o>=</span><span class=mi>10000</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>x_train</span><span class=p>,</span> <span class=n>y_train</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 5）得出模型</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;岭回归-权重系数为：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>coef_</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;岭回归-偏置为：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>estimator</span><span class=o>.</span><span class=n>intercept_</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 6）模型评估</span>
+</span></span><span class=line><span class=cl>    <span class=n>y_predict</span> <span class=o>=</span> <span class=n>estimator</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>x_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;预测房价：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>y_predict</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>error</span> <span class=o>=</span> <span class=n>mean_squared_error</span><span class=p>(</span><span class=n>y_test</span><span class=p>,</span> <span class=n>y_predict</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;岭回归-均方误差为：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>error</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>linear3</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=分类算法-逻辑回归与二分类>分类算法-逻辑回归与二分类</h2><p>逻辑回归(Logistic Regression)是机器学习中的一种分类模型，逻辑回归是一种分类算法，虽然名字中带有回归，但是它与回归之间有一定的联系。由于算法的简单和高效，在实际中应用非常广泛。</p><h3 id=辑回归的原理>辑回归的原理</h3><h4 id=输入>输入</h4><p>$$
+h(w)=w_{1} x_{1}+w_{2} x_{2}+w_{3} x_{3} \ldots+\mathrm{b}
+$$</p><blockquote><p>逻辑回归的输入就是一个线性回归的结果。</p></blockquote><h4 id=激活函数>激活函数</h4><p>sigmoid函数</p><p>$$
+g\left(\theta^{T} x\right)=\frac{1}{1+e^{-\theta^{T} x}}
+$$</p><ul><li>分析<ul><li>回归的结果输入到sigmoid函数当中</li><li>输出结果：[0,1]区间中的一个概率值，默认为0.5为阈值</li></ul></li></ul><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126221844.png alt=20231126221844></p><blockquote><p>逻辑回归最终的分类是通过属于某个类别的概率值来判断是否属于某个类别，并且这个类别默认标记为1（正例，另外的一个类别会标记为0（反例）。（方便损失计算)</p></blockquote><p>输出结果解释（重要）：假设有两个类别A,B,并且假设我们的概率值为属于A(1)这个类别的概率值。现在有一个样本的输入到逻辑回归输出结果0.6，那么这个概率值超过0.5，意味着我们训练或者预测的结果就是A(1)类别。那么反之，如果得出结果为0.3那么，训练或者预测结果就为B(O)类别。</p><p>所以接下来我们回忆之前的线性回归预测结果我们用均方误差衡量，那如果对于逻辑回归，我们预测的结果不对该怎么去衡量这个损失呢？我们来看这样一张图</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126222041.png alt=20231126222041></p><blockquote><p>假设得出概率值是属于A的概率值</p></blockquote><p>那么如何去衡量逻辑回归的预测结果与真实结果解差异呢？</p><h4 id=损失以及优化>损失以及优化</h4><p>1损失
+逻辑回归的损失，称之为对数似然损失，公式如下：
+·分开类别：</p><p>$$
+\operatorname{cost}\left(h_{\theta}(x), y\right)=\left{\begin{array}{ll}
+-\log \left(h_{\theta}(x)\right) & \text { if } \mathrm{y}=1 \
+-\log \left(1-h_{\theta}(x)\right) & \text { if } \mathrm{y}=0
+\end{array}\right.
+$$</p><p>当y=1时：
+<img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126222403.png alt=20231126222403></p><p>同理，我们也可以画出当y=0时，函数C()的图像：
+<img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126222439.png alt=20231126222439></p><p>综合完整损失函数</p><p>$$
+\operatorname{cost}\left(h_{\theta}(x), y\right)=\sum_{i=1}^{m}-y_{i} \log \left(h_{\theta}(x)\right)-\left(1-y_{i}\right) \log \left(1-h_{\theta}(x)\right)
+$$</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126222615.png alt=20231126222615></p><h5 id=优化>优化</h5><p>同样使用梯度下降优化算法，去减少损失函数的值。这样去更新逻辑回归前面对应算
+法的权重参数，提升原本属于1类别的概率，降低原本是0类别的概率</p><h3 id=逻辑回归ap1>逻辑回归AP1</h3><ul><li>sklearn.linear_model.LogisticRegression(solver=&lsquo;liblinear&rsquo;,penalty=&lsquo;12&rsquo;,C=1.0)<ul><li>solver:优化求解方式（默开源的liblinear库实现，内部使用了坐标轴下降法来迭代优化损失函数】<ul><li>Sag:根据数据集自动选择，随机平均梯度下降</li></ul></li><li>penalty:正则化的种类</li><li>C:正则化力度</li></ul></li></ul><blockquote><p>默认将类别数量少的当做正例</p></blockquote><p>LogisticRegression方法相当于SGDClassifier(loss=&ldquo;log&rdquo;,penalty=""),SGDClassifier3实现了一个普通的随机梯度下降学习，也支持平均随机梯度下降法(ASGD)，可以通过设置average:=True。而使用LogisticRegression(实现了SAG)</p><h3 id=二分类的模型评估>二分类的模型评估</h3><h3 id=精确率与召回率>精确率与召回率</h3><p>1混淆矩阵
+在分类任务下，预测结果(Predicted Condition)与正确标记(True Condition)之间存在四种不同的组合，构成混淆矩阵（适用于多分类）</p><table><thead><tr><th></th><th>预测.正例</th><th>预测.假例</th></tr></thead><tbody><tr><td>真实.正例</td><td>真正例TP</td><td>伪反例FN</td></tr><tr><td>真实.假例</td><td>伪正例FP</td><td>真反例TN</td></tr></tbody></table><p>2精确率(Precision)与召回率(Recall)
+·精确率：预测结果为正例样本中真实为正例的比例（了解）</p><table><thead><tr><th></th><th>$\color{red}{预测.正例}$</th><th>预测.假例</th></tr></thead><tbody><tr><td>$\color{red}{真实.正例}$</td><td>$\color{red}{真正例TP}$</td><td>伪反例FN</td></tr><tr><td>真实.假例</td><td>$\color{red}{伪正例FP}$</td><td>真反例TN</td></tr></tbody></table><p>召回率：真实为正例的样本中预测结果为正例的比例（查得全，对正样本的区分能力)</p><table><thead><tr><th></th><th>$\color{red}{预测.正例}$</th><th>预测.假例</th></tr></thead><tbody><tr><td>$\color{red}{真实.正例}$</td><td>$\color{red}{真正例TP}$</td><td>$\color{red}{伪反例FN}$</td></tr><tr><td>真实.假例</td><td>伪正例FP</td><td>真反例TN</td></tr></tbody></table><p>还有其他的评估标准，F1-score,反映了模型的稳健型</p><p>$$
+F 1=\frac{2 T P}{2 T P+F N+F P}=\frac{2 \cdot \text { Precision } \cdot \text { Recall }}{\text { Precision }+ \text { Recall }}
+$$</p><h4 id=分类评估报告api>分类评估报告API</h4><ul><li>sklearn.metrics.classification_report(y_true,y_pred,labels=,target_names=None)】<ul><li>y_true:真实目标值</li><li>y_pred:估计器预测目标值</li><li>labels:指定类别对应的数字</li><li>target_names:目标类别名称</li><li>return:每个类别精确率与召回率</li></ul></li></ul><p>假设这样一个情况，如果99个样本癌症，1个样本非癌症，不管怎样我全都预测正例(默认癌症为正例)，准确率就为99%但是这样效果并不好，这就是样本不均衡下的评估问题</p><h4 id=如何衡量样本不均衡下的评估>如何衡量样本不均衡下的评估？</h4><h5 id=roc曲线与auc指标>ROC曲线与AUC指标</h5><ol><li>知道TPR与FPR</li></ol><ul><li>TPR=TP/(TP+FN)<ul><li>所有真实类别为1的样本中，预测类别为1的比例</li></ul></li><li>FPR=FP/(FP+TN)<ul><li>所有真实类别为0的样本中，预测类别为1的比例</li></ul></li></ul><ol start=2><li>ROC曲线
+ROC曲线的横轴就是FPRate,纵轴就是TPRate,当二者相等时，表示的意义则是：对于不论真实类别是1还是0的样本，分类器预测为1的概率是相等的，此时AUC为0.5</li></ol><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126224250.png alt=20231126224250></p><p>3.AUC指标</p><ul><li>AUC的概率意义是随机取一对正负样本，正样本得分大于负样本的概率</li><li>AUC的最小值为0.5，最大值为1，取值越高越好</li><li>AUC=1,完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</li><li>0.5&lt;AUC&lt;1,优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</li></ul><blockquote><p>最终AUC的范围在[0.5,1]之间，并且越接近1越好</p></blockquote><ol start=4><li>AUC计算API</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.metrics</span> <span class=kn>import</span> <span class=n>roc_auc_score</span>
+</span></span><span class=line><span class=cl><span class=n>sklearn</span><span class=o>.</span><span class=n>metrics</span><span class=o>.</span><span class=n>roc_auc_score</span><span class=p>(</span><span class=n>y_true</span><span class=p>,</span><span class=n>y_score</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>#计算ROC曲线面积，即AUC值</span>
+</span></span><span class=line><span class=cl><span class=c1># y_tue:每个样本的真实类别，必须为0（反例，1（正例标记</span>
+</span></span><span class=line><span class=cl><span class=c1># y_score:预测得分，可以是正类的估计概率、置信值或者分类器方法的返回值</span>
+</span></span></code></pre></td></tr></table></div></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>0001-01-01</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/_posts/efk/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">简单实操elk</span>
