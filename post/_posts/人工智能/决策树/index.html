@@ -1,5 +1,5 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>决策树 - Zput's blog</title>
-<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%86%B3%E7%AD%96%E6%A0%91/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="决策树"><meta property="og:description" content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%86%B3%E7%AD%96%E6%A0%91/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-02T19:00:00+00:00"><meta property="article:modified_time" content="2023-11-02T19:00:00+00:00"><meta itemprop=name content="决策树"><meta itemprop=description content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><meta itemprop=datePublished content="2023-11-02T19:00:00+00:00"><meta itemprop=dateModified content="2023-11-02T19:00:00+00:00"><meta itemprop=wordCount content="816"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="决策树"><meta name=twitter:description content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.120.4 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%86%B3%E7%AD%96%E6%A0%91/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="决策树"><meta property="og:description" content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%86%B3%E7%AD%96%E6%A0%91/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-02T19:00:00+00:00"><meta property="article:modified_time" content="2023-11-02T19:00:00+00:00"><meta itemprop=name content="决策树"><meta itemprop=description content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><meta itemprop=datePublished content="2023-11-02T19:00:00+00:00"><meta itemprop=dateModified content="2023-11-02T19:00:00+00:00"><meta itemprop=wordCount content="1161"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="决策树"><meta name=twitter:description content="决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
 <span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>决策树</h1><div class=post-meta><span class=post-time>2023-11-02</span><div class=post-category><a href=/categories/applicationandsoftware/>applicationAndSoftware</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#举例>举例</a></li><li><a href=#信息增益>信息增益</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><p>决策树是一种基于树结构的机器学习算法，通常用于分类和回归分析。它通过一系列的问题或判断来建立一个树状模型，每个节点代表一个判断或决策，每个叶子节点代表一个分类结果或输出结果。</p><h2 id=举例>举例</h2><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126191746.png alt=20231126191746></p><p>你不能仅仅画一条线把他们分开，</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126191936.png alt=20231126191936></p><p>这就是使用二叉决策树进行分类的方法，但这只是一大堆嵌套的if-else语句，如何把它当做是机器学习呢？</p><p>主要是如何知道正确的条件呢？因为太多可能得分割条件了。
 我们的模型需要学习哪些特征和相应的正确阈值才能最好地分割数据，而这就是它被称为机器学习的原因。</p><blockquote><p>如何决定最佳的分割？</p></blockquote><h2 id=信息增益>信息增益</h2><p>先从根节点开始看起，我们手头上有所有的数据，然后我们会比较两种不同的分割方法，</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20231126192615.png alt=20231126192615></p><p>模型会选择那种能最大化信息增益的分割方式。要计算信息增益，需要了解一个状态所包含的信息量。
@@ -15,7 +15,101 @@ $p_i$表示第i类的概率</p><p>所以我们分别来计算一下上图的熵<
 $$
 $w_i$是权重，表示子节点相对于父节点的大小。</p><p>到此，信息增益就可以计算了：
 $IG_1 = 1-14/20<em>0.99-6/20</em>0.91 = 0.034$
-$IG_2 = 1-4/20<em>0-16/20</em>0.95 = 0.24 $</p><p>第二种分割方式给出了更大的信息增益，所以我们才选择它。</p><p>模型会比较每一种可能得分割方式，并选择那种能最大化信息增益的方式。模型会遍历每一个可能得特征和特征值，寻找最好的特征以及对应的阈值。</p><p>决策树是一种贪心算法，他会选择当前最佳的分割，也就是最大化信息增益的分割。当不会改变之前的分割，后续的分割都依赖于之前的分割。</p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+$IG_2 = 1-4/20<em>0-16/20</em>0.95 = 0.24 $</p><p>第二种分割方式给出了更大的信息增益，所以我们才选择它。</p><p>模型会比较每一种可能得分割方式，并选择那种能最大化信息增益的方式。模型会遍历每一个可能得特征和特征值，寻找最好的特征以及对应的阈值。</p><p>决策树是一种贪心算法，他会选择当前最佳的分割，也就是最大化信息增益的分割。当不会改变之前的分割，后续的分割都依赖于之前的分割。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.datasets</span> <span class=kn>import</span> <span class=n>load_iris</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>train_test_split</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.tree</span> <span class=kn>import</span> <span class=n>DecisionTreeClassifier</span><span class=p>,</span> <span class=n>export_graphviz</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>decision_iris</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>    用决策树对鸢尾花进行分类
+</span></span></span><span class=line><span class=cl><span class=s2>    :return:
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 1）获取数据集</span>
+</span></span><span class=line><span class=cl>    <span class=n>iris</span> <span class=o>=</span> <span class=n>load_iris</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 2）划分数据集</span>
+</span></span><span class=line><span class=cl>    <span class=n>x_train</span><span class=p>,</span> <span class=n>x_test</span><span class=p>,</span> <span class=n>y_train</span><span class=p>,</span> <span class=n>y_test</span> <span class=o>=</span> <span class=n>train_test_split</span><span class=p>(</span><span class=n>iris</span><span class=o>.</span><span class=n>data</span><span class=p>,</span> <span class=n>iris</span><span class=o>.</span><span class=n>target</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>22</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 3）决策树预估器</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span> <span class=o>=</span> <span class=n>DecisionTreeClassifier</span><span class=p>(</span><span class=n>criterion</span><span class=o>=</span><span class=s2>&#34;entropy&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>estimator</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>x_train</span><span class=p>,</span> <span class=n>y_train</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 4）模型评估</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 方法1：直接比对真实值和预测值</span>
+</span></span><span class=line><span class=cl>    <span class=n>y_predict</span> <span class=o>=</span> <span class=n>estimator</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>x_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;y_predict:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>y_predict</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;直接比对真实值和预测值:</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>y_test</span> <span class=o>==</span> <span class=n>y_predict</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 方法2：计算准确率</span>
+</span></span><span class=line><span class=cl>    <span class=n>score</span> <span class=o>=</span> <span class=n>estimator</span><span class=o>.</span><span class=n>score</span><span class=p>(</span><span class=n>x_test</span><span class=p>,</span> <span class=n>y_test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;准确率为：</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>,</span> <span class=n>score</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 可视化决策树</span>
+</span></span><span class=line><span class=cl>    <span class=n>export_graphviz</span><span class=p>(</span><span class=n>estimator</span><span class=p>,</span> <span class=n>out_file</span><span class=o>=</span><span class=s2>&#34;iris_tree.dot&#34;</span><span class=p>,</span> <span class=n>feature_names</span><span class=o>=</span><span class=n>iris</span><span class=o>.</span><span class=n>feature_names</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 用决策树对鸢尾花进行分类</span>
+</span></span><span class=line><span class=cl>    <span class=n>decision_iris</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>y_predict:
+</span></span><span class=line><span class=cl> [0 2 1 2 1 1 1 1 1 0 2 1 2 2 0 2 1 1 1 1 0 2 0 1 2 0 1 2 2 1 0 0 1 1 1 0 0
+</span></span><span class=line><span class=cl> 0]
+</span></span><span class=line><span class=cl>直接比对真实值和预测值:
+</span></span><span class=line><span class=cl> [ True  True  True  True  True  True  True False  True  True  True  True
+</span></span><span class=line><span class=cl>  True  True  True  True  True  True False  True  True  True  True  True
+</span></span><span class=line><span class=cl>  True  True False  True  True False  True  True  True  True  True  True
+</span></span><span class=line><span class=cl>  True  True]
+</span></span><span class=line><span class=cl>准确率为：
+</span></span><span class=line><span class=cl> 0.8947368421052632
+</span></span></code></pre></td></tr></table></div></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>2023-11-02</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/_posts/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">k近邻算法</span>
