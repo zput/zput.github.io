@@ -1,7 +1,163 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>- Zput's blog</title>
-<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="探究kubernets其底层实现"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.123.7 with theme even"><link rel=canonical href=http://zput.github.io/post/cloud_native/informer_factory/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content><meta property="og:description" content="探究kubernets其底层实现"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/cloud_native/informer_factory/"><meta property="article:section" content="post"><meta itemprop=name content><meta itemprop=description content="探究kubernets其底层实现"><meta itemprop=wordCount content="16"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="探究kubernets其底层实现"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="事件过多，需要去重。 削峰填谷。 需要反复查询某些对象资源：比如在事件hander中涉及到反查相关对象资源。 每次查询都直接请求k8s,导致k8s"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.123.7 with theme even"><link rel=canonical href=http://zput.github.io/post/cloud_native/informer_factory/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content><meta property="og:description" content="事件过多，需要去重。 削峰填谷。 需要反复查询某些对象资源：比如在事件hander中涉及到反查相关对象资源。 每次查询都直接请求k8s,导致k8s"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/cloud_native/informer_factory/"><meta property="article:section" content="post"><meta itemprop=name content><meta itemprop=description content="事件过多，需要去重。 削峰填谷。 需要反复查询某些对象资源：比如在事件hander中涉及到反查相关对象资源。 每次查询都直接请求k8s,导致k8s"><meta itemprop=wordCount content="1217"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content><meta name=twitter:description content="事件过多，需要去重。 削峰填谷。 需要反复查询某些对象资源：比如在事件hander中涉及到反查相关对象资源。 每次查询都直接请求k8s,导致k8s"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title></h1><div class=post-meta><span class=post-time>0001-01-01</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=article-container><div class=post-content><p>探究kubernets其底层实现</p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title></h1><div class=post-meta><span class=post-time>0001-01-01</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=article-container><div class=post-content><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230703.png alt=20240229230703></p><ol><li>事件过多，需要去重。</li><li>削峰填谷。</li></ol><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230621.png alt=20240229230621></p><ol><li>需要反复查询某些对象资源：比如在事件hander中涉及到反查相关对象资源。</li><li>每次查询都直接请求k8s,导致k8s负载过高。</li></ol><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230524.png alt=20240229230524></p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230419.png alt=20240229230419></p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240301001916.png alt=20240301001916></p><p>我们先定义了一个工厂接口，此接口InformerFor函数是构造某个资源的SharedIndexInformer需要知道资源以及构造这个资源SharedIndexInformer的方法，有点绕，大概意思就是这个函数其实不知道怎么构造资源的SharedIndexInformer，都是需要入参提供的，自身是非常的通用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-golang data-lang=golang><span class=line><span class=cl><span class=kd>type</span> <span class=nx>SharedIndexInformer</span> <span class=kd>interface</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// 包含很多方法，具体是什么方法后面再说
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>ConstructFuncForInformerI</span> <span class=kd>func</span><span class=p>(</span><span class=nx>client</span> <span class=nx>http</span><span class=p>.</span><span class=nx>Client</span><span class=p>)</span> <span class=nx>SharedIndexInformer</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>FactoryI</span> <span class=kd>interface</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nf>InformerFor</span><span class=p>(</span><span class=nx>resource</span> <span class=nx>any</span><span class=p>,</span> <span class=nx>constructF</span> <span class=nx>ConstructFuncForInformerI</span><span class=p>)</span> <span class=nx>SharedIndexInformer</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>我们再来看FactoryI的实现，聚焦于InformerFor函数，如上讨论，这个里面没有具体某个资源SharedIndexInformer生成逻辑，只是有一个缓存。这里好处如下：</p><ol><li>当某个资源调用过一次InformerFor后，后续再调用就可以直接从缓存中拿就行了。</li><li>可以记录所有生成过SharedIndexInformer的资源。</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-golang data-lang=golang><span class=line><span class=cl><span class=kd>type</span> <span class=nx>Factory</span> <span class=kd>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>cache</span>  <span class=kd>map</span><span class=p>[</span><span class=nx>reflect</span><span class=p>.</span><span class=nx>Type</span><span class=p>]</span><span class=nx>SharedIndexInformer</span>
+</span></span><span class=line><span class=cl>	<span class=nx>client</span> <span class=nx>http</span><span class=p>.</span><span class=nx>Client</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>f</span> <span class=o>*</span><span class=nx>Factory</span><span class=p>)</span> <span class=nf>InformerFor</span><span class=p>(</span><span class=nx>resource</span> <span class=nx>any</span><span class=p>,</span> <span class=nx>constructF</span> <span class=nx>ConstructFuncForInformerI</span><span class=p>)</span> <span class=nx>SharedIndexInformer</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>curType</span> <span class=o>:=</span> <span class=nx>reflect</span><span class=p>.</span><span class=nf>TypeOf</span><span class=p>(</span><span class=nx>resource</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>v</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=nx>f</span><span class=p>.</span><span class=nx>cache</span><span class=p>[</span><span class=nx>curType</span><span class=p>];</span> <span class=nx>ok</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>v</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>f</span><span class=p>.</span><span class=nx>cache</span><span class=p>[</span><span class=nx>curType</span><span class=p>]</span> <span class=p>=</span> <span class=nf>constructF</span><span class=p>(</span><span class=nx>f</span><span class=p>.</span><span class=nx>client</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=nx>f</span><span class=p>.</span><span class=nx>cache</span><span class=p>[</span><span class=nx>curType</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>那么Factory的InformerFor方法再哪里被调用呢？
+继续来看Factory的另一个方法，它是用户自己定义的一个资源（可类比与deployment，pod等），它的响应是一个组方法，继续跟踪下去可以看到有版本，然后是Informer，这个Informer有Informer方法以及一个私有的构造SharedIndexInformer接口的方法。
+而且工厂自身也被依次的传递了下去，直到Informer函数里调用了工厂的InformerFor方法。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-golang data-lang=golang><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>f</span> <span class=o>*</span><span class=nx>Factory</span><span class=p>)</span> <span class=nx>我自己定义的资源</span><span class=p>()</span> <span class=nx>GroupInterfaceI</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nf>NewGroupInterface</span><span class=p>(</span><span class=nx>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>GroupInterfaceI</span> <span class=kd>interface</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nf>V1ByXXX</span><span class=p>()</span> <span class=nx>VersionInterfaceI</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>NewGroupInterface</span><span class=p>(</span><span class=nx>f</span> <span class=nx>FactoryI</span><span class=p>)</span> <span class=nx>GroupInterfaceI</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=o>&amp;</span><span class=nx>GroupInterface</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>f</span><span class=p>:</span> <span class=nx>f</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>GroupInterface</span> <span class=kd>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>f</span> <span class=nx>FactoryI</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>g</span> <span class=o>*</span><span class=nx>GroupInterface</span><span class=p>)</span> <span class=nf>V1ByXXX</span><span class=p>()</span> <span class=nx>VersionInterfaceI</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nf>NewVersionInterface</span><span class=p>(</span><span class=nx>g</span><span class=p>.</span><span class=nx>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>VersionInterfaceI</span> <span class=kd>interface</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nf>KindByXXX</span><span class=p>()</span> <span class=nx>XXXInformerI</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>NewVersionInterface</span><span class=p>(</span><span class=nx>f</span> <span class=nx>FactoryI</span><span class=p>)</span> <span class=nx>VersionInterfaceI</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=o>&amp;</span><span class=nx>VersionInterface</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>f</span><span class=p>:</span> <span class=nx>f</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>VersionInterface</span> <span class=kd>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>f</span> <span class=nx>FactoryI</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>g</span> <span class=o>*</span><span class=nx>VersionInterface</span><span class=p>)</span> <span class=nf>KindByXXX</span><span class=p>()</span> <span class=nx>XXXInformerI</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nf>NewXXXInformer</span><span class=p>(</span><span class=nx>g</span><span class=p>.</span><span class=nx>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>我自己定义的资源InformerI</span> <span class=kd>interface</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nf>Informer</span><span class=p>()</span> <span class=nx>SharedIndexInformer</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>New我自己定义的资源Informer</span><span class=p>(</span><span class=nx>f</span> <span class=nx>FactoryI</span><span class=p>)</span> <span class=nx>XXXInformerI</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=o>&amp;</span><span class=nx>XXXInformer</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>factory</span><span class=p>:</span> <span class=nx>f</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>我自己定义的资源Informer</span> <span class=kd>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>factory</span> <span class=nx>FactoryI</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>x</span> <span class=o>*</span><span class=nx>我自己定义的资源Informer</span><span class=p>)</span> <span class=nf>Informer</span><span class=p>()</span> <span class=nx>SharedIndexInformer</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>x</span><span class=p>.</span><span class=nx>factory</span><span class=p>.</span><span class=nf>InformerFor</span><span class=p>(</span><span class=nx>我自己定义的资源Informer</span><span class=p>{},</span> <span class=nx>x</span><span class=p>.</span><span class=nx>defaultInformer</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>x</span> <span class=o>*</span><span class=nx>我自己定义的资源Informer</span><span class=p>)</span> <span class=nf>defaultInformer</span><span class=p>(</span><span class=nx>client</span> <span class=nx>http</span><span class=p>.</span><span class=nx>Client</span><span class=p>)</span> <span class=nx>SharedIndexInformer</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// panic(&#34;implement me&#34;)
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>return</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>_</span> <span class=nx>ConstructFuncForInformerI</span> <span class=p>=</span> <span class=nx>我自己定义的资源Informer</span><span class=p>{}.</span><span class=nx>defaultInformer</span>
+</span></span></code></pre></td></tr></table></div></div><p>到这里也就看明白了Factory方法以及Factory具体实现以及自定义资源的Informer的大致调用过程。资源对应的SharedIndexInformer还是由自身来决定怎么实现。工厂只是提供了InformerFor方法，来缓存所有资源的SharedIndexInformer。</p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
 <span class=item-content>0001-01-01</span></p></div><footer class=post-footer><nav class=post-nav><a class=next href=/post/cloud_native/sandbox/><span class="next-text nav-default"></span>
 <span class="next-text nav-mobile">下一篇</span>
