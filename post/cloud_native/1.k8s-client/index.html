@@ -5,8 +5,8 @@
 <img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230703.png alt=20240229230703></p><h2 id=推导优化>推导优化</h2><p>上面有什么问题呢?</p><ol><li>事件过多，需要去重。</li><li>削峰填谷。</li></ol><p>第二版：
 <img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230621.png alt=20240229230621></p><ol><li>需要反复查询某些对象资源：比如在事件hander中涉及到反查相关对象资源。</li><li>每次查询都直接请求k8s,导致k8s负载过高。</li></ol><p>第三版：</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230524.png alt=20240229230524></p><h2 id=client-go真实组件>client-go真实组件</h2><p>最后来看一下client-go的实际的是怎样组成的：</p><p><img src=https://raw.githubusercontent.com/zput/myPicLib/master/zput.github.io/20240229230419.png alt=20240229230419></p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
 <span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
-<span class=item-content>2019-06-21</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/cloud_native/2.informer_factory/><i class="iconfont icon-left"></i>
-<span class="prev-text nav-default">k8s client-go源码阅读一：informer工厂</span>
+<span class=item-content>2019-06-21</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/cloud_native/6.shareindexinformer_processor/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">k8s client-go源码阅读一：shareIndexInformer的processor</span>
 <span class="prev-text nav-mobile">上一篇</span>
 </a><a class=next href=/post/cloud_native/sandbox/><span class="next-text nav-default"></span>
 <span class="next-text nav-mobile">下一篇</span>
