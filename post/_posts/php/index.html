@@ -1,0 +1,302 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>PHP基本语法 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="常用的函数 String（字符串） &amp;ldquo;&amp;quot;:空字符串 &amp;ldquo;0&amp;rdquo;:作为字符串的0 Integer（整型） 0:"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.114.0 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/php/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="PHP基本语法"><meta property="og:description" content="常用的函数 String（字符串） &ldquo;&#34;:空字符串 &ldquo;0&rdquo;:作为字符串的0 Integer（整型） 0:"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/php/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-01-09T19:00:00+00:00"><meta property="article:modified_time" content="2023-01-09T19:00:00+00:00"><meta itemprop=name content="PHP基本语法"><meta itemprop=description content="常用的函数 String（字符串） &ldquo;&#34;:空字符串 &ldquo;0&rdquo;:作为字符串的0 Integer（整型） 0:"><meta itemprop=datePublished content="2023-01-09T19:00:00+00:00"><meta itemprop=dateModified content="2023-01-09T19:00:00+00:00"><meta itemprop=wordCount content="1375"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="PHP基本语法"><meta name=twitter:description content="常用的函数 String（字符串） &ldquo;&#34;:空字符串 &ldquo;0&rdquo;:作为字符串的0 Integer（整型） 0:"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>PHP基本语法</h1><div class=post-meta><span class=post-time>2023-01-09</span><div class=post-category><a href=/categories/systemandprotocol/>systemAndProtocol</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#常用的函数>常用的函数</a><ul><li><a href=#empty>empty</a></li><li><a href=#isset>isset</a></li></ul></li><li><a href=#引用>引用</a><ul><li><a href=#变量引用与取消引用>变量引用与取消引用</a></li><li><a href=#函数引用>函数引用</a></li></ul></li><li><a href=#作用域>作用域</a></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=常用的函数>常用的函数</h2><ul><li>String（字符串）<ul><li>&ldquo;":空字符串</li><li>&ldquo;0&rdquo;:作为字符串的0</li></ul></li><li>Integer（整型）<ul><li>0:作为整数的0</li></ul></li><li>Float（浮点型）<ul><li>0.0:作为浮点数的0</li></ul></li><li>Boolean（布尔型）<ul><li>FALSE</li></ul></li><li>Array（数组）<ul><li>array()/[]:一个空数组</li></ul></li><li>NULL（空值）<ul><li>NULL</li></ul></li><li>Object（对象）</li><li>Resource（资源类型）</li></ul><h3 id=empty>empty</h3><p>empty函数:当变量为类型的零值，或变量未定义才返回true.</p><h3 id=isset>isset</h3><p>isset：变量已设置并且非NULL, 如果是则为true.
+is_null：值为null为true.正好是isset的反结果，我们可以把它看成是!isset，是isset的一个逆操作。</p><p>$var (一个声明了，但是没有值的变量)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 测试isset函数
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$data</span><span class=o>=</span><span class=p>[</span><span class=k>null</span><span class=p>,</span> <span class=s2>&#34;null&#34;</span><span class=p>,</span> <span class=s2>&#34;&#34;</span><span class=p>,</span><span class=s2>&#34; &#34;</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mf>0.0</span> <span class=p>,</span><span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=k>true</span><span class=p>,</span> <span class=k>false</span> <span class=p>,[]];</span>
+</span></span><span class=line><span class=cl><span class=k>foreach</span> <span class=p>(</span><span class=nv>$data</span> <span class=k>as</span> <span class=nv>$key</span> <span class=o>=&gt;</span> <span class=nv>$val</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//只有 null返回false,其它都为真
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>echo</span> <span class=nv>$key</span> <span class=o>.</span> <span class=s1>&#39;=&gt;&#39;</span> <span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nx>var_dump</span><span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$val</span><span class=p>));</span>  <span class=c1>// isset
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>0=&gt;bool(false)
+</span></span></span><span class=line><span class=cl><span class=cm>1=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>2=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>3=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>4=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>5=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>6=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>7=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>8=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>9=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>------------</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>// 测试empty函数
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$data</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;&#34;</span><span class=p>,</span><span class=s2>&#34;0&#34;</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mf>0.0</span><span class=p>,</span> <span class=k>false</span><span class=p>,</span> <span class=k>null</span><span class=p>,</span> <span class=p>[],</span> <span class=s2>&#34; &#34;</span><span class=p>,</span> <span class=s2>&#34;null&#34;</span><span class=p>,</span> <span class=k>true</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=c1>//     &#34;&#34;,&#34;0&#34;, 0, 0.0, false, null, [] --都是对应类型的零值
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>foreach</span> <span class=p>(</span><span class=nv>$data</span> <span class=k>as</span> <span class=nv>$key</span> <span class=o>=&gt;</span> <span class=nv>$val</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$key</span> <span class=o>.</span> <span class=s1>&#39;=&gt;&#39;</span> <span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nx>var_dump</span><span class=p>(</span><span class=k>empty</span><span class=p>(</span><span class=nv>$val</span><span class=p>));</span> <span class=c1>// empty
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>0=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>1=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>2=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>3=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>4=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>5=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>6=&gt;bool(true)
+</span></span></span><span class=line><span class=cl><span class=cm>7=&gt;bool(false)
+</span></span></span><span class=line><span class=cl><span class=cm>8=&gt;bool(false)
+</span></span></span><span class=line><span class=cl><span class=cm>9=&gt;bool(false)
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=引用>引用</h2><p>在PHP 中引用的意思是：不同的名字访问同一个变量内容。</p><blockquote><p>Ｃ语言中的指针里面存储的是变量的内容，在内存中存放的地址。</p></blockquote><h3 id=变量引用与取消引用>变量引用与取消引用</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$a</span><span class=o>=</span><span class=s2>&#34;我初始化了&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$b</span> <span class=o>=&amp;</span><span class=nv>$a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$a</span> <span class=o>.</span><span class=s2>&#34;_&#34;</span><span class=o>.</span><span class=nv>$b</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$b</span><span class=o>=</span><span class=s2>&#34;我改变了&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$a</span> <span class=o>.</span><span class=s2>&#34;_&#34;</span><span class=o>.</span><span class=nv>$b</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>function</span> <span class=nf>test</span><span class=p>(</span><span class=o>&amp;</span><span class=nv>$tmp</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$tmp</span><span class=o>=</span><span class=nv>$tmp</span> <span class=o>.</span> <span class=s2>&#34;  (from_china)&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$varFirst</span><span class=o>=</span> <span class=s2>&#34;hi, I&#39;m tim&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$varFirst</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=nx>test</span><span class=p>(</span><span class=nv>$varFirst</span><span class=p>);</span>   <span class=c1>//这里$b传递给函数的其实是$b的变量内容所处的内存地址，通过在函数里改变$a的值　就可以改变$b的值了
+</span></span></span><span class=line><span class=cl><span class=c1></span> 
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$varFirst</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>我初始化了_我初始化了
+</span></span></span><span class=line><span class=cl><span class=cm>我改变了_我改变了
+</span></span></span><span class=line><span class=cl><span class=cm>hi, I&#39;m tim
+</span></span></span><span class=line><span class=cl><span class=cm>hi, I&#39;m tim  (from_china)
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$a</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$b</span> <span class=o>=&amp;</span><span class=nv>$a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$b</span> <span class=o>=</span><span class=mi>100</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$a</span><span class=o>.</span><span class=s2>&#34;_&#34;</span><span class=o>.</span><span class=nv>$b</span><span class=o>.</span><span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nx>unset</span> <span class=p>(</span><span class=nv>$a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$b</span> <span class=o>=</span><span class=mi>1000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$a</span><span class=o>.</span><span class=s2>&#34;_&#34;</span><span class=o>.</span><span class=nv>$b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>100_100
+</span></span></span><span class=line><span class=cl><span class=cm>_1000
+</span></span></span><span class=line><span class=cl><span class=cm>		
+</span></span></span><span class=line><span class=cl><span class=cm>PHP Notice:  Undefined variable: a in /usercode/file.php on line 8
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>    
+</span></span></code></pre></td></tr></table></div></div><h3 id=函数引用>函数引用</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>function</span> <span class=o>&amp;</span><span class=nf>test</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>    <span class=k>static</span> <span class=nv>$b</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=c1>//申明一个静态变量
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nv>$b</span><span class=o>=</span><span class=nv>$b</span><span class=o>+</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>echo</span> <span class=nv>$b</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nv>$b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=nv>$a</span><span class=o>=</span><span class=nx>test</span><span class=p>();</span>  
+</span></span><span class=line><span class=cl><span class=nv>$a</span><span class=o>=</span><span class=mi>5</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$a</span><span class=o>=</span><span class=nx>test</span><span class=p>();</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=nv>$a</span><span class=o>=&amp;</span><span class=nx>test</span><span class=p>();</span> <span class=c1>// &amp;test()才会把返回值引用到$a身上
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$a</span><span class=o>=</span><span class=mi>5</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$a</span><span class=o>=</span><span class=nx>test</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cm>/*
+</span></span></span><span class=line><span class=cl><span class=cm>1
+</span></span></span><span class=line><span class=cl><span class=cm>2
+</span></span></span><span class=line><span class=cl><span class=cm>3
+</span></span></span><span class=line><span class=cl><span class=cm>6
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>talker</span><span class=p>{</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=nv>$data</span> <span class=o>=</span> <span class=s1>&#39;Hi&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=o>&amp;</span> <span class=nf>get</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>data</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=nf>out</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>data</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>  
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=nv>$aa</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>talker</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$d</span> <span class=o>=</span> <span class=o>&amp;</span><span class=nv>$aa</span><span class=o>-&gt;</span><span class=na>get</span><span class=p>();</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=nv>$aa</span><span class=o>-&gt;</span><span class=na>out</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$d</span> <span class=o>=</span> <span class=s1>&#39;How&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$aa</span><span class=o>-&gt;</span><span class=na>out</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$d</span> <span class=o>=</span> <span class=s1>&#39;Are&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$aa</span><span class=o>-&gt;</span><span class=na>out</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=nv>$d</span> <span class=o>=</span> <span class=s1>&#39;You&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=nv>$aa</span><span class=o>-&gt;</span><span class=na>out</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// HiHowAreYou
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=作用域>作用域</h2><p>变量的作用域</p><p>变量需要先定义后使用，但这并不意味着变量定义后就可以随便使用，只有在它的作用范围中才可以被使用，这个作用范围称为变量的作用域。总体来说，变量根据定义的位置分为局部变量和全局变量。</p><ol><li>局部变量: 局部变量是在函数内部定义的变量，其作用域仅限于函数内部，离开该函数后再使用此变量是非法的。</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl>    <span class=k>function</span> <span class=nf>test</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nv>$tmp</span><span class=o>=</span><span class=s2>&#34;init&#34;</span><span class=p>;</span>        <span class=c1>//局部作用域在函数内部生效，不像C语言一样，if作用域内部的变量在外部不可见
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>echo</span> <span class=nv>$tmp</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$tmp</span><span class=o>=</span><span class=nv>$tmp</span> <span class=o>.</span> <span class=s2>&#34; again&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$tmp</span> <span class=o>.</span> <span class=s2>&#34;</span><span class=se>\r\n</span><span class=s2>&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>test</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li><p>全局变量: 全局变量是指在函数外部定义的变量，其作用域从变量定义处开始，到本程序文件末尾结束。</p></li><li><p>静态变量: 局部变量从存储方式上可分为动态存储类型和静态存储类型。函数中的局部变量默认都是动态存储类型，即在函数调用结束后自动释放存储空间。但有时希望在函数结束后，局部变量依然保存在内存中，这时就需要使用static关键字。</p></li></ol><p>static修饰的变量称为静态变量，其存储方式为静态存储，即在第一次调用函数时该变量被初始化，下次调用函数时该变量的值并不会消失。</p></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2023-01-09</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/_posts/complement-source-reverse/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">源码-反码-补码</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/_posts/%E6%A6%82%E5%BF%B5%E5%8E%9F%E7%90%86%E7%9A%84%E6%80%9D%E8%80%83/data_type_and_data_struct/><span class="next-text nav-default">数据结构与数据类型</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://giscus.app/client.js data-repo=zput/utterances-comments data-repo-id=R_kgDOHhATGQ data-category=Announcements data-category-id=DIC_kwDOHhATGc4CPxca data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=1 data-input-position=top data-theme=light data-lang=zh-CN data-loading=lazy crossorigin=anonymous async></script></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:zput@aliyun.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://zput.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2024<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>

@@ -1,0 +1,130 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>源码-反码-补码 - Zput's blog</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="zput"><meta name=description content="概念 机器数 真值 真值符号部分 真值部分 举例： -1的真值是:1000 0001, 其中真值符号区域为最高位的1,他的真值区域为000 0001。 原码 1 2 [+1] = 0000 0001"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.114.0 with theme even"><link rel=canonical href=http://zput.github.io/post/_posts/complement-source-reverse/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.e291ec317bf4a8f48812dc8bcd749ad9270976917bf2027d01a4415caecb80a5.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="源码-反码-补码"><meta property="og:description" content="概念 机器数 真值 真值符号部分 真值部分 举例： -1的真值是:1000 0001, 其中真值符号区域为最高位的1,他的真值区域为000 0001。 原码 1 2 [+1] = 0000 0001"><meta property="og:type" content="article"><meta property="og:url" content="http://zput.github.io/post/_posts/complement-source-reverse/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-01-10T19:00:00+00:00"><meta property="article:modified_time" content="2023-01-10T19:00:00+00:00"><meta itemprop=name content="源码-反码-补码"><meta itemprop=description content="概念 机器数 真值 真值符号部分 真值部分 举例： -1的真值是:1000 0001, 其中真值符号区域为最高位的1,他的真值区域为000 0001。 原码 1 2 [+1] = 0000 0001"><meta itemprop=datePublished content="2023-01-10T19:00:00+00:00"><meta itemprop=dateModified content="2023-01-10T19:00:00+00:00"><meta itemprop=wordCount content="2165"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="源码-反码-补码"><meta name=twitter:description content="概念 机器数 真值 真值符号部分 真值部分 举例： -1的真值是:1000 0001, 其中真值符号区域为最高位的1,他的真值区域为000 0001。 原码 1 2 [+1] = 0000 0001"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Zput</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/go-goroutine><li class=mobile-menu-item>go源码专栏</li></a><a href=/post/mrmk/><li class=mobile-menu-item>中间件专栏</li></a><a href=/post/cloud_native/><li class=mobile-menu-item>云原生专栏</li></a><a href=/post/postgraduate/><li class=mobile-menu-item>考研专栏</li></a><a href=/post/><li class=mobile-menu-item>时间线</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Zput</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/go-goroutine>go源码专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/mrmk/>中间件专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/cloud_native/>云原生专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/postgraduate/>考研专栏</a></li><li class=menu-item><a class=menu-item-link href=/post/>时间线</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>源码-反码-补码</h1><div class=post-meta><span class=post-time>2023-01-10</span><div class=post-category><a href=/categories/systemandprotocol/>systemAndProtocol</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>文章目录</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#概念>概念</a></li><li><a href=#使用原码反码和补码的原因>使用原码，反码和补码的原因</a><ul><li><a href=#人脑与机器计算的差异>人脑与机器计算的差异</a></li><li><a href=#反码诞生原因>反码诞生原因</a></li><li><a href=#补码的诞生>补码的诞生</a></li></ul></li><li><a href=#重探反码>重探反码</a><ul><li><a href=#模运算的定义>模运算的定义</a></li><li><a href=#同余>同余</a><ul><li><a href=#同余定理的反身性>同余定理的反身性</a></li><li><a href=#同余的线性运算>同余的线性运算</a></li></ul></li></ul></li></ul></li></ul></nav></div></div><div class=article-container><div class=post-content><h2 id=概念>概念</h2><ul><li><p>机器数</p></li><li><p>真值</p><ul><li>真值符号部分</li><li>真值部分</li></ul></li></ul><p>举例：
+-1的真值是:<code>1000 0001</code>, 其中真值<strong>符号区域</strong>为最高位的<code>1</code>,他的<strong>真值区域</strong>为<code>000 0001</code>。</p><hr><ul><li>原码</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[+1] = 0000 0001
+</span></span><span class=line><span class=cl>[-1] = 1000 0001
+</span></span></code></pre></td></tr></table></div></div><ul><li>反码：<ul><li>正数的反码是其本身</li><li>负数的反码是在其原码的基础上, 符号位不变，其余各个位取反.</li></ul></li></ul><table><thead><tr><th>十进制数</th><th>带符号位二进制原码</th><th>带符号位二进制补码</th></tr></thead><tbody><tr><td>-8</td><td>N</td><td>1000</td></tr><tr><td>-7</td><td>1111</td><td>1001</td></tr><tr><td>-6</td><td>1110</td><td>1010</td></tr><tr><td>-5</td><td>1101</td><td>1011</td></tr><tr><td>-4</td><td>1100</td><td>1100</td></tr><tr><td>-3</td><td>1011</td><td>1101</td></tr><tr><td>-2</td><td>1010</td><td>1110</td></tr><tr><td>-1</td><td>1001</td><td>1111</td></tr><tr><td>-0</td><td>1000</td><td>0000</td></tr><tr><td>+0</td><td>0000</td><td>0000</td></tr><tr><td>1</td><td>0001</td><td>0001</td></tr><tr><td>2</td><td>0010</td><td>0010</td></tr><tr><td>3</td><td>0011</td><td>0011</td></tr><tr><td>4</td><td>0100</td><td>0100</td></tr><tr><td>5</td><td>0101</td><td>0101</td></tr><tr><td>6</td><td>0110</td><td>0110</td></tr><tr><td>7</td><td>0111</td><td>0111</td></tr></tbody></table><ul><li>补码：<ul><li>正数的补码就是其本身</li><li>负数的补码是在其原码的基础上, 符号位不变, 其余各位取反, 最后+1. (即在反码基础上+1)</li></ul></li></ul><p>计算机要使用一定的编码方式进行存储. 原码, 反码, 补码是机器存储一个具体数字的编码方式.
+但为什么需要三种不同的编码方式呢？</p><h2 id=使用原码反码和补码的原因>使用原码，反码和补码的原因</h2><h3 id=人脑与机器计算的差异>人脑与机器计算的差异</h3><p>人脑可以知道第一位是符号位, 在计算的时候我们会根据符号位, 选择对真值区域的加减。但是对于计算机, 加减乘数已经是最基础的运算, 要设计的尽量简单. 计算机辨别"符号位"显然会让<strong>计算机的基础电路设计</strong>变得十分复杂! 于是人们转而设计出将<strong>符号位也参与运算</strong>的方法。</p><h3 id=反码诞生原因>反码诞生原因</h3><p>如果只使用原码，当我们计算<code>1-1=0</code> => <code>1 - 1 = 1 + (-1) = [00000001]原 + [10000001]原 = [10000010]原 = -2</code>，这显然不符合我们的预期。</p><p>为了解决<strong>原码符号位也参与运算做减法</strong>的问题, 出现了反码,会到前面的例子，用反码来表示一下:<code>1 - 1 = 1 + (-1) = [0000 0001]原 + [1000 0001]原= [0000 0001]反 + [1111 1110]反 = [1111 1111]反 = [1000 0000]原 = -0</code>用反码计算减法, 结果<strong>真值区域</strong>是正确的</p><p>再看一个<code>1-2</code>=><code>[0000 0001]原 + [1000 0010]原= [0000 0001]反 + [1111 1101]反 = [1111 1110]反 = [1000 0001]原</code>,就为<code>-1</code></p><p>但对于<strong>0这个特殊的数值</strong>. 虽然人们理解上+0和-0是一样的, 但是0带符号是没有任何意义的. 且会用[0000 0000]原和[1000 0000]原两个编码表示0,导致浪费。</p><h3 id=补码的诞生>补码的诞生</h3><p>于是补码的出现, 解决了0的符号以及两个编码的问题: <code>1-1 = 1 + (-1) = [0000 0001]原 + [1000 0001]原 = [0000 0001]补 + [1111 1111]补 = [0000 0000]补=[0000 0000]原</code></p><p>这样0用[0000 0000]表示, 而以前出现问题的-0则不存在了.而且可以用[1000 0000]表示-128:</p><h2 id=重探反码>重探反码</h2><p>计算机巧妙地把符号位参与运算, 并且将减法变成了加法, 背后蕴含了怎样的数学原理呢?</p><p>将钟表想象成是一个1位的12进制数. 如果当前时间是6点, 我希望将时间设置成4点, 需要怎么做呢?我们可以:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>1. 往回拨2个小时: 6 - 2 = 4
+</span></span><span class=line><span class=cl>2. 往前拨10个小时: (6 + 10) mod 12 = 4
+</span></span><span class=line><span class=cl>3. 往前拨10+12=22个小时: (6+22) mod 12 =4
+</span></span></code></pre></td></tr></table></div></div><p>2,3方法中的mod是指取模操作, 16 mod 12 =4 即用16除以12后的余数是4.</p><p>所以钟表往回拨(减法)的结果可以用往前拨(加法)替代!</p><p>现在的焦点就落在了如何用一个正数, 来替代一个负数. 上面的例子我们能感觉出来一些端倪, 发现一些规律. 但是数学是严谨的. 不能靠感觉.</p><h3 id=模运算的定义>模运算的定义</h3><p>定义：对于任意实数x,y,可以有
+$$ x \bmod y=x-y\left[\frac{x}{y}\right], \quad y \neq 0 $$ 取下界</p><p>-3 mod 2:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>-3 mod 2
+</span></span><span class=line><span class=cl>  = -3 - 2x[-3/2]
+</span></span><span class=line><span class=cl>  = -3 - 2x[-1.5]
+</span></span><span class=line><span class=cl>  = -3 - 2x(-2) // 取下界
+</span></span><span class=line><span class=cl>  = -3 + 4 = 1
+</span></span></code></pre></td></tr></table></div></div><h3 id=同余>同余</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>同余是数论中的一个概念，指两个整数在除以某个正整数时所得的余数相等，可以用符号 ≡ 表示。具体来说，如果整数 a 和 b 在模 m 的意义下同余，即有：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>a ≡ b (mod m)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>其中 mod 是取模运算符，表示对两个操作数进行除法运算后取余数的结果。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>这个式子的含义是，a 与 b 除以 m 的余数相同。例如，假设 m = 7，a = 25，b = 11，则有：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>25 ≡ 4 (mod 7)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>11 ≡ 4 (mod 7)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>因此，在模 7 的意义下，25 和 11 是同余的。同样地，对于任何整数 k，都有：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>25 + 7k ≡ 4 + 7k (mod 7)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>这是因为 25 + 7k 和 4 + 7k 在除以 7 后的余数相同。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>同余关系在数论中非常重要，因为它可以用于证明和推导各种定理和公式。同时，同余关系还广泛应用于密码学、编码解码等领域。
+</span></span></code></pre></td></tr></table></div></div><h4 id=同余定理的反身性>同余定理的反身性</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>同余定理的反身性是指，如果两个整数 a 和 b 模 m 同余，即 a ≡ b (mod m)，那么也可以推导出 b ≡ a (mod m)。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>例如，假设 a = 7，b = 17，m = 5，则有：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>a ≡ 7 ≡ 2 (mod 5)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>b ≡ 17 ≡ 2 (mod 5)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>因此，a 和 b 在模 5 下是同余的。根据同余定理的反身性，我们可以得出：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2 ≡ a ≡ 7 (mod 5)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2 ≡ b ≡ 17 (mod 5)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>这表明在模 5 的意义下，a 和 b 是等价的，它们对于同一模数的余数相同。这个结论符合同余定理的定义，因此同余定理的反身性成立。
+</span></span></code></pre></td></tr></table></div></div><h4 id=同余的线性运算>同余的线性运算</h4><ul><li>同余式相加：若 $$ a \equiv b(\bmod m) ， c \equiv d(\bmod m) ，则 a \pm c \equiv b d \mathrm{m} (mod m) $$</li><li>同余式相乘：若 $$ a \equiv b(\bmod m) ， c \equiv d(\bmod m) ，则 a c \equiv b d(\bmod m) $$</li></ul><p>一个数的反码, 实际上是这个数对于一个膜的同余数. 而这个膜并不是我们的二进制, 而是所能表示的最大值</p><ul><li><code>2-1=2+(-1) = [0000 0010]原 + [1000 0001]原= [0000 0010]反 + [1111 1110]反 = [0000 0010]补 + [1111 1111]补</code></li></ul><p>-1的反码表示是1111 1110. 如果这里将[1111 1110]认为是原码, 则[1111 1110]原 = -126, 这里将符号位除去(<strong>符号位是参与计算的, 正好和溢出的最高位形成正确的运算结果</strong>), 即认为是126</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>(-1) mod 127 = 126 //负数取模
+</span></span><span class=line><span class=cl>126 mod 127 = 126
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>(-1) ≡ 126 (mod 127)
+</span></span><span class=line><span class=cl>所以：2-1 ≡ 2+126 (mod 127), 这个就是内涵的数学原理
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>其实, 在反码的基础上+1, 只是相当于增加了膜的值:
+</span></span><span class=line><span class=cl>(-1) mod 128 = 127
+</span></span><span class=line><span class=cl>127 mod 128 = 127
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2-1 ≡ 2+127 (mod 128)
+</span></span></code></pre></td></tr></table></div></div><ul><li><a href=https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/computercode.html>https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/computercode.html</a></li></ul></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>文章作者</span>
+<span class=item-content>zput</span></p><p class=copyright-item><span class=item-title>上次更新</span>
+<span class=item-content>2023-01-10</span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/post/_posts/object_oriented/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">面向对象编程在不同语言中落地</span>
+<span class="prev-text nav-mobile">上一篇</span></a>
+<a class=next href=/post/_posts/php/><span class="next-text nav-default">PHP基本语法</span>
+<span class="next-text nav-mobile">下一篇</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://giscus.app/client.js data-repo=zput/utterances-comments data-repo-id=R_kgDOHhATGQ data-category=Announcements data-category-id=DIC_kwDOHhATGc4CPxca data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=1 data-input-position=top data-theme=light data-lang=zh-CN data-loading=lazy crossorigin=anonymous async></script></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:zput@aliyun.com class="iconfont icon-email" title=email></a>
+<a href=https://github.com/zput class="iconfont icon-github" title=github></a>
+<a href=http://zput.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=copyright-year>&copy;
+2017 -
+2024<span class=heart><i class="iconfont icon-heart"></i></span><span>zput</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script>
+<script type=text/javascript>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><script async src=https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin=anonymous></script></body></html>
